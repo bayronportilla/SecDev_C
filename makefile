@@ -10,7 +10,8 @@ $(TARGET):$(TARGET).c
 
 
 clean:
-	rm *#
+	rm -rf *#
+	rm -rf *~
 
 run:
 	./main.x
