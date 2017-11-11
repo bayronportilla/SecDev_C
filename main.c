@@ -4,6 +4,7 @@
 #include <gsl/gsl_matrix.h>
 #include <gsl/gsl_odeiv2.h>
 #include "Units.h"
+#include <libconfig.h>
 
 #define PI 3.14159
   
