@@ -1,7 +1,7 @@
 CC = gcc
 CFLAGS =  -I/usr/local/inlcude
 CCFLAGS = -L/usr/local/lib
-TARGET = test
+TARGET = main
 
 
 $(TARGET):$(TARGET).c

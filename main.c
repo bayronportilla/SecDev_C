@@ -4,6 +4,7 @@
 #include <gsl/gsl_matrix.h>
 #include <gsl/gsl_odeiv2.h>
 #include "Units.h"
+#include "Params.h"
 #include <libconfig.h>
 
 #define PI 3.14159
@@ -17,6 +18,7 @@ int func (double t, const double y[], double f[], void *params){
   f[1] = -mu*mu*x;
   return GSL_SUCCESS;
 }
+
 
 
 int jac (double t, const double y[], double *dfdy, double dfdt[], void *params){
@@ -36,20 +38,22 @@ int jac (double t, const double y[], double *dfdy, double dfdt[], void *params){
 
 
 int main (void){
-
-  printf("%1.9e\n",units(1.989e30,149.6e9,"uT")[0]);
-  printf("%1.9e\n",units(1.989e30,149.6e9,"uT")[1]);
-  printf("%1.9e\n",units(1.989e30,149.6e9,"uT")[2]);
   
   FILE *fp;
   fp = fopen("data.dat","w");
+  
   double mu = 1.0;
+  int N;
+  
+  N = params();
+
+  
   gsl_odeiv2_system sys = { func, jac, 2, &mu };
 
   gsl_odeiv2_driver *d = gsl_odeiv2_driver_alloc_y_new (&sys,gsl_odeiv2_step_rk4,1e-3,1e-8,1e-8);  //Driver system
 
   double t_ini   = 0.0; //t_ini
-  double t_end   = 2*2*PI/mu;
+  double t_end   = N*2*PI/mu;
   double n_steps = 1000;
   double h       = (t_end-t_ini)/n_steps;
   double y[2]    = { 1.0, 0.0 }; // y[number of entries of the array] = {}
@@ -71,14 +75,14 @@ int main (void){
       printf ("error: driver returned %d\n", s);
       break;
     }
-
-    //printf ("%.5e %.5e %.5e\n", t, y[0], y[1]);
+    
     fprintf(fp,"%.5e %.5e %.5e\n",t, y[0], y[1]);
   }
   
   fclose(fp);
 
   gsl_odeiv2_driver_free (d);
+
   return s;
 
   
