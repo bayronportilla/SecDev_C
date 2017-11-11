@@ -15,7 +15,6 @@ int main(void){
   const char *met;
   int N;
   
-  
   config_init(&cfg);
 
   // Read the file. If there is an error, report it and exit. 

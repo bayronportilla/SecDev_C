@@ -20,7 +20,6 @@ int func (double t, const double y[], double f[], void *params){
 }
 
 
-
 int jac (double t, const double y[], double *dfdy, double dfdt[], void *params){
   (void)(t); // avoid unused parameter warning 
   double mu = *(double *)params;
@@ -36,55 +35,45 @@ int jac (double t, const double y[], double *dfdy, double dfdt[], void *params){
 }
 
 
-
 int main (void){
-  
+
   FILE *fp;
   fp = fopen("data.dat","w");
   
-  double mu = 1.0;
-  int N;
+  Inpar st;
+  st = params();
   
-  N = params();
+  double mu = 1.0;
+  double t_ini = st.t_ini;
+  double t_end = st.t_end;
+  int n_steps = st.n_steps;
+  
 
   
   gsl_odeiv2_system sys = { func, jac, 2, &mu };
-
   gsl_odeiv2_driver *d = gsl_odeiv2_driver_alloc_y_new (&sys,gsl_odeiv2_step_rk4,1e-3,1e-8,1e-8);  //Driver system
 
-  double t_ini   = 0.0; //t_ini
-  double t_end   = N*2*PI/mu;
-  double n_steps = 1000;
   double h       = (t_end-t_ini)/n_steps;
   double y[2]    = { 1.0, 0.0 }; // y[number of entries of the array] = {}
   int i, s;
 
   double t = t_ini;
 
-  /*
-  printf("time = %f\n",t_ini);
-  s = gsl_odeiv2_driver_apply_fixed_step (d, &t_ini, h, 1, y); // driver system, t_ini, step size, n_steps, state vector
-  printf("time = %f\n",t_ini);
-  */
       
-  for (i = 0; i < n_steps; i++){
-    
+  for (i = 0; i < n_steps; i++){    
     s = gsl_odeiv2_driver_apply_fixed_step (d, &t, h, 1, y); // driver system, t_ini, step size, n_steps, state vector
-
     if (s != GSL_SUCCESS){
       printf ("error: driver returned %d\n", s);
       break;
     }
-    
     fprintf(fp,"%.5e %.5e %.5e\n",t, y[0], y[1]);
   }
+
   
   fclose(fp);
-
   gsl_odeiv2_driver_free (d);
 
   return s;
-
   
 }
 

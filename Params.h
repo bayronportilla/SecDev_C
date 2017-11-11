@@ -3,17 +3,59 @@
 #include <libconfig.h>
 
 
-//int main(int argc, char **argv){
+typedef struct Inpar_params{
 
-int params(void){
+  // Inner A properties
+  char   name_A[50];
+  double mass_A;
+  double radius_A;
+  double k_A;
+  double tv_A;
+  double gyr_rad_A;
+  double a_in;
+  double e_in;
+  double W_in;
+  double w_in;
+
+  // Inner B properties
+  char   name_B[50];
+  double mass_B ;
+  double radius_B ;
+  double k_B ;
+  double tv_B ;
+  double gyr_rad_B ;
+
+  // Inner C properties
+  char   name_C[50];
+  double mass_C;
+  double radius_C;
+  double k_C;
+  double tv_C;
+  double gyr_rad_C;
+  double a_out;
+  double e_out;
+  double W_out;
+  double w_out;
+
+  // General properties
+  double t_ini;
+  double t_end;
+  int n_steps;
   
+} Inpar; // Defining a new datatype *Inpar*
+         //which is a structure of the tyoe *Inpar_params*
+
+
+//void params(void *b){
+Inpar params(){
+  
+  Inpar rest; //defining the REturnSTucture
+
   config_t cfg;
   config_setting_t *setting;
   const char *str;
   const char *met;
-  int N;
-  
-  
+
   config_init(&cfg);
   
   // Read the file. If there is an error, report it and exit. 
@@ -22,12 +64,26 @@ int params(void){
       fprintf(stderr, "%s:%d - %s\n", config_error_file(&cfg),
 	      config_error_line(&cfg), config_error_text(&cfg));
       config_destroy(&cfg);
-      return(EXIT_FAILURE);
+      //return(EXIT_FAILURE);
     }
   
+  // Getting and storing General Properties
+  int N;
+  double t_ini;
+  double t_end;
+  int n_steps;
   
+  config_lookup_int(&cfg, "n_steps", &n_steps);
+  //config_lookup_string(&cfg, "method", &met);
+  config_lookup_float(&cfg, "t_ini", &t_ini);
+  config_lookup_float(&cfg, "t_end", &t_end);
+
+  rest.t_ini = t_ini;
+  rest.t_end = t_end;
+  rest.n_steps = n_steps;
   
-  config_lookup_int(&cfg, "N", &N);
+  //strcpy(rest.name,met);
+    
   //printf("\nN = %d\n", N);
   
   /*
@@ -181,6 +237,9 @@ int params(void){
   
   config_destroy(&cfg);
   //return(EXIT_SUCCESS);
-  return N;
+
+  
+  return rest;
+
   
 }
