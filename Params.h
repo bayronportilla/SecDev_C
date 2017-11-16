@@ -1,5 +1,5 @@
-#include <stdio.h>
-#include <stdlib.h>
+//#include <stdio.h>
+//#include <stdlib.h>
 #include <libconfig.h>
 
 
@@ -41,6 +41,12 @@ typedef struct Inpar_params{
   double t_ini;
   double t_end;
   int n_steps;
+  int q_orb;
+  int q_tid;
+  int q_GR;
+  int rcu;
+  int rse;
+  
   
 } Inpar; // Defining a new datatype *Inpar*
          //which is a structure of the tyoe *Inpar_params*
@@ -66,21 +72,39 @@ Inpar params(){
       config_destroy(&cfg);
       //return(EXIT_FAILURE);
     }
-  
+
+  ////////////////////////////////////////////////////////////
+  //
   // Getting and storing General Properties
+  //
+  ////////////////////////////////////////////////////////////
   int N;
   double t_ini;
   double t_end;
   int n_steps;
+  int q_orb;
+  int q_tid;
+  int q_GR;
+  int rcu;
+  int rse;
   
-  config_lookup_int(&cfg, "n_steps", &n_steps);
   //config_lookup_string(&cfg, "method", &met);
-  config_lookup_float(&cfg, "t_ini", &t_ini);
-  config_lookup_float(&cfg, "t_end", &t_end);
+  config_lookup_int(&cfg  , "n_steps", &n_steps);
+  config_lookup_float(&cfg, "t_ini"  , &t_ini);
+  config_lookup_float(&cfg, "t_end"  , &t_end);
+  config_lookup_int(&cfg  , "q_orb"  , &q_orb);
+  config_lookup_int(&cfg  , "q_tid"  , &q_tid);
+  config_lookup_int(&cfg  , "q_GR"   , &q_GR);
+  config_lookup_int(&cfg  , "rcu"    , &rcu);
+  config_lookup_int(&cfg  , "rse"    , &rse);
 
-  rest.t_ini = t_ini;
-  rest.t_end = t_end;
   rest.n_steps = n_steps;
+  rest.t_ini   = t_ini;
+  rest.t_end   = t_end;
+  rest.q_orb   = q_orb;
+  rest.q_tid   = q_tid;
+  rest.q_GR    = q_GR;
+
   
   //strcpy(rest.name,met);
     

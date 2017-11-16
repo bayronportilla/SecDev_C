@@ -3,9 +3,12 @@
 #include <gsl/gsl_errno.h>
 #include <gsl/gsl_matrix.h>
 #include <gsl/gsl_odeiv2.h>
+#include <gsl/gsl_vector.h>
+#include <gsl/gsl_blas.h>
 #include "Units.h"
 #include "Params.h"
 #include "ModQuad.h"
+
 #include <libconfig.h>
 
 #define PI 3.14159
@@ -23,16 +26,22 @@ int main (void){
   double t_ini   = st.t_ini;
   double t_end   = st.t_end;
   int    n_steps = st.n_steps;
-  
-  gsl_odeiv2_system sys = { func, jac, 2, &mu };
-  gsl_odeiv2_driver *d = gsl_odeiv2_driver_alloc_y_new (&sys,gsl_odeiv2_step_rk4,1e-3,1e-8,1e-8);  //Driver system
 
-  double h       = (t_end-t_ini)/n_steps;
-  double y[2]    = { 1.0, 0.0 }; // y[number of entries of the array] = {}
+  gsl_odeiv2_system sys = { func, jac, 2, &mu };
+  gsl_odeiv2_driver *d  = gsl_odeiv2_driver_alloc_y_new (&sys,gsl_odeiv2_step_rk4,1e-3,1e-8,1e-8);  //Driver system
+
+  double    h = (t_end-t_ini)/n_steps;
+  double y[2] = { 1.0, 0.0 }; // y[number of entries of the array] = {}
 
   int i, s;
   double t = t_ini;
-      
+
+
+  double vector[3] = {0.1,0.2,0.3};
+
+  printf("%e \n",Z_B(1e6,0.25,1.989e30,5.97e24,
+		     1e11,0.2,1.1,1.1,1.1,1e-5,1e-5,1e-5));
+    
   for (i = 0; i < n_steps; i++){    
     s = gsl_odeiv2_driver_apply_fixed_step (d, &t, h, 1, y); // driver system, t_ini, step size, n_steps, state vector
     if (s != GSL_SUCCESS){
