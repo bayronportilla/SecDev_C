@@ -7,8 +7,8 @@ typedef struct Inpar_params{
 
   // Inner A properties
   char   name_A[50];
-  double mass_A;
-  double radius_A;
+  double m_A;
+  double R_A;
   double k_A;
   double tv_A;
   double gyr_rad_A;
@@ -19,16 +19,16 @@ typedef struct Inpar_params{
 
   // Inner B properties
   char   name_B[50];
-  double mass_B ;
-  double radius_B ;
+  double m_B ;
+  double R_B ;
   double k_B ;
   double tv_B ;
   double gyr_rad_B ;
 
   // Inner C properties
   char   name_C[50];
-  double mass_C;
-  double radius_C;
+  double m_C;
+  double R_C;
   double k_C;
   double tv_C;
   double gyr_rad_C;
@@ -52,7 +52,6 @@ typedef struct Inpar_params{
          //which is a structure of the tyoe *Inpar_params*
 
 
-//void params(void *b){
 Inpar params(){
   
   Inpar rest; //defining the REturnSTucture
@@ -149,8 +148,8 @@ Inpar params(){
   ////////////////////////////////////////////////////////////
   
   const char *name_A;
-  double mass_A;
-  double radius_A;
+  double m_A;
+  double R_A;
   double k_A;
   double tv_A;
   double gyr_rad_A;
@@ -168,19 +167,19 @@ Inpar params(){
     for(i = 0; i < count; ++i){
       config_setting_t *object = config_setting_get_elem(setting, i);
       
-      config_setting_lookup_string(object, "name", &name_A);
-      config_setting_lookup_float(object, "mass", &mass_A);
-      config_setting_lookup_float(object, "radius", &radius_A);
-      config_setting_lookup_float(object, "k", &k_A);
-      config_setting_lookup_float(object, "tv", &tv_A);
-      config_setting_lookup_float(object, "gyr_rad", &gyr_rad_A);
-      config_setting_lookup_float(object, "a", &a_in);
-      config_setting_lookup_float(object, "e", &e_in);
-      config_setting_lookup_float(object, "W", &W_in);
-      config_setting_lookup_float(object, "w", &w_in);
+      config_setting_lookup_string(object, "name",    &name_A);
+      config_setting_lookup_float(object,  "mass",    &m_A);
+      config_setting_lookup_float(object,  "radius",  &R_A);
+      config_setting_lookup_float(object,  "k",       &k_A);
+      config_setting_lookup_float(object,  "tv",      &tv_A);
+      config_setting_lookup_float(object,  "gyr_rad", &gyr_rad_A);
+      config_setting_lookup_float(object,  "a",       &a_in);
+      config_setting_lookup_float(object,  "e",       &e_in);
+      config_setting_lookup_float(object,  "W",       &W_in);
+      config_setting_lookup_float(object,  "w",       &w_in);
       
     }
-    putchar('\n');
+    //putchar('\n');
   }
   
   
@@ -192,8 +191,8 @@ Inpar params(){
   ////////////////////////////////////////////////////////////
   
   const char *name_B;
-  double mass_B;
-  double radius_B;
+  double m_B;
+  double R_B;
   double k_B;
   double tv_B;
   double gyr_rad_B;
@@ -207,13 +206,12 @@ Inpar params(){
     for(i = 0; i < count; ++i){
       config_setting_t *object = config_setting_get_elem(setting, i);
       
-      config_setting_lookup_string(object, "name", &name_B);
-      config_setting_lookup_float(object, "mass", &mass_B);
-      config_setting_lookup_float(object, "radius", &radius_B);
-      config_setting_lookup_float(object, "k", &k_B);
-      config_setting_lookup_float(object, "tv", &tv_B);
-      config_setting_lookup_float(object, "gyr_rad", &gyr_rad_B);
-      
+      config_setting_lookup_string(object, "name",    &name_B);
+      config_setting_lookup_float(object,  "mass",    &m_B);
+      config_setting_lookup_float(object,  "radius",  &R_B);
+      config_setting_lookup_float(object,  "k",       &k_B);
+      config_setting_lookup_float(object,  "tv",      &tv_B);
+      config_setting_lookup_float(object,  "gyr_rad", &gyr_rad_B);
     }
   }
   
@@ -225,8 +223,8 @@ Inpar params(){
   ////////////////////////////////////////////////////////////
   
   const char *name_C;
-  double mass_C;
-  double radius_C;
+  double m_C;
+  double R_C;
   double k_C;
   double tv_C;
   double gyr_rad_C;
@@ -235,8 +233,6 @@ Inpar params(){
   double W_out;
   double w_out;
   
-  
-
   setting = config_lookup(&cfg, "bodies.outer");
   if(setting != NULL){
     int count = config_setting_length(setting);
@@ -245,23 +241,53 @@ Inpar params(){
     for(i = 0; i < count; ++i){
       config_setting_t *object = config_setting_get_elem(setting, i);
       
-      config_setting_lookup_string(object, "name", &name_C);
-      config_setting_lookup_float(object, "mass", &mass_C);
-      config_setting_lookup_float(object, "radius", &radius_C);
-      config_setting_lookup_float(object, "k", &k_C);
-      config_setting_lookup_float(object, "tv", &tv_C);
-      config_setting_lookup_float(object, "gyr_rad", &gyr_rad_C);
-      config_setting_lookup_float(object, "a", &a_out);
-      config_setting_lookup_float(object, "e", &e_out);
-      config_setting_lookup_float(object, "W", &W_out);
-      config_setting_lookup_float(object, "w", &w_out);
-      
+      config_setting_lookup_string(object, "name",    &name_C);
+      config_setting_lookup_float(object,  "mass",    &m_C);
+      config_setting_lookup_float(object,  "radius",  &R_C);
+      config_setting_lookup_float(object,  "k",       &k_C);
+      config_setting_lookup_float(object,  "tv",      &tv_C);
+      config_setting_lookup_float(object,  "gyr_rad", &gyr_rad_C);
+      config_setting_lookup_float(object,  "a",       &a_out);
+      config_setting_lookup_float(object,  "e",       &e_out);
+      config_setting_lookup_float(object,  "W",       &W_out);
+      config_setting_lookup_float(object,  "w",       &w_out);
     }
   }
   
   config_destroy(&cfg);
   //return(EXIT_SUCCESS);
 
+  rest.m_A = m_A;
+  rest.m_B = m_B;
+  rest.m_C = m_C;
+
+  rest.R_A = R_A;
+  rest.R_B = R_B;
+  rest.R_C = R_C;
+
+  rest.k_A = k_A;
+  rest.k_B = k_B;
+  rest.k_C = k_C;
+
+  rest.tv_A = tv_A;
+  rest.tv_B = tv_B;
+  rest.tv_C = tv_C;
+
+  rest.gyr_rad_A = gyr_rad_A;
+  rest.gyr_rad_B = gyr_rad_B;
+  rest.gyr_rad_C = gyr_rad_C;
+
+  rest.a_in = a_in;
+  rest.e_in = e_in;
+  rest.W_in = W_in;
+  rest.w_in = w_in;
+
+  rest.a_out = a_out;
+  rest.e_out = e_out;
+  rest.W_out = W_out;
+  rest.w_out = w_out;
+  
+  
   
   return rest;
 

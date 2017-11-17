@@ -32,7 +32,7 @@ double *RotMat(double W, double I, double w, double *in_array, char dir[]){
     }
     
    */
-  
+
   ////////////////////////////////////////////////////////////
   //
   // vectors
@@ -157,7 +157,7 @@ double H_2(double m_1,double m_2,double m_3,double a_2,double e_2,double I_2 ){
 }
 
 double C2(double m_1,double m_2,double m_3,double a_1,double a_2,double e_2){
-  return G*G/16.0 * pow(m_1+m_2,7)/pow(m_1+m_2+m_3,3) * pow(m_3,7)/pow(m_1*m_2,3) * pow(L_1(m_1,m_2,a_1),4)/pow(L_2(m_1,m_2,m_3,a_2),3) * pow(G_2(m_1,m_2,m_3,a_2,e_2),3);
+  return G*G/16.0 * pow(m_1+m_2,7)/pow(m_1+m_2+m_3,3) * pow(m_3,7)/pow(m_1*m_2,3) * pow(L_1(m_1,m_2,a_1),4)/(pow(L_2(m_1,m_2,m_3,a_2),3) * pow(G_2(m_1,m_2,m_3,a_2,e_2),3));
 }
 
 double epsilon_m(double m_1,double m_2,double a_1,double a_2,double e_2){
@@ -326,32 +326,750 @@ double da_in_dt(double a_in, double a_out, double e_in,
 		double Om_Az, double Om_Bx, double Om_By,
 		double Om_Bz, double t, Inpar params){
 
+  ////////////////////////////////////////////////////////////
+  //
+  // bulk properties
+  //
+  ////////////////////////////////////////////////////////////
+  
+  double tv_A = params.tv_A;
+  double tv_B = params.tv_B;
+  double R_A  = params.R_A;
+  double R_B  = params.R_B;
+  double k_A  = params.k_A;
+  double k_B  = params.k_B;
+  double m_A  = params.m_A;
+  double m_B  = params.m_B;
+  
   double da_in_dt_orb;
   double da_in_dt_tid;
-
+ 
   da_in_dt_orb = 0.0;
-  
-  /*
   da_in_dt_tid = -2.0*a_in*( W_A(tv_A,R_A,k_A,m_A,m_B,a_in,e_in,W_in,I_in,w_in,Om_Ax,Om_Ay,Om_Az)
-	         + W_B(tv_B,R_B,k_B,m_A,m_B,a_in,e_in,W_in,I_in,w_in,Om_Bx,Om_By,Om_Bz) ) - \
-                 2.0*a_in*e_in**2/(1.0-e_in**2) * ( V_A(tv_A,R_A,m_A,m_B,k_A,a_in,e_in,W_in,I_in,w_in,Om_Ax,Om_Ay,Om_Az) + \
-	         V_B(tv_B,R_B,m_A,m_B,k_B,a_in,e_in,W_in,I_in,w_in,Om_Bx,Om_By,Om_Bz) );
-  */
+			     + W_B(tv_B,R_B,k_B,m_A,m_B,a_in,e_in,W_in,I_in,w_in,Om_Bx,Om_By,Om_Bz) ) - 
+    2.0*a_in*pow(e_in,2)/(1.0-e_in*e_in) * ( V_A(tv_A,R_A,m_A,m_B,k_A,a_in,e_in,W_in,I_in,w_in,Om_Ax,Om_Ay,Om_Az) + 
+					     V_B(tv_B,R_B,m_A,m_B,k_B,a_in,e_in,W_in,I_in,w_in,Om_Bx,Om_By,Om_Bz) );
   
-  //da_in_dt_tid = W_A(a_in);
-  return 0;  
+  return (params.q_orb*da_in_dt_orb) + (params.q_tid*da_in_dt_tid);
 }
 
 
-/*
-double da_in_dt(Inpar params){
+
+
+
+
+double da_out_dt(double a_in, double a_out, double e_in,
+		 double e_out, double I_in, double I_out,
+		 double W_in, double W_out, double w_in,
+		 double w_out, double Om_Ax, double Om_Ay,
+		 double Om_Az, double Om_Bx, double Om_By,
+		 double Om_Bz, double t, Inpar params){
   
-  double da_in_dt_orb = 0.0;
-  double da_in_dt_tid = 0.0;
+  ////////////////////////////////////////////////////////////
+  //
+  // bulk properties
+  //
+  ////////////////////////////////////////////////////////////
   
-  return (params.q_orb*2.0) + (params.q_tid*3.0);
+  double tv_A = params.tv_A;
+  double tv_B = params.tv_B;
+  double R_A  = params.R_A;
+  double R_B  = params.R_B;
+  double k_A  = params.k_A;
+  double k_B  = params.k_B;
+  double m_A  = params.m_A;
+  double m_B  = params.m_B;
+  
+  double da_out_dt_orb;
+  double da_out_dt_tid;
+ 
+  da_out_dt_orb = 0.0;
+  da_out_dt_tid = 0.0;
+  
+  return (params.q_orb*da_out_dt_orb) + (params.q_tid*da_out_dt_tid);
 }
-*/
+
+
+
+
+
+double de_in_dt(double a_in, double a_out, double e_in,
+		double e_out, double I_in, double I_out,
+		double W_in, double W_out, double w_in,
+		double w_out, double Om_Ax, double Om_Ay,
+		double Om_Az, double Om_Bx, double Om_By,
+		double Om_Bz, double t, Inpar params){
+  
+  ////////////////////////////////////////////////////////////
+  //
+  // bulk properties
+  //
+  ////////////////////////////////////////////////////////////
+  
+  double tv_A = params.tv_A;
+  double tv_B = params.tv_B;
+  double R_A  = params.R_A;
+  double R_B  = params.R_B;
+  double k_A  = params.k_A;
+  double k_B  = params.k_B;
+  double m_A  = params.m_A;
+  double m_B  = params.m_B;
+  double m_C  = params.m_C;
+  
+  double de_in_dt_orb;
+  double de_in_dt_tid;
+  double I_tot;
+  double B;
+  double A;
+  double cphi;
+
+  I_tot = I_in + I_out;
+  B     = 2.0 + 5.0*e_in*e_in - 7.0*e_in*e_in*cos(2.0*w_in);
+  A     = 4.0 + 3.0*e_in*e_in - 2.5*B*pow(sin(I_tot),2);
+  cphi  = -cos(w_in)*cos(w_out) - cos(I_tot)*sin(w_in)*sin(w_out);  
+ 
+  de_in_dt_orb = C2(m_A,m_B,m_C,a_in,a_out,e_out)*(1-e_in*e_in)/G_1(m_A,m_B,a_in,e_in) * 30.0*e_in*pow(sin(I_tot),2) * sin(2.0*w_in);
+  de_in_dt_tid = -(V_A(tv_A,R_A,m_A,m_B,k_A,a_in,e_in,W_in,I_in,w_in,Om_Ax,Om_Ay,Om_Az) + V_B(tv_B,R_B,m_A,m_B,k_B,a_in,e_in,W_in,I_in,w_in,Om_Bx,Om_By,Om_Bz))*e_in;
+  
+  return (params.q_orb*de_in_dt_orb) + (params.q_tid*de_in_dt_tid);
+}
+
+
+
+
+
+double de_out_dt(double a_in, double a_out, double e_in,
+		 double e_out, double I_in, double I_out,
+		 double W_in, double W_out, double w_in,
+		 double w_out, double Om_Ax, double Om_Ay,
+		 double Om_Az, double Om_Bx, double Om_By,
+		 double Om_Bz, double t, Inpar params){
+  
+  ////////////////////////////////////////////////////////////
+  //
+  // bulk properties
+  //
+  ////////////////////////////////////////////////////////////
+  
+  double tv_A = params.tv_A;
+  double tv_B = params.tv_B;
+  double R_A  = params.R_A;
+  double R_B  = params.R_B;
+  double k_A  = params.k_A;
+  double k_B  = params.k_B;
+  double m_A  = params.m_A;
+  double m_B  = params.m_B;
+  double m_C  = params.m_C;
+  
+  double de_out_dt_orb;
+  double de_out_dt_tid;
+  double I_tot;
+  double B;
+  double A;
+  double cphi;
+
+  I_tot = I_in + I_out;
+  B     = 2.0 + 5.0*e_in*e_in - 7.0*e_in*e_in*cos(2.0*w_in);
+  A     = 4.0 + 3.0*e_in*e_in - 2.5*B*pow(sin(I_tot),2);
+  cphi  = -cos(w_in)*cos(w_out) - cos(I_tot)*sin(w_in)*sin(w_out);  
+ 
+  de_out_dt_orb = 0.0;
+  de_out_dt_tid = 0.0;
+  
+  return (params.q_orb*de_out_dt_orb) + (params.q_tid*de_out_dt_tid);
+}
+
+
+
+
+
+double dI_in_dt(double a_in, double a_out, double e_in,
+		double e_out, double I_in, double I_out,
+		double W_in, double W_out, double w_in,
+		double w_out, double Om_Ax, double Om_Ay,
+		double Om_Az, double Om_Bx, double Om_By,
+		double Om_Bz, double t, Inpar params){
+  
+  ////////////////////////////////////////////////////////////
+  //
+  // bulk properties
+  //
+  ////////////////////////////////////////////////////////////
+  
+  double tv_A = params.tv_A;
+  double tv_B = params.tv_B;
+  double R_A  = params.R_A;
+  double R_B  = params.R_B;
+  double k_A  = params.k_A;
+  double k_B  = params.k_B;
+  double m_A  = params.m_A;
+  double m_B  = params.m_B;
+  double m_C  = params.m_C;
+  
+  double dI_in_dt_orb;
+  double dI_in_dt_tid;
+  double I_tot;
+  double B;
+  double A;
+  double cphi;
+  double dGin_dt;
+  double dGout_dt;
+  double dHin_dt;
+
+  I_tot = I_in + I_out;
+  B     = 2.0 + 5.0*e_in*e_in - 7.0*e_in*e_in*cos(2.0*w_in);
+  A     = 4.0 + 3.0*e_in*e_in - 2.5*B*pow(sin(I_tot),2);
+  cphi  = -cos(w_in)*cos(w_out) - cos(I_tot)*sin(w_in)*sin(w_out);  
+
+  dGin_dt  = -C2(m_A,m_B,m_C,a_in,a_out,e_out)*30.0*e_in*e_in*sin(2.0*w_in)*pow(sin(I_tot),2);
+  dGout_dt = 0.0;
+  dHin_dt  = -30.0*C2(m_A,m_B,m_C,a_in,a_out,e_out)*e_in*e_in * sin(I_out) * sin(I_tot) * sin(2.0*w_in);
+
+  dI_in_dt_orb = -1.0 * ( dHin_dt - dGin_dt * cos(I_in) ) / (sin(I_in) * G_1(m_A,m_B,a_in,e_in) );
+  dI_in_dt_tid = ( X_A(tv_A,R_A,k_A,m_A,m_B,a_in,e_in,W_in,I_in,w_in,Om_Ax,Om_Ay,Om_Az) + X_B(tv_B,R_B,k_B,m_A,m_B,a_in,e_in,W_in,I_in,w_in,Om_Bx,Om_By,Om_Bz) ) * cos(w_in) - 
+                 ( Y_A(tv_A,R_A,k_A,m_A,m_B,a_in,e_in,W_in,I_in,w_in,Om_Ax,Om_Ay,Om_Az) + Y_B(tv_B,R_B,k_B,m_A,m_B,a_in,e_in,W_in,I_in,w_in,Om_Bx,Om_By,Om_Bz) ) * sin(w_in);
+
+  
+  return (params.q_orb*dI_in_dt_orb) + (params.q_tid*dI_in_dt_tid);
+}
+
+
+
+
+double dI_out_dt(double a_in, double a_out, double e_in,
+		 double e_out, double I_in, double I_out,
+		 double W_in, double W_out, double w_in,
+		 double w_out, double Om_Ax, double Om_Ay,
+		 double Om_Az, double Om_Bx, double Om_By,
+		 double Om_Bz, double t, Inpar params){
+  
+  ////////////////////////////////////////////////////////////
+  //
+  // bulk properties
+  //
+  ////////////////////////////////////////////////////////////
+  
+  double tv_A = params.tv_A;
+  double tv_B = params.tv_B;
+  double R_A  = params.R_A;
+  double R_B  = params.R_B;
+  double k_A  = params.k_A;
+  double k_B  = params.k_B;
+  double m_A  = params.m_A;
+  double m_B  = params.m_B;
+  double m_C  = params.m_C;
+  
+  double dI_out_dt_orb;
+  double dI_out_dt_tid;
+  double I_tot;
+  double B;
+  double A;
+  double cphi;
+  double dGin_dt;
+  double dGout_dt;
+  double dHin_dt;
+  double dHout_dt;
+
+  I_tot = I_in + I_out;
+  B     = 2.0 + 5.0*e_in*e_in - 7.0*e_in*e_in*cos(2.0*w_in);
+  A     = 4.0 + 3.0*e_in*e_in - 2.5*B*pow(sin(I_tot),2);
+  cphi  = -cos(w_in)*cos(w_out) - cos(I_tot)*sin(w_in)*sin(w_out);  
+
+  dGin_dt  = -C2(m_A,m_B,m_C,a_in,a_out,e_out)*30.0*e_in*e_in*sin(2.0*w_in)*pow(sin(I_tot),2);
+  dGout_dt = 0.0;
+  dHin_dt  = -30.0*C2(m_A,m_B,m_C,a_in,a_out,e_out)*e_in*e_in * sin(I_out) * sin(I_tot) * sin(2.0*w_in);
+  dHout_dt = -1.0*dHin_dt;
+    
+  dI_out_dt_orb = -1.0 * (dHout_dt - dGout_dt * cos(I_out))/(sin(I_out)*G_2(m_A,m_B,m_C,a_out,e_out));
+  dI_out_dt_tid = 0.0;
+  
+  return (params.q_orb*dI_out_dt_orb) + (params.q_tid*dI_out_dt_tid);
+}
+
+
+
+
+double dW_in_dt(double a_in, double a_out, double e_in,
+		double e_out, double I_in, double I_out,
+		double W_in, double W_out, double w_in,
+		double w_out, double Om_Ax, double Om_Ay,
+		double Om_Az, double Om_Bx, double Om_By,
+		double Om_Bz, double t, Inpar params){
+  
+  ////////////////////////////////////////////////////////////
+  //
+  // bulk properties
+  //
+  ////////////////////////////////////////////////////////////
+  
+  double tv_A = params.tv_A;
+  double tv_B = params.tv_B;
+  double R_A  = params.R_A;
+  double R_B  = params.R_B;
+  double k_A  = params.k_A;
+  double k_B  = params.k_B;
+  double m_A  = params.m_A;
+  double m_B  = params.m_B;
+  double m_C  = params.m_C;
+  
+  double dW_in_dt_orb;
+  double dW_in_dt_tid;
+  double I_tot;
+  double B;
+  double A;
+  double cphi;
+
+  I_tot = I_in + I_out;
+  B     = 2.0 + 5.0*e_in*e_in - 7.0*e_in*e_in*cos(2.0*w_in);
+  A     = 4.0 + 3.0*e_in*e_in - 2.5*B*pow(sin(I_tot),2);
+  cphi  = -cos(w_in)*cos(w_out) - cos(I_tot)*sin(w_in)*sin(w_out);  
+ 
+  dW_in_dt_orb = -3.0*C2(m_A,m_B,m_C,a_in,a_out,e_out)/(G_1(m_A,m_B,a_in,e_in)*sin(I_in)) * (2.0+3.0*e_in*e_in-5.0*e_in*e_in*cos(2.0*w_in))*sin(2.0*I_tot);
+
+  dW_in_dt_tid = ( X_A(tv_A,R_A,k_A,m_A,m_B,a_in,e_in,W_in,I_in,w_in,Om_Ax,Om_Ay,Om_Az) + X_B(tv_B,R_B,k_B,m_A,m_B,a_in,e_in,W_in,I_in,w_in,Om_Bx,Om_By,Om_Bz) )
+    * sin(w_in)/sin(I_in+I_out) +				
+    ( Y_A(tv_A,R_A,k_A,m_A,m_B,a_in,e_in,W_in,I_in,w_in,Om_Ax,Om_Ay,Om_Az) + Y_B(tv_B,R_B,k_B,m_A,m_B,a_in,e_in,W_in,I_in,w_in,Om_Bx,Om_By,Om_Bz) )
+    * cos(w_in)/sin(I_in+I_out);
+
+  return (params.q_orb * dW_in_dt_orb) + (params.q_tid * dW_in_dt_tid);
+
+}
+
+
+
+
+// Ojo aqui
+
+double dW_out_dt(double a_in, double a_out, double e_in,
+		 double e_out, double I_in, double I_out,
+		 double W_in, double W_out, double w_in,
+		 double w_out, double Om_Ax, double Om_Ay,
+		 double Om_Az, double Om_Bx, double Om_By,
+		 double Om_Bz, double t, Inpar params){
+  
+  ////////////////////////////////////////////////////////////
+  //
+  // bulk properties
+  //
+  ////////////////////////////////////////////////////////////
+  
+  double tv_A = params.tv_A;
+  double tv_B = params.tv_B;
+  double R_A  = params.R_A;
+  double R_B  = params.R_B;
+  double k_A  = params.k_A;
+  double k_B  = params.k_B;
+  double m_A  = params.m_A;
+  double m_B  = params.m_B;
+  double m_C  = params.m_C;
+  
+  double dW_out_dt_orb;
+  double I_tot;
+  double B;
+  double A;
+  double cphi;
+
+  I_tot = I_in + I_out;
+  B     = 2.0 + 5.0*e_in*e_in - 7.0*e_in*e_in*cos(2.0*w_in);
+  A     = 4.0 + 3.0*e_in*e_in - 2.5*B*pow(sin(I_tot),2);
+  cphi  = -cos(w_in)*cos(w_out) - cos(I_tot)*sin(w_in)*sin(w_out);  
+ 
+  dW_out_dt_orb = -3.0*C2(m_A,m_B,m_C,a_in,a_out,e_out)/(G_1(m_A,m_B,a_in,e_in)*sin(I_in)) * (2.0+3.0*e_in*e_in-5.0*e_in*e_in*cos(2.0*w_in))*sin(2.0*I_tot);
+
+  return (params.q_orb * dW_out_dt_orb);
+  
+}
+
+
+
+
+double dw_in_dt(double a_in, double a_out, double e_in,
+		double e_out, double I_in, double I_out,
+		double W_in, double W_out, double w_in,
+		double w_out, double Om_Ax, double Om_Ay,
+		double Om_Az, double Om_Bx, double Om_By,
+		double Om_Bz, double t, Inpar params){
+  
+  ////////////////////////////////////////////////////////////
+  //
+  // bulk properties
+  //
+  ////////////////////////////////////////////////////////////
+  
+  double tv_A = params.tv_A;
+  double tv_B = params.tv_B;
+  double R_A  = params.R_A;
+  double R_B  = params.R_B;
+  double k_A  = params.k_A;
+  double k_B  = params.k_B;
+  double m_A  = params.m_A;
+  double m_B  = params.m_B;
+  double m_C  = params.m_C;
+  
+  double dw_in_dt_orb;
+  double dw_in_dt_tid;
+  double I_tot;
+  double B;
+  double A;
+  double cphi;
+
+  I_tot = I_in + I_out;
+  B     = 2.0 + 5.0*e_in*e_in - 7.0*e_in*e_in*cos(2.0*w_in);
+  A     = 4.0 + 3.0*e_in*e_in - 2.5*B*pow(sin(I_tot),2);
+  cphi  = -cos(w_in)*cos(w_out) - cos(I_tot)*sin(w_in)*sin(w_out);  
+  
+  dw_in_dt_orb = 6.0*C2(m_A,m_B,m_C,a_in,a_out,e_out)*(1.0/G_1(m_A,m_B,a_in,e_in)*(4.0*pow(cos(I_tot),2)
+										   + (5.0*cos(2.0*w_in)-1.0)*(1.0-e_in*e_in-pow(cos(I_tot),2))) + 
+						       cos(I_tot)/G_2(m_A,m_B,m_C,a_out,e_out) * (2.0+e_in*e_in*(3.0-5.0*cos(2.0*w_in)))); 
+
+  
+  dw_in_dt_tid = ( X_A(tv_A,R_A,k_A,m_A,m_B,a_in,e_in,W_in,I_in,w_in,Om_Ax,Om_Ay,Om_Az)
+		   + X_B(tv_B,R_B,k_B,m_A,m_B,a_in,e_in,W_in,I_in,w_in,Om_Bx,Om_By,Om_Bz) ) * sin(w_in)/sin(I_in+I_out) +				
+    ( Y_A(tv_A,R_A,k_A,m_A,m_B,a_in,e_in,W_in,I_in,w_in,Om_Ax,Om_Ay,Om_Az) + Y_B(tv_B,R_B,k_B,m_A,m_B,a_in,e_in,W_in,I_in,w_in,Om_Bx,Om_By,Om_Bz) )
+    * cos(w_in)/sin(I_in+I_out);
+  
+  return (params.q_orb * dw_in_dt_orb) + (params.q_tid * dw_in_dt_tid);
+
+}
+
+
+
+
+double dw_out_dt(double a_in, double a_out, double e_in,
+		 double e_out, double I_in, double I_out,
+		 double W_in, double W_out, double w_in,
+		 double w_out, double Om_Ax, double Om_Ay,
+		 double Om_Az, double Om_Bx, double Om_By,
+		 double Om_Bz, double t, Inpar params){
+  
+  ////////////////////////////////////////////////////////////
+  //
+  // bulk properties
+  //
+  ////////////////////////////////////////////////////////////
+  
+  double tv_A = params.tv_A;
+  double tv_B = params.tv_B;
+  double R_A  = params.R_A;
+  double R_B  = params.R_B;
+  double k_A  = params.k_A;
+  double k_B  = params.k_B;
+  double m_A  = params.m_A;
+  double m_B  = params.m_B;
+  double m_C  = params.m_C;
+  
+  double dw_out_dt_orb;
+  double dw_out_dt_tid;
+  double I_tot;
+  double B;
+  double A;
+  double cphi;
+
+  I_tot = I_in + I_out;
+  B     = 2.0 + 5.0*e_in*e_in - 7.0*e_in*e_in*cos(2.0*w_in);
+  A     = 4.0 + 3.0*e_in*e_in - 2.5*B*pow(sin(I_tot),2);
+  cphi  = -cos(w_in)*cos(w_out) - cos(I_tot)*sin(w_in)*sin(w_out);  
+  
+  dw_out_dt_orb = 3.0*C2(m_A,m_B,m_C,a_in,a_out,e_out)*(2.0*cos(I_tot)/G_1(m_A,m_B,a_in,e_in) * (2.0+e_in*e_in*(3.0-5.0*cos(2.0*w_in))) + 
+							1.0/G_2(m_A,m_B,m_C,a_out,e_out) * (4.0+6.0*e_in*e_in+(5.0*pow(cos(I_tot),2)-3.0)*
+											    (2.0+e_in*e_in*(3.0-5.0*cos(2.0*w_in))))); 
+  
+  dw_out_dt_tid = 0.0;
+  
+  return (params.q_orb * dw_out_dt_orb) + (params.q_tid * dw_out_dt_tid);
+
+}
+
+
+
+
+
+double dOm_Ax_dt(double a_in, double a_out, double e_in,
+		 double e_out, double I_in, double I_out,
+		 double W_in, double W_out, double w_in,
+		 double w_out, double Om_Ax, double Om_Ay,
+		 double Om_Az, double Om_Bx, double Om_By,
+		 double Om_Bz, double t, Inpar params){
+  
+  ////////////////////////////////////////////////////////////
+  //
+  // bulk properties
+  //
+  ////////////////////////////////////////////////////////////
+  
+  double tv_A = params.tv_A;
+  double tv_B = params.tv_B;
+  double R_A  = params.R_A;
+  double R_B  = params.R_B;
+  double k_A  = params.k_A;
+  double k_B  = params.k_B;
+  double m_A  = params.m_A;
+  double m_B  = params.m_B;
+  double m_C  = params.m_C;
+  double gyr_rad_A = params.gyr_rad_A;
+  
+  double mu;
+
+  mu = m_A*m_B/(m_A+m_B);
+
+  return params.q_tid*( mu*pow(G*(m_A+m_B),0.5)*a_in*(1.0-e_in*e_in)/(gyr_rad_A*m_A*pow(R_A,2)) * 
+    ( X_A(tv_A,R_A,k_A,m_A,m_B,a_in,e_in,W_in,I_in,w_in,Om_Ax,Om_Ay,Om_Az)*(-cos(W_in)*sin(w_in) - sin(W_in)*cos(w_in)*cos(I_in)) + 
+      W_A(tv_A,R_A,k_A,m_A,m_B,a_in,e_in,W_in,I_in,w_in,Om_Ax,Om_Ay,Om_Az)*(sin(I_in)*sin(W_in)) - 
+      Y_A(tv_A,R_A,k_A,m_A,m_B,a_in,e_in,W_in,I_in,w_in,Om_Ax,Om_Ay,Om_Az)*(cos(W_in)*cos(w_in)-sin(W_in)*sin(w_in)*cos(I_in))));
+
+}
+
+
+
+
+double dOm_Ay_dt(double a_in, double a_out, double e_in,
+		 double e_out, double I_in, double I_out,
+		 double W_in, double W_out, double w_in,
+		 double w_out, double Om_Ax, double Om_Ay,
+		 double Om_Az, double Om_Bx, double Om_By,
+		 double Om_Bz, double t, Inpar params){
+  
+  ////////////////////////////////////////////////////////////
+  //
+  // bulk properties
+  //
+  ////////////////////////////////////////////////////////////
+  
+  double tv_A = params.tv_A;
+  double tv_B = params.tv_B;
+  double R_A  = params.R_A;
+  double R_B  = params.R_B;
+  double k_A  = params.k_A;
+  double k_B  = params.k_B;
+  double m_A  = params.m_A;
+  double m_B  = params.m_B;
+  double m_C  = params.m_C;
+  double gyr_rad_A = params.gyr_rad_A;
+  
+  double mu;
+
+  mu = m_A*m_B/(m_A+m_B);
+
+  return params.q_tid * ( mu*pow(G*(m_A+m_B),0.5)*a_in*(1.0-e_in*e_in)/(gyr_rad_A*m_A*pow(R_A,2)) * 
+    ( X_A(tv_A,R_A,k_A,m_A,m_B,a_in,e_in,W_in,I_in,w_in,Om_Ax,Om_Ay,Om_Az)*(-sin(W_in)*sin(w_in) + cos(W_in)*cos(w_in)*cos(I_in)) + 
+      W_A(tv_A,R_A,k_A,m_A,m_B,a_in,e_in,W_in,I_in,w_in,Om_Ax,Om_Ay,Om_Az)*(-sin(I_in)*cos(W_in)) - 
+      Y_A(tv_A,R_A,k_A,m_A,m_B,a_in,e_in,W_in,I_in,w_in,Om_Ax,Om_Ay,Om_Az)*(sin(W_in)*cos(w_in)+cos(W_in)*sin(w_in)*cos(I_in))) ) ;
+
+}
+
+
+
+
+
+double dOm_Az_dt(double a_in, double a_out, double e_in,
+		 double e_out, double I_in, double I_out,
+		 double W_in, double W_out, double w_in,
+		 double w_out, double Om_Ax, double Om_Ay,
+		 double Om_Az, double Om_Bx, double Om_By,
+		 double Om_Bz, double t, Inpar params){
+  
+  ////////////////////////////////////////////////////////////
+  //
+  // bulk properties
+  //
+  ////////////////////////////////////////////////////////////
+  
+  double tv_A = params.tv_A;
+  double tv_B = params.tv_B;
+  double R_A  = params.R_A;
+  double R_B  = params.R_B;
+  double k_A  = params.k_A;
+  double k_B  = params.k_B;
+  double m_A  = params.m_A;
+  double m_B  = params.m_B;
+  double m_C  = params.m_C;
+  double gyr_rad_A = params.gyr_rad_A;
+  
+  double mu;
+
+  mu = m_A*m_B/(m_A+m_B);
+  
+  return params.q_tid * ( mu*pow(G*(m_A+m_B),0.5)*a_in*(1.0-e_in*e_in)/(gyr_rad_A*m_A*pow(R_A,2)) * 
+			  ( X_A(tv_A,R_A,k_A,m_A,m_B,a_in,e_in,W_in,I_in,w_in,Om_Ax,Om_Ay,Om_Az)*(sin(I_in)*cos(w_in)) + 
+			    W_A(tv_A,R_A,k_A,m_A,m_B,a_in,e_in,W_in,I_in,w_in,Om_Ax,Om_Ay,Om_Az)*cos(I_in) - 
+			    Y_A(tv_A,R_A,k_A,m_A,m_B,a_in,e_in,W_in,I_in,w_in,Om_Ax,Om_Ay,Om_Az)*(sin(I_in)*sin(w_in))) );
+
+}
+
+
+
+
+
+double dOm_Bx_dt(double a_in, double a_out, double e_in,
+		 double e_out, double I_in, double I_out,
+		 double W_in, double W_out, double w_in,
+		 double w_out, double Om_Ax, double Om_Ay,
+		 double Om_Az, double Om_Bx, double Om_By,
+		 double Om_Bz, double t, Inpar params){
+  
+  ////////////////////////////////////////////////////////////
+  //
+  // bulk properties
+  //
+  ////////////////////////////////////////////////////////////
+  
+  double tv_A = params.tv_A;
+  double tv_B = params.tv_B;
+  double R_A  = params.R_A;
+  double R_B  = params.R_B;
+  double k_A  = params.k_A;
+  double k_B  = params.k_B;
+  double m_A  = params.m_A;
+  double m_B  = params.m_B;
+  double m_C  = params.m_C;
+  double gyr_rad_B = params.gyr_rad_B;
+  
+  double mu;
+
+  mu = m_A*m_B/(m_A+m_B);
+
+  return params.q_tid*( mu*pow(G*(m_A+m_B),0.5)*a_in*(1.0-e_in*e_in)/(gyr_rad_B*m_B*pow(R_B,2)) * 
+    ( X_B(tv_B,R_B,k_B,m_A,m_B,a_in,e_in,W_in,I_in,w_in,Om_Bx,Om_By,Om_Bz)*(-cos(W_in)*sin(w_in) - sin(W_in)*cos(w_in)*cos(I_in)) + 
+      W_B(tv_B,R_B,k_B,m_A,m_B,a_in,e_in,W_in,I_in,w_in,Om_Bx,Om_By,Om_Bz)*(sin(I_in)*sin(W_in)) - 
+      Y_B(tv_B,R_B,k_B,m_A,m_B,a_in,e_in,W_in,I_in,w_in,Om_Bx,Om_By,Om_Bz)*(cos(W_in)*cos(w_in)-sin(W_in)*sin(w_in)*cos(I_in))));
+
+}
+
+
+
+
+double dOm_By_dt(double a_in, double a_out, double e_in,
+		 double e_out, double I_in, double I_out,
+		 double W_in, double W_out, double w_in,
+		 double w_out, double Om_Ax, double Om_Ay,
+		 double Om_Az, double Om_Bx, double Om_By,
+		 double Om_Bz, double t, Inpar params){
+  
+  ////////////////////////////////////////////////////////////
+  //
+  // bulk properties
+  //
+  ////////////////////////////////////////////////////////////
+  
+  double tv_A = params.tv_A;
+  double tv_B = params.tv_B;
+  double R_A  = params.R_A;
+  double R_B  = params.R_B;
+  double k_A  = params.k_A;
+  double k_B  = params.k_B;
+  double m_A  = params.m_A;
+  double m_B  = params.m_B;
+  double m_C  = params.m_C;
+  double gyr_rad_B = params.gyr_rad_B;
+  
+  double mu;
+
+  mu = m_A*m_B/(m_A+m_B);
+
+  return params.q_tid * ( mu*pow(G*(m_A+m_B),0.5)*a_in*(1.0-e_in*e_in)/(gyr_rad_B*m_B*pow(R_B,2)) * 
+    ( X_B(tv_B,R_B,k_B,m_A,m_B,a_in,e_in,W_in,I_in,w_in,Om_Bx,Om_By,Om_Bz)*(-sin(W_in)*sin(w_in) + cos(W_in)*cos(w_in)*cos(I_in)) + 
+      W_B(tv_B,R_B,k_B,m_A,m_B,a_in,e_in,W_in,I_in,w_in,Om_Bx,Om_By,Om_Bz)*(-sin(I_in)*cos(W_in)) - 
+      Y_B(tv_B,R_B,k_B,m_A,m_B,a_in,e_in,W_in,I_in,w_in,Om_Bx,Om_By,Om_Bz)*(sin(W_in)*cos(w_in)+cos(W_in)*sin(w_in)*cos(I_in))) ) ;
+
+}
+
+
+
+
+
+double dOm_Bz_dt(double a_in, double a_out, double e_in,
+		 double e_out, double I_in, double I_out,
+		 double W_in, double W_out, double w_in,
+		 double w_out, double Om_Ax, double Om_Ay,
+		 double Om_Az, double Om_Bx, double Om_By,
+		 double Om_Bz, double t, Inpar params){
+  
+  ////////////////////////////////////////////////////////////
+  //
+  // bulk properties
+  //
+  ////////////////////////////////////////////////////////////
+  
+  double tv_A = params.tv_A;
+  double tv_B = params.tv_B;
+  double R_A  = params.R_A;
+  double R_B  = params.R_B;
+  double k_A  = params.k_A;
+  double k_B  = params.k_B;
+  double m_A  = params.m_A;
+  double m_B  = params.m_B;
+  double m_C  = params.m_C;
+  double gyr_rad_B = params.gyr_rad_B;
+  
+  double mu;
+
+  mu = m_A*m_B/(m_A+m_B);
+  
+  return params.q_tid * ( mu*pow(G*(m_A+m_B),0.5)*a_in*(1.0-e_in*e_in)/(gyr_rad_B*m_B*pow(R_B,2)) * 
+			  ( X_B(tv_B,R_B,k_B,m_A,m_B,a_in,e_in,W_in,I_in,w_in,Om_Bx,Om_By,Om_Bz)*(sin(I_in)*cos(w_in)) + 
+			    W_B(tv_B,R_B,k_B,m_A,m_B,a_in,e_in,W_in,I_in,w_in,Om_Bx,Om_By,Om_Bz)*cos(I_in) - 
+			    Y_B(tv_B,R_B,k_B,m_A,m_B,a_in,e_in,W_in,I_in,w_in,Om_Bx,Om_By,Om_Bz)*(sin(I_in)*sin(w_in))) );
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 int func (double t, const double y[], double f[], void *params){
   (void)(t); // avoid unused parameter warning 
