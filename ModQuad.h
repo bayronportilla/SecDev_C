@@ -1,3 +1,5 @@
+
+
 ////////////////////////////////////////////////////////////
 //
 // This matrix takes me from the inertial system to the
@@ -97,6 +99,7 @@ double *RotMat(double W, double I, double w, double *in_array, char dir[]){
 }
 
 
+double G = 1.0;
 
 ////////////////////////////////////////////////////////////
 //
@@ -124,7 +127,7 @@ double f_5(double e){
   return ( 1.0 + (15.0/4.0)*pow(e,2) + (15.0/8.0)*pow(e,4) + (5.0/64.0)*pow(e,6) ) / pow(1.0-e*e,13.0/2.0);
 }
 
-double G = 6.67e-11;
+
 
 double n(double m_1, double m_2, double a){
   return pow(G*(m_1+m_2)/pow(a,3),0.5);
@@ -327,10 +330,9 @@ double da_in_dt(double a_in, double a_out, double e_in,
 		double Om_Bz, double t, Inpar params){
 
   ////////////////////////////////////////////////////////////
-  //
   // bulk properties
-  //
-  ////////////////////////////////////////////////////////////
+  
+  
   
   double tv_A = params.tv_A;
   double tv_B = params.tv_B;
@@ -366,10 +368,8 @@ double da_out_dt(double a_in, double a_out, double e_in,
 		 double Om_Bz, double t, Inpar params){
   
   ////////////////////////////////////////////////////////////
-  //
   // bulk properties
-  //
-  ////////////////////////////////////////////////////////////
+ 
   
   double tv_A = params.tv_A;
   double tv_B = params.tv_B;
@@ -401,10 +401,8 @@ double de_in_dt(double a_in, double a_out, double e_in,
 		double Om_Bz, double t, Inpar params){
   
   ////////////////////////////////////////////////////////////
-  //
   // bulk properties
-  //
-  ////////////////////////////////////////////////////////////
+
   
   double tv_A = params.tv_A;
   double tv_B = params.tv_B;
@@ -429,6 +427,7 @@ double de_in_dt(double a_in, double a_out, double e_in,
   cphi  = -cos(w_in)*cos(w_out) - cos(I_tot)*sin(w_in)*sin(w_out);  
  
   de_in_dt_orb = C2(m_A,m_B,m_C,a_in,a_out,e_out)*(1-e_in*e_in)/G_1(m_A,m_B,a_in,e_in) * 30.0*e_in*pow(sin(I_tot),2) * sin(2.0*w_in);
+  
   de_in_dt_tid = -(V_A(tv_A,R_A,m_A,m_B,k_A,a_in,e_in,W_in,I_in,w_in,Om_Ax,Om_Ay,Om_Az) + V_B(tv_B,R_B,m_A,m_B,k_B,a_in,e_in,W_in,I_in,w_in,Om_Bx,Om_By,Om_Bz))*e_in;
   
   return (params.q_orb*de_in_dt_orb) + (params.q_tid*de_in_dt_tid);
@@ -446,10 +445,8 @@ double de_out_dt(double a_in, double a_out, double e_in,
 		 double Om_Bz, double t, Inpar params){
   
   ////////////////////////////////////////////////////////////
-  //
   // bulk properties
-  //
-  ////////////////////////////////////////////////////////////
+
   
   double tv_A = params.tv_A;
   double tv_B = params.tv_B;
@@ -491,10 +488,8 @@ double dI_in_dt(double a_in, double a_out, double e_in,
 		double Om_Bz, double t, Inpar params){
   
   ////////////////////////////////////////////////////////////
-  //
   // bulk properties
-  //
-  ////////////////////////////////////////////////////////////
+
   
   double tv_A = params.tv_A;
   double tv_B = params.tv_B;
@@ -544,10 +539,8 @@ double dI_out_dt(double a_in, double a_out, double e_in,
 		 double Om_Bz, double t, Inpar params){
   
   ////////////////////////////////////////////////////////////
-  //
   // bulk properties
-  //
-  ////////////////////////////////////////////////////////////
+
   
   double tv_A = params.tv_A;
   double tv_B = params.tv_B;
@@ -597,10 +590,8 @@ double dW_in_dt(double a_in, double a_out, double e_in,
 		double Om_Bz, double t, Inpar params){
   
   ////////////////////////////////////////////////////////////
-  //
   // bulk properties
-  //
-  ////////////////////////////////////////////////////////////
+
   
   double tv_A = params.tv_A;
   double tv_B = params.tv_B;
@@ -648,10 +639,8 @@ double dW_out_dt(double a_in, double a_out, double e_in,
 		 double Om_Bz, double t, Inpar params){
   
   ////////////////////////////////////////////////////////////
-  //
   // bulk properties
-  //
-  ////////////////////////////////////////////////////////////
+
   
   double tv_A = params.tv_A;
   double tv_B = params.tv_B;
@@ -691,10 +680,8 @@ double dw_in_dt(double a_in, double a_out, double e_in,
 		double Om_Bz, double t, Inpar params){
   
   ////////////////////////////////////////////////////////////
-  //
   // bulk properties
-  //
-  ////////////////////////////////////////////////////////////
+
   
   double tv_A = params.tv_A;
   double tv_B = params.tv_B;
@@ -743,10 +730,8 @@ double dw_out_dt(double a_in, double a_out, double e_in,
 		 double Om_Bz, double t, Inpar params){
   
   ////////////////////////////////////////////////////////////
-  //
   // bulk properties
-  //
-  ////////////////////////////////////////////////////////////
+
   
   double tv_A = params.tv_A;
   double tv_B = params.tv_B;
@@ -792,10 +777,8 @@ double dOm_Ax_dt(double a_in, double a_out, double e_in,
 		 double Om_Bz, double t, Inpar params){
   
   ////////////////////////////////////////////////////////////
-  //
   // bulk properties
-  //
-  ////////////////////////////////////////////////////////////
+
   
   double tv_A = params.tv_A;
   double tv_B = params.tv_B;
@@ -830,10 +813,8 @@ double dOm_Ay_dt(double a_in, double a_out, double e_in,
 		 double Om_Bz, double t, Inpar params){
   
   ////////////////////////////////////////////////////////////
-  //
   // bulk properties
-  //
-  ////////////////////////////////////////////////////////////
+
   
   double tv_A = params.tv_A;
   double tv_B = params.tv_B;
@@ -869,10 +850,8 @@ double dOm_Az_dt(double a_in, double a_out, double e_in,
 		 double Om_Bz, double t, Inpar params){
   
   ////////////////////////////////////////////////////////////
-  //
   // bulk properties
-  //
-  ////////////////////////////////////////////////////////////
+
   
   double tv_A = params.tv_A;
   double tv_B = params.tv_B;
@@ -908,10 +887,8 @@ double dOm_Bx_dt(double a_in, double a_out, double e_in,
 		 double Om_Bz, double t, Inpar params){
   
   ////////////////////////////////////////////////////////////
-  //
   // bulk properties
-  //
-  ////////////////////////////////////////////////////////////
+
   
   double tv_A = params.tv_A;
   double tv_B = params.tv_B;
@@ -946,10 +923,8 @@ double dOm_By_dt(double a_in, double a_out, double e_in,
 		 double Om_Bz, double t, Inpar params){
   
   ////////////////////////////////////////////////////////////
-  //
   // bulk properties
-  //
-  ////////////////////////////////////////////////////////////
+
   
   double tv_A = params.tv_A;
   double tv_B = params.tv_B;
@@ -985,10 +960,8 @@ double dOm_Bz_dt(double a_in, double a_out, double e_in,
 		 double Om_Bz, double t, Inpar params){
   
   ////////////////////////////////////////////////////////////
-  //
   // bulk properties
-  //
-  ////////////////////////////////////////////////////////////
+
   
   double tv_A = params.tv_A;
   double tv_B = params.tv_B;
@@ -1015,73 +988,95 @@ double dOm_Bz_dt(double a_in, double a_out, double e_in,
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+////////////////////////////////////////////////////////////
+//
+// State vector function
+//
+////////////////////////////////////////////////////////////
 
 
 int func (double t, const double y[], double f[], void *params){
-  (void)(t); // avoid unused parameter warning 
-  double mu = *(double *)params;
-  double x  = y[0];
-  double vx = y[1];
-  f[0] = vx;
-  f[1] = -mu*mu*x;
+  (void)(t); // avoid unused parameter warning
+
+  Inpar parameters = *(Inpar *)params;
+    
+  double a_in  = y[0];
+  double a_out = y[1];
+  double e_in  = y[2];
+  double e_out = y[3];
+  double I_in  = y[4];
+  double I_out = y[5];
+  double W_in  = y[6];
+  double W_out = y[7];
+  double w_in  = y[8];
+  double w_out = y[9];
+  double Om_Ax = y[10];
+  double Om_Ay = y[11];
+  double Om_Az = y[12];
+  double Om_Bx = y[13];
+  double Om_By = y[14];
+  double Om_Bz = y[15];
+
+  f[0]  = da_in_dt(a_in,a_out,e_in,e_out,I_in,I_out,W_in,W_out,w_in,w_out,Om_Ax,Om_Ay,Om_Az,Om_Bx,Om_By,Om_Bz,t,parameters);
+  f[1]  = da_out_dt(a_in,a_out,e_in,e_out,I_in,I_out,W_in,W_out,w_in,w_out,Om_Ax,Om_Ay,Om_Az,Om_Bx,Om_By,Om_Bz,t,parameters);
+  f[2]  = de_in_dt(a_in,a_out,e_in,e_out,I_in,I_out,W_in,W_out,w_in,w_out,Om_Ax,Om_Ay,Om_Az,Om_Bx,Om_By,Om_Bz,t,parameters);
+  f[3]  = de_out_dt(a_in,a_out,e_in,e_out,I_in,I_out,W_in,W_out,w_in,w_out,Om_Ax,Om_Ay,Om_Az,Om_Bx,Om_By,Om_Bz,t,parameters);
+  f[4]  = dI_in_dt(a_in,a_out,e_in,e_out,I_in,I_out,W_in,W_out,w_in,w_out,Om_Ax,Om_Ay,Om_Az,Om_Bx,Om_By,Om_Bz,t,parameters);
+  f[5]  = dI_out_dt(a_in,a_out,e_in,e_out,I_in,I_out,W_in,W_out,w_in,w_out,Om_Ax,Om_Ay,Om_Az,Om_Bx,Om_By,Om_Bz,t,parameters);
+  f[6]  = dW_in_dt(a_in,a_out,e_in,e_out,I_in,I_out,W_in,W_out,w_in,w_out,Om_Ax,Om_Ay,Om_Az,Om_Bx,Om_By,Om_Bz,t,parameters);
+  f[7]  = dW_out_dt(a_in,a_out,e_in,e_out,I_in,I_out,W_in,W_out,w_in,w_out,Om_Ax,Om_Ay,Om_Az,Om_Bx,Om_By,Om_Bz,t,parameters);
+  f[8]  = dw_in_dt(a_in,a_out,e_in,e_out,I_in,I_out,W_in,W_out,w_in,w_out,Om_Ax,Om_Ay,Om_Az,Om_Bx,Om_By,Om_Bz,t,parameters);
+  f[9]  = dw_out_dt(a_in,a_out,e_in,e_out,I_in,I_out,W_in,W_out,w_in,w_out,Om_Ax,Om_Ay,Om_Az,Om_Bx,Om_By,Om_Bz,t,parameters);
+  f[10] = dOm_Ax_dt(a_in,a_out,e_in,e_out,I_in,I_out,W_in,W_out,w_in,w_out,Om_Ax,Om_Ay,Om_Az,Om_Bx,Om_By,Om_Bz,t,parameters);
+  f[11] = dOm_Ay_dt(a_in,a_out,e_in,e_out,I_in,I_out,W_in,W_out,w_in,w_out,Om_Ax,Om_Ay,Om_Az,Om_Bx,Om_By,Om_Bz,t,parameters);
+  f[12] = dOm_Az_dt(a_in,a_out,e_in,e_out,I_in,I_out,W_in,W_out,w_in,w_out,Om_Ax,Om_Ay,Om_Az,Om_Bx,Om_By,Om_Bz,t,parameters);
+  f[13] = dOm_Bx_dt(a_in,a_out,e_in,e_out,I_in,I_out,W_in,W_out,w_in,w_out,Om_Ax,Om_Ay,Om_Az,Om_Bx,Om_By,Om_Bz,t,parameters);
+  f[14] = dOm_By_dt(a_in,a_out,e_in,e_out,I_in,I_out,W_in,W_out,w_in,w_out,Om_Ax,Om_Ay,Om_Az,Om_Bx,Om_By,Om_Bz,t,parameters);
+  f[15] = dOm_Bz_dt(a_in,a_out,e_in,e_out,I_in,I_out,W_in,W_out,w_in,w_out,Om_Ax,Om_Ay,Om_Az,Om_Bx,Om_By,Om_Bz,t,parameters);
+  
   return GSL_SUCCESS;
+  
 }
 
 
+
+/*
+typedef struct my_estruct{
+  double mu;
+} exx;
+
+
+double pos(double x, double vx, exx params){
+  double mu = params.mu;
+  return -mu*mu*x;
+}
+
+double vel(double x, double vx, exx params){
+  return vx;
+}
+
+int func (double t, const double y[], double f[], void *params){
+  (void)(t); // avoid unused parameter warning 
+  //double mu = *(double *)params;
+ 
+  exx stt   = *(exx *)params;
+  stt.mu = 1.0;
+  double x  = y[0];
+  double vx = y[1];
+
+ 
+  //f[0] = vx;
+  //f[1] = -mu*mu*x;
+ 
+
+  f[0] = vel(x,vx,stt);
+  f[1] = pos(x,vx,stt);
+  
+  return GSL_SUCCESS;
+}
+*/
+
+/*
 int jac (double t, const double y[], double *dfdy, double dfdt[], void *params){
   (void)(t); // avoid unused parameter warning 
   double mu = *(double *)params;
@@ -1095,3 +1090,4 @@ int jac (double t, const double y[], double *dfdy, double dfdt[], void *params){
   dfdt[1] = 0.0;
   return GSL_SUCCESS;
 }
+*/

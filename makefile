@@ -1,6 +1,7 @@
 CC = gcc
-CFLAGS =  -I/usr/local/inlcude
-CCFLAGS = -L/usr/local/lib
+CFLAGS   = -I/usr/local/inlcude
+CCFLAGS  = -L/usr/local/lib
+
 TARGET = main
 
 

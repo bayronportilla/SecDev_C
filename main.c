@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 #include <gsl/gsl_errno.h>
 #include <gsl/gsl_matrix.h>
 #include <gsl/gsl_odeiv2.h>
@@ -8,74 +9,103 @@
 #include "Units.h"
 #include "Params.h"
 #include "ModQuad.h"
-
+#include "ConverCan.h"
 #include <libconfig.h>
 
 #define PI 3.14159
 
+/*
+double de_in_dt(double a_in, double a_out, double e_in,
+		double e_out, double I_in, double I_out,
+		double W_in, double W_out, double w_in,
+		double w_out, double Om_Ax, double Om_Ay,
+		double Om_Az, double Om_Bx, double Om_By,
+		double Om_Bz, double t, Inpar params);
+*/
 
 int main (void){
 
   FILE *fp;
   fp = fopen("data.dat","w");
-  
+
   Inpar st;
   st = params();
-  
+
   double mu      = 1.0;
-  double t_ini   = st.t_ini;
-  double t_end   = st.t_end;
-  int    n_steps = st.n_steps;
 
-  gsl_odeiv2_system sys = { func, jac, 2, &mu };
-  gsl_odeiv2_driver *d  = gsl_odeiv2_driver_alloc_y_new (&sys,gsl_odeiv2_step_rk4,1e-3,1e-8,1e-8);  //Driver system
+  
+  const gsl_odeiv2_step_type * T = gsl_odeiv2_step_rk4;
+  gsl_odeiv2_step * s = gsl_odeiv2_step_alloc (T, 16);
+  gsl_odeiv2_control * c = gsl_odeiv2_control_y_new (1e-6, 0.0);
+  gsl_odeiv2_evolve * e = gsl_odeiv2_evolve_alloc (16);
+  
+  double h = 1e-6;
+  
+  Inpar stc;
+  stc = ConverToCan(st);
 
-  double h = (t_end-t_ini)/n_steps;
-  double y[2] = { 1.0, 0.0 }; // y[number of entries of the array] = {}
-
-  int i, s;
-  double t = t_ini;
-
-
-  /*
-  printf("%e \n",Z_B(1e6,0.25,1.989e30,5.97e24,
-		     1e11,0.2,1.1,1.1,1.1,1e-5,1e-5,1e-5));
+  
+  double y[16] = { stc.a_in, stc.a_out, stc.e_in, stc.e_out, 
+		   stc.I_in, stc.I_out, stc.W_in, stc.W_out,
+		   stc.w_in, stc.w_out, stc.Om_Ax, stc.Om_Ay,
+		   stc.Om_Az, stc.Om_Bx, stc.Om_By, stc.Om_Bz}; // y[number of entries of the array] = {}
+  
+  
+  /*  
+  gsl_odeiv2_system sys = { func, NULL, 16, &mu}; // Define sistema de ecuaciones
+  
+  int i;
+  double t = stc.t_ini;
   */
 
-  
-  printf("%e \n",dOm_Bz_dt(st.a_in,st.a_out,st.e_in,
-			   st.e_out,1.1292280260403313,0.005235987755982988,
-			   st.W_in,st.W_out,st.w_in,
-			   st.w_out,1e-5,1e-5,
-			   1e-5,1e-5,1e-5,
-			   1e-5,0.0,st));
-  
+
 
   /*
-  printf("%e \n",W_B(st.tv_A,st.R_A,st.k_A,
-		     st.m_A,st.m_B,st.a_in,
-		     st.e_in,st.W_in,2.2,
-		     st.w_in,1e-5,1e-5,
-		     1e-5));
+  printf("%e \n",da_in_dt(stc.a_in,stc.a_out,stc.e_in,
+			  stc.e_out,stc.I_in,stc.I_out,
+			  stc.W_in,stc.W_out,stc.w_in,
+			  stc.w_out,stc.Om_Ax,stc.Om_Ay,
+			  stc.Om_Az,stc.Om_Bx,stc.Om_By,
+			  stc.Om_Bz,0,stc));
   */
   
+  printf("%e \n",da_in_dt(st.a_in,st.a_out,st.e_in,
+			  st.e_out,st.I_in,st.I_out,
+			  st.W_in,st.W_out,st.w_in,
+			  st.w_out,st.Om_Ax,st.Om_Ay,
+			  st.Om_Az,st.Om_Bx,st.Om_By,
+			  st.Om_Bz,0,st));
   /*
- 
-  for (i = 0; i < n_steps; i++){    
-    s = gsl_odeiv2_driver_apply_fixed_step (d, &t, h, 1, y); // driver system, t_ini, step size, n_steps, state vector
-    if (s != GSL_SUCCESS){
-      printf ("error: driver returned %d\n", s);
-      break;
+  printf("%e \n",C2(stc.m_A,stc.m_B,stc.m_C,stc.a_in,stc.a_out,stc.e_out));
+  printf("%e \n",G_1(stc.m_A,stc.m_B,stc.a_in,stc.e_in));
+  printf("%e \n",sin(2.0*sin(stc.w_in)));
+  */
+  
+  printf("%e \n",C2(st.m_A,st.m_B,st.m_C,st.a_in,st.a_out,st.e_out)*(1-st.e_in*st.e_in)/G_1(st.m_A,st.m_B,st.a_in,st.e_in) * 30.0*st.e_in*pow(sin(st.I_tot),2) * sin(2.0*st.w_in));
+  
+  
+  /*
+  while (t < stc.t_end)
+    {
+      int status = gsl_odeiv2_evolve_apply (e,c,s,&sys,&t,stc.t_end,&h,y);
+
+      if (status != GSL_SUCCESS)
+          break;
+
+      printf ("%.5e %.5e %.5e\n", t, y[0], y[15]);
     }
-    fprintf(fp,"%.5e %.5e %.5e\n",t, y[0], y[1]);
-  }
-  */
   
+  
+
+  gsl_odeiv2_evolve_free (e);
+  gsl_odeiv2_control_free (c);
+  gsl_odeiv2_step_free (s);
 
   fclose(fp);
-  gsl_odeiv2_driver_free (d);
 
-  return s;
+
+  */
+  return 0;
   
 }
 
