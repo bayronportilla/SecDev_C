@@ -38,6 +38,7 @@ int main (void){
   gsl_odeiv2_step * s = gsl_odeiv2_step_alloc (T, 16);
   gsl_odeiv2_control * c = gsl_odeiv2_control_y_new (1e-6, 0.0);
   gsl_odeiv2_evolve * e = gsl_odeiv2_evolve_alloc (16);
+  gsl_odeiv2_system sys = { func, NULL, 16, &mu}; // Define sistema de ecuaciones
   
   double h = 1e-6;
   
@@ -50,41 +51,24 @@ int main (void){
 		   stc.w_in, stc.w_out, stc.Om_Ax, stc.Om_Ay,
 		   stc.Om_Az, stc.Om_Bx, stc.Om_By, stc.Om_Bz}; // y[number of entries of the array] = {}
   
-  
-  /*  
-  gsl_odeiv2_system sys = { func, NULL, 16, &mu}; // Define sistema de ecuaciones
-  
-  int i;
-  double t = stc.t_ini;
-  */
-
-
-
   /*
-  printf("%e \n",da_in_dt(stc.a_in,stc.a_out,stc.e_in,
+  printf("%e \n",dW_in_dt(stc.a_in,stc.a_out,stc.e_in,
 			  stc.e_out,stc.I_in,stc.I_out,
 			  stc.W_in,stc.W_out,stc.w_in,
 			  stc.w_out,stc.Om_Ax,stc.Om_Ay,
 			  stc.Om_Az,stc.Om_Bx,stc.Om_By,
 			  stc.Om_Bz,0,stc));
-  */
-  
-  printf("%e \n",da_in_dt(st.a_in,st.a_out,st.e_in,
+    
+  printf("%e \n",dW_in_dt(st.a_in,st.a_out,st.e_in,
 			  st.e_out,st.I_in,st.I_out,
 			  st.W_in,st.W_out,st.w_in,
 			  st.w_out,st.Om_Ax,st.Om_Ay,
 			  st.Om_Az,st.Om_Bx,st.Om_By,
-			  st.Om_Bz,0,st));
-  /*
-  printf("%e \n",C2(stc.m_A,stc.m_B,stc.m_C,stc.a_in,stc.a_out,stc.e_out));
-  printf("%e \n",G_1(stc.m_A,stc.m_B,stc.a_in,stc.e_in));
-  printf("%e \n",sin(2.0*sin(stc.w_in)));
+  			  st.Om_Bz,0,st));
+
   */
-  
-  printf("%e \n",C2(st.m_A,st.m_B,st.m_C,st.a_in,st.a_out,st.e_out)*(1-st.e_in*st.e_in)/G_1(st.m_A,st.m_B,st.a_in,st.e_in) * 30.0*st.e_in*pow(sin(st.I_tot),2) * sin(2.0*st.w_in));
-  
-  
-  /*
+
+  double t = stc.t_ini;
   while (t < stc.t_end)
     {
       int status = gsl_odeiv2_evolve_apply (e,c,s,&sys,&t,stc.t_end,&h,y);
@@ -104,7 +88,7 @@ int main (void){
   fclose(fp);
 
 
-  */
+  
   return 0;
   
 }

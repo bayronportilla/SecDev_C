@@ -303,8 +303,6 @@ Inpar params(){
   double vels_A[3]   = {Om_Ax_orb,Om_Ay_orb,Om_Az_orb};
   double vels_B[3]   = {Om_Bx_orb,Om_By_orb,Om_Bz_orb};
 
-  
-  
   double Om_Ax_in = RotMat(W_in,I_in,w_in,vels_A,"OrbIn")[0];
   double Om_Ay_in = RotMat(W_in,I_in,w_in,vels_A,"OrbIn")[1];
   double Om_Az_in = RotMat(W_in,I_in,w_in,vels_A,"OrbIn")[2];
@@ -318,7 +316,6 @@ Inpar params(){
   rest.n_steps = n_steps;
   rest.t_ini   = t_ini;
   rest.t_end   = t_end;
-  rest.I_tot   = I_tot;
   rest.q_orb   = q_orb;
   rest.q_tid   = q_tid;
   rest.q_GR    = q_GR;
@@ -363,6 +360,7 @@ Inpar params(){
   rest.W_out = W_out;
   rest.w_out = w_out;
 
+  rest.I_tot   = I_tot;
 
   rest.Om_Ax = Om_Ax_in;
   rest.Om_Ay = Om_Ay_in;

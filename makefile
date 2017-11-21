@@ -5,7 +5,7 @@ CCFLAGS  = -L/usr/local/lib
 TARGET = main
 
 
-$(TARGET):$(TARGET).c
+$(TARGET):$(TARGET).c #Units.c Params.c ModQuad.c
 	$(CC) $(CFLAGS) -c $@.c
 	$(CC) $(CCFLAGS) $@.o -lgsl -lgslcblas -lm -lconfig -o $@.x
 
