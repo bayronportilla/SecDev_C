@@ -167,6 +167,7 @@ double epsilon_m(double m_1,double m_2,double a_1,double a_2,double e_2){
   return (m_1-m_2)/(m_1+m_2) * a_1/a_2 * e_2/(1.0-e_2*e_2);
 }
 
+// Ojo, si es negativo? ver eq 24 de Naoz 2013
 double C3(double m_1,double m_2,double m_3,double a_1,double a_2,double e_2){
   return -C2(m_1,m_2,m_3,a_1,a_2,e_2)*15.0/4.0 * epsilon_m(m_1,m_2,a_1,a_2,e_2)/e_2;
 }
