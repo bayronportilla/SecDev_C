@@ -1,0 +1,4 @@
+* Revisar la funcion X_A() en el integrador en python. Para condiciones iniciales tales que
+alpha_A = beta_A = 0.0, deberia regresar Om_Ax_orb = Om_Ay_orb = 0.0 El programa en C no
+parece tener este problema.
+

@@ -30,8 +30,8 @@ typedef struct Inpar_params{
   double m_B ;
   double R_B ;
   double k_B ;
-  double tv_B ;
-  double gyr_rad_B ;
+  double tv_B;
+  double gyr_rad_B;
   double P_rot_B;
   double alpha_B;
   double beta_B;

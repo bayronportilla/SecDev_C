@@ -1,19 +1,18 @@
 
-
 Inpar ConverToCan(Inpar st){
 
   ////////////////////////////////////////////////////////////
   // Defining constants
 
-  double AU = 149.6e9;
-  double MS = 1.989e30;
-  double RS = 6.957e8;
-  double MJ = 1.898e27;
-  double RJ = 6.9911e7;
-  double ME = 5.972e24;
-  double RE = 6.371e6;
+  double AU    = 149.6e9;
+  double MS    = 1.989e30;
+  double RS    = 6.957e8;
+  double MJ    = 1.898e27;
+  double RJ    = 6.9911e7;
+  double ME    = 5.972e24;
+  double RE    = 6.371e6;
   double YEARS = 365.25*86400;
-  double DAYS = 86400.0; 
+  double DAYS  = 86400.0; 
   double InRad = 3.14159265359/180.0;
   
   
@@ -95,8 +94,8 @@ Inpar ConverToCan(Inpar st){
   canonical_st.I_in      = st.I_in;
   canonical_st.W_in      = st.W_in;
   canonical_st.w_in      = st.w_in;
-  canonical_st.P_rot_A   = st.P_rot_A/uT;
-  canonical_st.P_rot_B   = st.P_rot_B/uT;
+  canonical_st.P_rot_A   = P_rot_A/uT;
+  canonical_st.P_rot_B   = P_rot_B/uT;
   canonical_st.alpha_A   = st.alpha_A;
   canonical_st.alpha_B   = st.alpha_B;
   canonical_st.beta_A    = st.beta_A;

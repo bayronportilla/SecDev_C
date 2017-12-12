@@ -42,16 +42,13 @@ double *RotMat(double W, double I, double w, double *in_array, char dir[]){
   ////////////////////////////////////////////////////////////
 
   static double out_array[3]; // the output array with the elements in the orbital plane
-
   
   gsl_vector *v = gsl_vector_alloc (3);
-  
+
   gsl_vector_set (v, 0, in_array[0]);
   gsl_vector_set (v, 1, in_array[1]);
   gsl_vector_set (v, 2, in_array[2]);
   
-
-
   ////////////////////////////////////////////////////////////
   //
   // matrices
@@ -175,7 +172,7 @@ double C3(double m_1,double m_2,double m_3,double a_1,double a_2,double e_2){
   return -C2(m_1,m_2,m_3,a_1,a_2,e_2)*15.0/4.0 * epsilon_m(m_1,m_2,a_1,a_2,e_2)/e_2;
 }
 
-double tf_A(double tv_A, double R_A, double k_A, double a, double m_A, double m_B){
+double tf_A(double tv_A, double R_A, double k_A,double a,double m_A, double m_B){
   return tv_A/9.0 * pow(a/R_A,8) * m_A*m_A/((m_A+m_B)*m_B) * 1.0/pow(1.0+2.0*k_A,2);
 }
 
@@ -183,14 +180,13 @@ double tf_B(double tv_B, double R_B, double k_B, double a, double m_A, double m_
   return tv_B/9.0 * pow(a/R_B,8) * m_B*m_B/((m_A+m_B)*m_A) * 1.0/pow(1.0+2.0*k_B,2);
 }
 
-
 double V_A(double tv_A, double R_A, double k_A, double m_A, double m_B,
 	   double a, double e, double W, double I, double w,
 	   double Om_Ax, double Om_Ay, double Om_Az){
   
   double Om_A_in[3] = {Om_Ax,Om_Ay,Om_Az};
   double Om_Az_orb = RotMat(W,I,w,Om_A_in,"InOrb")[2];
-
+  
   return 9.0/tf_A(tv_A,R_A,k_A,a,m_A,m_B) * (f_5(e) - 11.0/18.0*Om_Az_orb/n(m_A,m_B,a) * f_4(e));
 }
 
@@ -239,7 +235,6 @@ double X_A(double tv_A, double R_A, double k_A, double m_A,double m_B,
   mu = m_A*m_B/(m_A+m_B);
   
   return -m_B*k_A*pow(R_A,5)/(mu*n(m_A,m_B,a)*pow(a,5)) * Om_Az_orb*Om_Ax_orb/pow(1.0-e*e,2) - Om_Ay_orb/(2.0*n(m_A,m_B,a)*tf_A(tv_A,R_A,k_A,a,m_A,m_B)) * f_3(e);
-  
 }
 
 double X_B(double tv_B, double R_B, double k_B, double m_A,double m_B,
@@ -254,8 +249,6 @@ double X_B(double tv_B, double R_B, double k_B, double m_A,double m_B,
   mu = m_A*m_B/(m_A+m_B);
   
   return -m_A*k_B*pow(R_B,5)/(mu*n(m_A,m_B,a)*pow(a,5)) * Om_Bz_orb*Om_Bx_orb/pow(1.0-e*e,2) - Om_By_orb/(2.0*n(m_A,m_B,a)*tf_B(tv_B,R_B,k_B,a,m_A,m_B)) * f_3(e);
-
-  
 }
 
 
@@ -322,6 +315,7 @@ double Z_B(double R_B, double k_B, double m_A,double m_B,
 
 
 
+
 ////////////////////////////////////////////////////////////
 //
 // Differential equations
@@ -339,6 +333,8 @@ double da_in_dt(double a_in, double a_out, double e_in,
   ////////////////////////////////////////////////////////////
   // bulk properties
   
+  
+  
   double tv_A = params.tv_A;
   double tv_B = params.tv_B;
   double R_A  = params.R_A;
@@ -347,22 +343,22 @@ double da_in_dt(double a_in, double a_out, double e_in,
   double k_B  = params.k_B;
   double m_A  = params.m_A;
   double m_B  = params.m_B;
-
   
-   
   double da_in_dt_orb;
   double da_in_dt_tid;
-  
+ 
   da_in_dt_orb = 0.0;
-  da_in_dt_tid = -2.0*a_in*( W_A(tv_A,R_A,k_A,m_A,m_B,a_in,e_in,W_in,I_in,w_in,Om_Ax,Om_Ay,Om_Az) +
-			     W_B(tv_B,R_B,k_B,m_A,m_B,a_in,e_in,W_in,I_in,w_in,Om_Bx,Om_By,Om_Bz) ) -
-    2.0*a_in*pow(e_in,2)/(1.0-e_in*e_in) * ( V_A(tv_A,R_A,k_A,m_A,m_B,a_in,e_in,W_in,I_in,w_in,Om_Ax,Om_Ay,Om_Az) +
-					     V_B(tv_B,R_B,k_B,m_A,m_B,a_in,e_in,W_in,I_in,w_in,Om_Bx,Om_By,Om_Bz));
+  da_in_dt_tid = -2.0*a_in*( W_A(tv_A,R_A,k_A,m_A,m_B,a_in,e_in,W_in,I_in,w_in,Om_Ax,Om_Ay,Om_Az)
+			     + W_B(tv_B,R_B,k_B,m_A,m_B,a_in,e_in,W_in,I_in,w_in,Om_Bx,Om_By,Om_Bz) ) - 
+    2.0*a_in*pow(e_in,2)/(1.0-e_in*e_in) * ( V_A(tv_A,R_A,m_A,m_B,k_A,a_in,e_in,W_in,I_in,w_in,Om_Ax,Om_Ay,Om_Az) + 
+					     V_B(tv_B,R_B,m_A,m_B,k_B,a_in,e_in,W_in,I_in,w_in,Om_Bx,Om_By,Om_Bz) );
   
   return (params.q_orb*da_in_dt_orb) + (params.q_tid*da_in_dt_tid);
-  
- 
+
 }
+
+
+
 
 
 
@@ -397,6 +393,8 @@ double da_out_dt(double a_in, double a_out, double e_in,
 
 
 
+
+
 double de_in_dt(double a_in, double a_out, double e_in,
 		double e_out, double I_in, double I_out,
 		double W_in, double W_out, double w_in,
@@ -417,8 +415,7 @@ double de_in_dt(double a_in, double a_out, double e_in,
   double m_A  = params.m_A;
   double m_B  = params.m_B;
   double m_C  = params.m_C;
-
-   
+  
   double de_in_dt_orb;
   double de_in_dt_tid;
   double I_tot;
@@ -426,18 +423,20 @@ double de_in_dt(double a_in, double a_out, double e_in,
   double A;
   double cphi;
 
- 
   I_tot = I_in + I_out;
   B     = 2.0 + 5.0*e_in*e_in - 7.0*e_in*e_in*cos(2.0*w_in);
   A     = 4.0 + 3.0*e_in*e_in - 2.5*B*pow(sin(I_tot),2);
   cphi  = -cos(w_in)*cos(w_out) - cos(I_tot)*sin(w_in)*sin(w_out);  
  
-  de_in_dt_orb = C2(m_A,m_B,m_C,a_in,a_out,e_out)*(1-e_in*e_in)/G_1(m_A,m_B,a_in,e_in) * 30.0*e_in*pow(sin(I_tot),2) * sin(2.0*w_in);
-  de_in_dt_tid = -(V_A(tv_A,R_A,k_A,m_A,m_B,a_in,e_in,W_in,I_in,w_in,Om_Ax,Om_Ay,Om_Az) + V_B(tv_B,R_B,k_B,m_A,m_B,a_in,e_in,W_in,I_in,w_in,Om_Bx,Om_By,Om_Bz))*e_in;
-
+  de_in_dt_orb = C2(m_A,m_B,m_C,a_in,a_out,e_out)*(1-e_in*e_in)/G_1(m_A,m_B,a_in,e_in) * 30.0*e_in*pow(sin(I_tot),2) * sin(2.0*w_in) +
+    C3(m_A,m_B,m_C,a_in,a_out,e_out)*e_out*(1-e_in*e_in)/G_1(m_A,m_B,a_in,e_in)*(35.0*cphi*pow(sin(I_tot),2)*e_in*e_in*sin(2.0*w_in) -
+										 10.0*cos(I_tot)*pow(sin(I_tot),2)*cos(w_in)*sin(w_out)*(1.0-e_in*e_in) -
+										 A*(sin(w_in)*cos(w_out)-cos(I_tot)*cos(w_in)*sin(w_out)));
+  
+  de_in_dt_tid = -(V_A(tv_A,R_A,m_A,m_B,k_A,a_in,e_in,W_in,I_in,w_in,Om_Ax,Om_Ay,Om_Az) + V_B(tv_B,R_B,m_A,m_B,k_B,a_in,e_in,W_in,I_in,w_in,Om_Bx,Om_By,Om_Bz))*e_in;
+  
   return (params.q_orb*de_in_dt_orb) + (params.q_tid*de_in_dt_tid);
 }
-
 
 
 
@@ -474,12 +473,13 @@ double de_out_dt(double a_in, double a_out, double e_in,
   A     = 4.0 + 3.0*e_in*e_in - 2.5*B*pow(sin(I_tot),2);
   cphi  = -cos(w_in)*cos(w_out) - cos(I_tot)*sin(w_in)*sin(w_out);  
  
-  de_out_dt_orb = 0.0;
+  de_out_dt_orb = -C3(m_A,m_B,m_C,a_in,a_out,e_out)*e_in*(1.0-e_out*e_out)/G_2(m_A,m_B,m_C,a_out,e_out) *
+    (10.0*cos(I_tot)*pow(sin(I_tot),2)*(1.0-e_in*e_in)*sin(w_in)*cos(w_out) +
+     A*(cos(w_in)*sin(w_out)-cos(I_tot)*sin(w_in)*cos(w_out)));
   de_out_dt_tid = 0.0;
   
   return (params.q_orb*de_out_dt_orb) + (params.q_tid*de_out_dt_tid);
 }
-
 
 
 
@@ -504,8 +504,7 @@ double dI_in_dt(double a_in, double a_out, double e_in,
   double m_A  = params.m_A;
   double m_B  = params.m_B;
   double m_C  = params.m_C;
-
-    
+  
   double dI_in_dt_orb;
   double dI_in_dt_tid;
   double I_tot;
@@ -521,9 +520,13 @@ double dI_in_dt(double a_in, double a_out, double e_in,
   A     = 4.0 + 3.0*e_in*e_in - 2.5*B*pow(sin(I_tot),2);
   cphi  = -cos(w_in)*cos(w_out) - cos(I_tot)*sin(w_in)*sin(w_out);  
 
-  dGin_dt  = -C2(m_A,m_B,m_C,a_in,a_out,e_out)*30.0*e_in*e_in*sin(2.0*w_in)*pow(sin(I_tot),2);
-  dGout_dt = 0.0;
-  dHin_dt  = -30.0*C2(m_A,m_B,m_C,a_in,a_out,e_out)*e_in*e_in * sin(I_out) * sin(I_tot) * sin(2.0*w_in);
+  dGin_dt  = -C2(m_A,m_B,m_C,a_in,a_out,e_out)*30.0*e_in*e_in*sin(2.0*w_in)*pow(sin(I_tot),2) +
+    C3(m_A,m_B,m_C,a_in,a_out,e_out)*e_in*e_out*(-35.0*e_in*e_in*pow(sin(I_tot),2)*sin(2.0*w_in)*cphi +
+						 A*(sin(w_in)*cos(w_out)-cos(I_tot)*cos(w_in)*sin(w_out)) +
+						 10.0*cos(I_tot)*pow(sin(I_tot),2)*(1.0-e_in*e_in)*cos(w_in)*sin(w_out));
+  dGout_dt = C3(m_A,m_B,m_C,a_in,a_out,e_out)*e_in*e_out*(A*(cos(w_in)*sin(w_out)-cos(I_tot)*sin(w_in)*cos(w_out)) +
+							  10.0*cos(I_tot)*pow(sin(I_tot),2)*(1.0-e_in*e_in)*sin(w_in)*cos(w_out));
+  dHin_dt  = (sin(I_out)*dGin_dt - sin(I_in)*dGout_dt)/sin(I_tot);
 
   dI_in_dt_orb = -1.0 * ( dHin_dt - dGin_dt * cos(I_in) ) / (sin(I_in) * G_1(m_A,m_B,a_in,e_in) );
   dI_in_dt_tid = ( X_A(tv_A,R_A,k_A,m_A,m_B,a_in,e_in,W_in,I_in,w_in,Om_Ax,Om_Ay,Om_Az) + X_B(tv_B,R_B,k_B,m_A,m_B,a_in,e_in,W_in,I_in,w_in,Om_Bx,Om_By,Om_Bz) ) * cos(w_in) - 
@@ -531,14 +534,7 @@ double dI_in_dt(double a_in, double a_out, double e_in,
 
   
   return (params.q_orb*dI_in_dt_orb) + (params.q_tid*dI_in_dt_tid);
-  //return ( X_A(tv_A,R_A,k_A,m_A,m_B,a_in,e_in,W_in,I_in,w_in,Om_Ax,Om_Ay,Om_Az) + X_B(tv_B,R_B,k_B,m_A,m_B,a_in,e_in,W_in,I_in,w_in,Om_Bx,Om_By,Om_Bz) ) * cos(w_in) - 
-  //  ( Y_A(tv_A,R_A,k_A,m_A,m_B,a_in,e_in,W_in,I_in,w_in,Om_Ax,Om_Ay,Om_Az) + Y_B(tv_B,R_B,k_B,m_A,m_B,a_in,e_in,W_in,I_in,w_in,Om_Bx,Om_By,Om_Bz) ) * sin(w_in);
-
-
-  
-
 }
-
 
 
 
@@ -578,10 +574,14 @@ double dI_out_dt(double a_in, double a_out, double e_in,
   B     = 2.0 + 5.0*e_in*e_in - 7.0*e_in*e_in*cos(2.0*w_in);
   A     = 4.0 + 3.0*e_in*e_in - 2.5*B*pow(sin(I_tot),2);
   cphi  = -cos(w_in)*cos(w_out) - cos(I_tot)*sin(w_in)*sin(w_out);  
-
-  dGin_dt  = -C2(m_A,m_B,m_C,a_in,a_out,e_out)*30.0*e_in*e_in*sin(2.0*w_in)*pow(sin(I_tot),2);
-  dGout_dt = 0.0;
-  dHin_dt  = -30.0*C2(m_A,m_B,m_C,a_in,a_out,e_out)*e_in*e_in * sin(I_out) * sin(I_tot) * sin(2.0*w_in);
+  
+  dGin_dt  = -C2(m_A,m_B,m_C,a_in,a_out,e_out)*30.0*e_in*e_in*sin(2.0*w_in)*pow(sin(I_tot),2) +
+    C3(m_A,m_B,m_C,a_in,a_out,e_out)*e_in*e_out*(-35.0*e_in*e_in*pow(sin(I_tot),2)*sin(2.0*w_in)*cphi +
+						 A*(sin(w_in)*cos(w_out)-cos(I_tot)*cos(w_in)*sin(w_out)) +
+						 10.0*cos(I_tot)*pow(sin(I_tot),2)*(1.0-e_in*e_in)*cos(w_in)*sin(w_out));
+  dGout_dt = C3(m_A,m_B,m_C,a_in,a_out,e_out)*e_in*e_out*(A*(cos(w_in)*sin(w_out)-cos(I_tot)*sin(w_in)*cos(w_out)) +
+							  10.0*cos(I_tot)*pow(sin(I_tot),2)*(1.0-e_in*e_in)*sin(w_in)*cos(w_out));
+  dHin_dt  = (sin(I_out)*dGin_dt - sin(I_in)*dGout_dt)/sin(I_tot);
   dHout_dt = -1.0*dHin_dt;
     
   dI_out_dt_orb = -1.0 * (dHout_dt - dGout_dt * cos(I_out))/(sin(I_out)*G_2(m_A,m_B,m_C,a_out,e_out));
@@ -626,7 +626,9 @@ double dW_in_dt(double a_in, double a_out, double e_in,
   A     = 4.0 + 3.0*e_in*e_in - 2.5*B*pow(sin(I_tot),2);
   cphi  = -cos(w_in)*cos(w_out) - cos(I_tot)*sin(w_in)*sin(w_out);  
  
-  dW_in_dt_orb = -3.0*C2(m_A,m_B,m_C,a_in,a_out,e_out)/(G_1(m_A,m_B,a_in,e_in)*sin(I_in)) * (2.0+3.0*e_in*e_in-5.0*e_in*e_in*cos(2.0*w_in))*sin(2.0*I_tot);
+  dW_in_dt_orb = -3.0*C2(m_A,m_B,m_C,a_in,a_out,e_out)/(G_1(m_A,m_B,a_in,e_in)*sin(I_in)) * (2.0+3.0*e_in*e_in-5.0*e_in*e_in*cos(2.0*w_in))*sin(2.0*I_tot) -
+    C3(m_A,m_B,m_C,a_in,a_out,e_out)*e_in*e_out*(5.0*B*cos(I_tot)*cphi - A*sin(w_in)*sin(w_out) +
+						 10.0*(1.0-3.0*pow(cos(I_tot),2))*(1.0-e_in*e_in)*sin(w_in)*sin(w_out))*sin(I_tot)/(G_1(m_A,m_B,a_in,e_in)*sin(I_in));
 
   dW_in_dt_tid = ( X_A(tv_A,R_A,k_A,m_A,m_B,a_in,e_in,W_in,I_in,w_in,Om_Ax,Om_Ay,Om_Az) + X_B(tv_B,R_B,k_B,m_A,m_B,a_in,e_in,W_in,I_in,w_in,Om_Bx,Om_By,Om_Bz) )
     * sin(w_in)/sin(I_in+I_out) +				
@@ -673,8 +675,10 @@ double dW_out_dt(double a_in, double a_out, double e_in,
   B     = 2.0 + 5.0*e_in*e_in - 7.0*e_in*e_in*cos(2.0*w_in);
   A     = 4.0 + 3.0*e_in*e_in - 2.5*B*pow(sin(I_tot),2);
   cphi  = -cos(w_in)*cos(w_out) - cos(I_tot)*sin(w_in)*sin(w_out);  
- 
-  dW_out_dt_orb = -3.0*C2(m_A,m_B,m_C,a_in,a_out,e_out)/(G_1(m_A,m_B,a_in,e_in)*sin(I_in)) * (2.0+3.0*e_in*e_in-5.0*e_in*e_in*cos(2.0*w_in))*sin(2.0*I_tot);
+  
+  dW_out_dt_orb = -3.0*C2(m_A,m_B,m_C,a_in,a_out,e_out)/(G_1(m_A,m_B,a_in,e_in)*sin(I_in)) * (2.0+3.0*e_in*e_in-5.0*e_in*e_in*cos(2.0*w_in))*sin(2.0*I_tot) -
+    C3(m_A,m_B,m_C,a_in,a_out,e_out)*e_in*e_out*(5.0*B*cos(I_tot)*cphi - A*sin(w_in)*sin(w_out) +
+						 10.0*(1.0-3.0*pow(cos(I_tot),2))*(1.0-e_in*e_in)*sin(w_in)*sin(w_out))*sin(I_tot)/(G_1(m_A,m_B,a_in,e_in)*sin(I_in));
 
   return (params.q_orb * dW_out_dt_orb);
   
@@ -718,18 +722,20 @@ double dw_in_dt(double a_in, double a_out, double e_in,
   
   dw_in_dt_orb = 6.0*C2(m_A,m_B,m_C,a_in,a_out,e_out)*(1.0/G_1(m_A,m_B,a_in,e_in)*(4.0*pow(cos(I_tot),2)
 										   + (5.0*cos(2.0*w_in)-1.0)*(1.0-e_in*e_in-pow(cos(I_tot),2))) + 
-						       cos(I_tot)/G_2(m_A,m_B,m_C,a_out,e_out) * (2.0+e_in*e_in*(3.0-5.0*cos(2.0*w_in)))); 
+						       cos(I_tot)/G_2(m_A,m_B,m_C,a_out,e_out) * (2.0+e_in*e_in*(3.0-5.0*cos(2.0*w_in)))) -
+    C3(m_A,m_B,m_C,a_in,a_out,e_out)*e_out*(e_in*(1.0/G_2(m_A,m_B,m_C,a_out,e_out) + cos(I_tot)/G_1(m_A,m_B,a_in,e_in)) *
+					    (sin(w_in)*sin(w_out)*(10.0*(3.0*pow(cos(I_tot),2)-1.0)*(1.0-e_in*e_in)+A) - 5.0*B*cos(I_tot)*cphi) -
+					    (1.0-e_in*e_in)/(e_in*G_1(m_A,m_B,a_in,e_in))*(sin(w_in)*sin(w_out)*10.0*cos(I_tot)*pow(sin(I_tot),2)*(1.0-3.0*e_in*e_in) +
+											   cphi*(3.0*A-10.0*pow(cos(I_tot),2)+2.0))); 
 
   
   dw_in_dt_tid = Z_A(R_A,k_A,m_A,m_B,a_in,e_in,W_in,I_in,w_in,Om_Ax,Om_Ay,Om_Az) + Z_B(R_B,k_B,m_A,m_B,a_in,e_in,W_in,I_in,w_in,Om_Bx,Om_By,Om_Bz)  - 
     ( X_A(tv_A,R_A,k_A,m_A,m_B,a_in,e_in,W_in,I_in,w_in,Om_Ax,Om_Ay,Om_Az) + X_B(tv_B,R_B,k_B,m_A,m_B,a_in,e_in,W_in,I_in,w_in,Om_Bx,Om_By,Om_Bz) ) * sin(w_in)*cos(I_in+I_out)/sin(I_in+I_out) - 
     ( Y_A(tv_A,R_A,k_A,m_A,m_B,a_in,e_in,W_in,I_in,w_in,Om_Ax,Om_Ay,Om_Az) + Y_B(tv_B,R_B,k_B,m_A,m_B,a_in,e_in,W_in,I_in,w_in,Om_Bx,Om_By,Om_Bz) ) * cos(w_in)*cos(I_in+I_out)/sin(I_in+I_out);
-																		       
-    // OJO!!!!!!!!!!!!!!!!!!!!!!!!!! AGREGAR CORRECCION RELATIVISTA
-    
-  return (params.q_orb * dw_in_dt_orb) + (params.q_tid * dw_in_dt_tid);
+		
   
-    
+  return (params.q_orb * dw_in_dt_orb) + (params.q_tid * dw_in_dt_tid);
+
 }
 
 
@@ -770,7 +776,13 @@ double dw_out_dt(double a_in, double a_out, double e_in,
   
   dw_out_dt_orb = 3.0*C2(m_A,m_B,m_C,a_in,a_out,e_out)*(2.0*cos(I_tot)/G_1(m_A,m_B,a_in,e_in) * (2.0+e_in*e_in*(3.0-5.0*cos(2.0*w_in))) + 
 							1.0/G_2(m_A,m_B,m_C,a_out,e_out) * (4.0+6.0*e_in*e_in+(5.0*pow(cos(I_tot),2)-3.0)*
-											    (2.0+e_in*e_in*(3.0-5.0*cos(2.0*w_in))))); 
+											    (2.0+e_in*e_in*(3.0-5.0*cos(2.0*w_in))))) +
+    C3(m_A,m_B,m_C,a_in,a_out,e_out)*e_in*(sin(w_in)*sin(w_out)*((4.0*e_out*e_out + 1.0)/(e_out*G_2(m_A,m_B,m_C,a_out,e_out))*
+								 10.0*cos(I_tot)*pow(sin(I_tot),2)*(1.0-e_in*e_in)-
+								 e_out*(1.0/G_1(m_A,m_B,a_in,e_in) + cos(I_tot)/G_2(m_A,m_B,m_C,a_out,e_out)) *
+								 (A+10.0*(3.0*pow(cos(I_tot),2)-1.0)*(1.0-e_in*e_in))) +
+					   cphi*(5.0*B*cos(I_tot)*e_out*(1.0/G_1(m_A,m_B,a_in,e_in) + cos(I_tot)/G_2(m_A,m_B,m_C,a_out,e_out)) +
+						 (4.0*e_out*e_out + 1.0)/(e_out*G_2(m_A,m_B,m_C,a_out,e_out))*A));
   
   dw_out_dt_tid = 0.0;
   
