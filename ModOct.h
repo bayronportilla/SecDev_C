@@ -101,6 +101,7 @@ double *RotMat(double W, double I, double w, double *in_array, char dir[]){
 
 double G = 1.0;
 
+
 ////////////////////////////////////////////////////////////
 //
 // Definition of generic functions
@@ -697,6 +698,7 @@ double dw_in_dt(double a_in, double a_out, double e_in,
   ////////////////////////////////////////////////////////////
   // bulk properties
 
+  double cvel = 300.0e6 * params.uT/params.uL;
   
   double tv_A = params.tv_A;
   double tv_B = params.tv_B;
@@ -710,6 +712,7 @@ double dw_in_dt(double a_in, double a_out, double e_in,
   
   double dw_in_dt_orb;
   double dw_in_dt_tid;
+  double dw_in_dt_GR;
   double I_tot;
   double B;
   double A;
@@ -733,8 +736,11 @@ double dw_in_dt(double a_in, double a_out, double e_in,
     ( X_A(tv_A,R_A,k_A,m_A,m_B,a_in,e_in,W_in,I_in,w_in,Om_Ax,Om_Ay,Om_Az) + X_B(tv_B,R_B,k_B,m_A,m_B,a_in,e_in,W_in,I_in,w_in,Om_Bx,Om_By,Om_Bz) ) * sin(w_in)*cos(I_in+I_out)/sin(I_in+I_out) - 
     ( Y_A(tv_A,R_A,k_A,m_A,m_B,a_in,e_in,W_in,I_in,w_in,Om_Ax,Om_Ay,Om_Az) + Y_B(tv_B,R_B,k_B,m_A,m_B,a_in,e_in,W_in,I_in,w_in,Om_Bx,Om_By,Om_Bz) ) * cos(w_in)*cos(I_in+I_out)/sin(I_in+I_out);
 		
-  
-  return (params.q_orb * dw_in_dt_orb) + (params.q_tid * dw_in_dt_tid);
+
+  dw_in_dt_GR = 3.0*pow(G*(m_A+m_B),1.5)/(pow(a_in,2.5)*cvel*cvel*(1.0-e_in*e_in));
+
+  return (params.q_orb * dw_in_dt_orb) + (params.q_tid * dw_in_dt_tid) + (params.q_GR * dw_in_dt_GR);
+
 
 }
 

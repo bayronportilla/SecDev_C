@@ -70,6 +70,11 @@ typedef struct Inpar_params{
   int q_GR;
   int rcu;
   int rse;
+
+  // Canonical units info.
+  double uM;
+  double uL;
+  double uT;
   
   
 } Inpar; // Defining a new datatype *Inpar*
@@ -254,7 +259,7 @@ Inpar params(){
 
   ////////////////////////////////////////////////////////////
   //
-  // Converting to radians
+  // Converting angles to radians
   //
   ////////////////////////////////////////////////////////////
 
@@ -309,52 +314,78 @@ Inpar params(){
   double Om_Bx_in = RotMat(W_in,I_in,w_in,vels_B,"OrbIn")[0];
   double Om_By_in = RotMat(W_in,I_in,w_in,vels_B,"OrbIn")[1];
   double Om_Bz_in = RotMat(W_in,I_in,w_in,vels_B,"OrbIn")[2];
-    
- 
-  // config_destroy(&cfg);
+
+
+  ////////////////////////////////////////////////////////////
+  //
+  // Finding canonical units
+  //
+  ////////////////////////////////////////////////////////////
+  
+  double uM =  units(1.989e30,149.6e9,"uT")[0];
+  double uL =  units(1.989e30,149.6e9,"uT")[1];
+  double uT =  units(1.989e30,149.6e9,"uT")[2];
+
+  ////////////////////////////////////////////////////////////
+  // Defining constants
+
+  double AU    = 149.6e9;
+  double MS    = 1.989e30;
+  double RS    = 6.957e8;
+  double MJ    = 1.898e27;
+  double RJ    = 6.9911e7;
+  double ME    = 5.972e24;
+  double RE    = 6.371e6;
+  double YEARS = 365.25*86400;
+  double DAYS  = 86400.0; 
+  
 
   rest.n_steps = n_steps;
-  rest.t_ini   = t_ini;
-  rest.t_end   = t_end;
+  rest.t_ini   = t_ini * YEARS/uT;
+  rest.t_end   = t_end * YEARS/uT;
   rest.q_orb   = q_orb;
   rest.q_tid   = q_tid;
   rest.q_GR    = q_GR;
   rest.rcu     = rcu;
   rest.rse     = rse;
 
-  rest.m_A = m_A;
-  rest.m_B = m_B;
-  rest.m_C = m_C;
+  rest.uM      = uM;
+  rest.uL      = uL;
+  rest.uT      = uT;
+  
+  rest.m_A = m_A * MS/uM;
+  rest.m_B = m_B * MS/uM;
+  rest.m_C = m_C * MS/uM;
 
-  rest.R_A = R_A;
-  rest.R_B = R_B;
-  rest.R_C = R_C;
+  rest.R_A = R_A * RS/uL;
+  rest.R_B = R_B * RS/uL;
+  rest.R_C = R_C * RS/uL;
 
   rest.k_A = k_A;
   rest.k_B = k_B;
   rest.k_C = k_C;
 
-  rest.tv_A = tv_A;
-  rest.tv_B = tv_B;
-  rest.tv_C = tv_C;
+  rest.tv_A = tv_A * YEARS/uT;
+  rest.tv_B = tv_B * YEARS/uT;
+  rest.tv_C = tv_C * YEARS/uT;
 
   rest.gyr_rad_A = gyr_rad_A;
   rest.gyr_rad_B = gyr_rad_B;
   rest.gyr_rad_C = gyr_rad_C;
 
-  rest.a_in = a_in;
+  rest.a_in = a_in * AU/uL;
   rest.e_in = e_in;
   rest.I_in = I_in;
   rest.W_in = W_in;
   rest.w_in = w_in;
-  rest.P_rot_A = P_rot_A;
-  rest.P_rot_B = P_rot_B;
+  rest.P_rot_A = P_rot_A * DAYS/uT;
+  rest.P_rot_B = P_rot_B * DAYS/uT;
   rest.alpha_A = alpha_A;
   rest.alpha_B = alpha_B;
   rest.beta_A  = beta_A;
   rest.beta_B  = beta_B;
   
-  rest.a_out = a_out;
+  rest.a_out = a_out * AU/uL;
   rest.e_out = e_out;
   rest.I_out = I_out;
   rest.W_out = W_out;
@@ -362,12 +393,12 @@ Inpar params(){
 
   rest.I_tot   = I_tot;
 
-  rest.Om_Ax = Om_Ax_in;
-  rest.Om_Ay = Om_Ay_in;
-  rest.Om_Az = Om_Az_in;
-  rest.Om_Bx = Om_Bx_in;
-  rest.Om_By = Om_By_in;
-  rest.Om_Bz = Om_Bz_in;
+  rest.Om_Ax = Om_Ax_in * uT/DAYS;
+  rest.Om_Ay = Om_Ay_in * uT/DAYS;
+  rest.Om_Az = Om_Az_in * uT/DAYS;
+  rest.Om_Bx = Om_Bx_in * uT/DAYS;
+  rest.Om_By = Om_By_in * uT/DAYS;
+  rest.Om_Bz = Om_Bz_in * uT/DAYS;
   
    
   return rest;

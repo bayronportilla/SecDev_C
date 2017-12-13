@@ -11,11 +11,10 @@
 //#include "ModQuad.h"
 //#include "matrix.h"
 #include "ModOct.h"
-#include "ConverCan.h"
+//#include "ConverCan.h"
 #include <libconfig.h>
 
 #define PI 3.14159
-
 
 int main (void){
 
@@ -23,9 +22,9 @@ int main (void){
   fp = fopen("data.dat","w");
 
   Inpar st;
-  Inpar stc;
+  //Inpar stc;
   st = params();
-  stc = ConverToCan(st);
+  //stc = ConverToCan(st);
 
   //gsl_odeiv2_driver_alloc_y_new(const gsl_odeiv2_system * sys,
   //                              const gsl_odeiv2_step_type * T,
@@ -35,62 +34,68 @@ int main (void){
   
   //const gsl_odeiv2_step_type * T = gsl_odeiv2_step_rkck;
 
-  gsl_odeiv2_system sys = { func, NULL, 16, &stc}; // Define sistema de ecuaciones
+  gsl_odeiv2_system sys = { func, NULL, 16, &st}; // Define sistema de ecuaciones
   gsl_odeiv2_driver *d = gsl_odeiv2_driver_alloc_y_new (&sys, gsl_odeiv2_step_rk8pd,1e-3, 1e-8, 1e-8);
     
   //const double h = 6.283e1;
   
-  double y[16] = { stc.a_in, stc.a_out, stc.e_in, stc.e_out, 
-		   stc.I_in, stc.I_out, stc.W_in, stc.W_out,
-		   stc.w_in, stc.w_out, stc.Om_Ax, stc.Om_Ay,
-		   stc.Om_Az, stc.Om_Bx, stc.Om_By, stc.Om_Bz}; // y[number of entries of the array] = {}
+  double y[16] = { st.a_in, st.a_out, st.e_in, st.e_out, 
+		   st.I_in, st.I_out, st.W_in, st.W_out,
+		   st.w_in, st.w_out, st.Om_Ax, st.Om_Ay,
+		   st.Om_Az, st.Om_Bx, st.Om_By, st.Om_Bz}; // y[number of entries of the array] = {}
   
    int i, s;
-   double t = stc.t_ini;
-
+   double t = st.t_ini;
 
    double progress;
-   /*
-   printf("m_A = %1.9e \n",stc.m_A);
-   printf("m_B = %1.9e \n",stc.m_B);
-   printf("m_C = %1.9e \n",stc.m_C);
-   printf("R_A = %1.9e \n",stc.R_A);
-   printf("R_B = %1.9e \n",stc.R_B);
-   printf("P_rot_A = %1.9e \n",stc.P_rot_A);
-   printf("P_rot_B = %1.9e \n",stc.P_rot_B);
-   printf("alpha_A = %1.9e \n",stc.alpha_A);
-   printf("alpha_B = %1.9e \n",stc.alpha_B);
-   printf("beta_A = %1.9e \n",stc.beta_A);
-   printf("beta_B = %1.9e \n",stc.beta_B);
-   printf("tv_A = %1.9e \n",stc.tv_A);
-   printf("tv_B = %1.9e \n",stc.tv_B);
-   printf("k_A = %1.9e \n",stc.k_A);
-   printf("k_B = %1.9e \n",stc.k_B);
-   printf("a_in = %1.9e \n",stc.a_in);
-   printf("a_out = %1.9e \n",stc.a_out);
-   printf("e_in = %1.9e \n",stc.e_in);
-   printf("e_out = %1.9e \n",stc.e_out);
-   printf("I_in = %1.17e \n",stc.I_in);
-   printf("I_out = %1.9e \n",stc.I_out);
-   printf("W_in = %1.9e \n",stc.W_in);
-   printf("W_out = %1.9e \n",stc.W_out);
-   printf("w_in = %1.9e \n",stc.w_in);
-   printf("w_out = %1.9e \n",stc.w_out);
-   printf("Om_Ax = %1.9e \n",stc.Om_Ax);
-   printf("Om_Ay = %1.9e \n",stc.Om_Ay);
-   printf("Om_Az = %1.9e \n",stc.Om_Az);
-   printf("Om_Bx = %1.9e \n",stc.Om_Bx);
-   printf("Om_By = %1.9e \n",stc.Om_By);
-   printf("Om_Bz = %1.9e \n",stc.Om_Bz);
-
-   printf("%e\n",X_A(stc.tv_A,stc.R_A,stc.k_A,stc.m_A,
-		     stc.m_B, stc.a_in, stc.e_in, stc.W_in,
-		     stc.I_in, stc.w_in, stc.Om_Ax, stc.Om_Ay,
-		     stc.Om_Az));
    
+
+
+     printf("%e\n",st.uT);
+          exit(0);
+   /*
+   printf("m_A = %1.9e \n",st.m_A);
+   printf("m_B = %1.9e \n",st.m_B);
+   printf("m_C = %1.9e \n",st.m_C);
+   printf("R_A = %1.9e \n",st.R_A);
+   printf("R_B = %1.9e \n",st.R_B);
+   printf("P_rot_A = %1.9e \n",st.P_rot_A);
+   printf("P_rot_B = %1.9e \n",st.P_rot_B);
+   printf("alpha_A = %1.9e \n",st.alpha_A);
+   printf("alpha_B = %1.9e \n",st.alpha_B);
+   printf("beta_A = %1.9e \n",st.beta_A);
+   printf("beta_B = %1.9e \n",st.beta_B);
+   printf("tv_A = %1.9e \n",st.tv_A);
+   printf("tv_B = %1.9e \n",st.tv_B);
+   printf("k_A = %1.9e \n",st.k_A);
+   printf("k_B = %1.9e \n",st.k_B);
+   printf("a_in = %1.9e \n",st.a_in);
+   printf("a_out = %1.9e \n",st.a_out);
+   printf("e_in = %1.9e \n",st.e_in);
+   printf("e_out = %1.9e \n",st.e_out);
+   printf("I_in = %1.17e \n",st.I_in);
+   printf("I_out = %1.9e \n",st.I_out);
+   printf("W_in = %1.9e \n",st.W_in);
+   printf("W_out = %1.9e \n",st.W_out);
+   printf("w_in = %1.9e \n",st.w_in);
+   printf("w_out = %1.9e \n",st.w_out);
+   printf("Om_Ax = %1.9e \n",st.Om_Ax);
+   printf("Om_Ay = %1.9e \n",st.Om_Ay);
+   printf("Om_Az = %1.9e \n",st.Om_Az);
+   printf("Om_Bx = %1.9e \n",st.Om_Bx);
+   printf("Om_By = %1.9e \n",st.Om_By);
+   printf("Om_Bz = %1.9e \n",st.Om_Bz);
+   */
+   /*
+   printf("%e\n",X_A(st.tv_A,st.R_A,st.k_A,st.m_A,
+		     st.m_B, st.a_in, st.e_in, st.W_in,
+		     st.I_in, st.w_in, st.Om_Ax, st.Om_Ay,
+		     st.Om_Az));
    */
 
-   
+
+
+   //   exit(0);
    
    /*   
    printf("%e\n",Y_A(stc.tv_A,stc.R_A,stc.k_A,stc.m_A,
@@ -131,19 +136,22 @@ int main (void){
    
    //   W_A(tv_A,R_A,k_A,m_A,m_B,a_in,e_in,W_in,I_in,w_in,Om_Ax,Om_Ay,Om_Az);
 
+   
+   printf("dw_in_dt = %e\n",dw_in_dt(st.a_in,st.a_out,st.e_in,st.e_out,
+				      st.I_in, st.I_out, st.W_in, st.W_out,
+				      st.w_in, st.w_out, st.Om_Ax, st.Om_Ay,
+				      st.Om_Az, st.Om_Bx, st.Om_By, st.Om_Bz,
+				      0.0,st));
+
+   //   exit(0);
    /*
-   printf("dI_in_dt = %e\n",dI_in_dt(stc.a_in,stc.a_out,stc.e_in,stc.e_out,
-				      stc.I_in, stc.I_out, stc.W_in, stc.W_out,
-				      stc.w_in, stc.w_out, stc.Om_Ax, stc.Om_Ay,
-				      stc.Om_Az, stc.Om_Bx, stc.Om_By, stc.Om_Bz,
-				      0.0,stc));
-   */
-   printf("da_in_dt = %e\n",da_in_dt(stc.a_in,stc.a_out,stc.e_in,stc.e_out,
+   printf("dw_in_dt = %e\n",dw_in_dt(stc.a_in,stc.a_out,stc.e_in,stc.e_out,
 				     stc.I_in, stc.I_out, stc.W_in, stc.W_out,
 				     stc.w_in, stc.w_out, stc.Om_Ax, stc.Om_Ay,
 				     stc.Om_Az, stc.Om_Bx, stc.Om_By, stc.Om_Bz,
 				     0.0,stc));
 
+     
    printf("da_out_dt = %e\n",da_out_dt(stc.a_in,stc.a_out,stc.e_in,stc.e_out,
 				      stc.I_in, stc.I_out, stc.W_in, stc.W_out,
 				      stc.w_in, stc.w_out, stc.Om_Ax, stc.Om_Ay,
@@ -235,11 +243,11 @@ int main (void){
 				       0.0,stc));
    
    
-
+   */
    //printf("%f\n",st.gyr_rad_A);
    // exit(0);
    double ti = 1e3;
-   while(t<stc.t_end){
+   while(t<st.t_end){
      //s = gsl_odeiv2_driver_apply_fixed_step (d, &t, h, 1, y);
     
      s = gsl_odeiv2_driver_apply(d, &t, ti, y);
@@ -265,6 +273,7 @@ int main (void){
    
    gsl_odeiv2_driver_free (d);
    fclose(fp);
+
    
    return 0;
    
