@@ -35,7 +35,7 @@ int main (void){
   //const gsl_odeiv2_step_type * T = gsl_odeiv2_step_rkck;
 
   gsl_odeiv2_system sys = { func, NULL, 16, &st}; // Define sistema de ecuaciones
-  gsl_odeiv2_driver *d = gsl_odeiv2_driver_alloc_y_new (&sys, gsl_odeiv2_step_rk8pd,1e-3, 1e-8, 1e-8);
+  gsl_odeiv2_driver *d = gsl_odeiv2_driver_alloc_y_new (&sys, gsl_odeiv2_step_rk4,1e-3, 1e-8, 1e-8);
     
   //const double h = 6.283e1;
   
@@ -51,8 +51,6 @@ int main (void){
    
 
 
-     printf("%e\n",st.uT);
-          exit(0);
    /*
    printf("m_A = %1.9e \n",st.m_A);
    printf("m_B = %1.9e \n",st.m_B);
@@ -258,15 +256,15 @@ int main (void){
 
      ti += 1e3;
      
-    /*
-    progress = (t/stc.t_end)*100.0;
+    
+    progress = (t/st.t_end)*100.0;
     printf("Progress: %d per cent \n",(int)progress);
     
     if ( (int)progress%10 == 0){
       printf("Progress: %d per cent \n",(int)progress);
     }
-    */
-     printf("%.5e %.5e %.5e\n", t, y[0], y[2]);
+    
+    //printf("%.5e %.5e %.5e\n", t, y[0], y[2]);
      fprintf(fp,"%.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e \n",
 	     t,y[0],y[1],y[2],y[3],y[4],y[5],y[6],y[7],y[8],y[9],y[10],y[11],y[12],y[13],y[14],y[15]);
    }

@@ -394,8 +394,6 @@ double da_out_dt(double a_in, double a_out, double e_in,
 
 
 
-
-
 double de_in_dt(double a_in, double a_out, double e_in,
 		double e_out, double I_in, double I_out,
 		double W_in, double W_out, double w_in,
@@ -525,6 +523,7 @@ double dI_in_dt(double a_in, double a_out, double e_in,
     C3(m_A,m_B,m_C,a_in,a_out,e_out)*e_in*e_out*(-35.0*e_in*e_in*pow(sin(I_tot),2)*sin(2.0*w_in)*cphi +
 						 A*(sin(w_in)*cos(w_out)-cos(I_tot)*cos(w_in)*sin(w_out)) +
 						 10.0*cos(I_tot)*pow(sin(I_tot),2)*(1.0-e_in*e_in)*cos(w_in)*sin(w_out));
+  
   dGout_dt = C3(m_A,m_B,m_C,a_in,a_out,e_out)*e_in*e_out*(A*(cos(w_in)*sin(w_out)-cos(I_tot)*sin(w_in)*cos(w_out)) +
 							  10.0*cos(I_tot)*pow(sin(I_tot),2)*(1.0-e_in*e_in)*sin(w_in)*cos(w_out));
   dHin_dt  = (sin(I_out)*dGin_dt - sin(I_in)*dGout_dt)/sin(I_tot);
@@ -686,8 +685,6 @@ double dW_out_dt(double a_in, double a_out, double e_in,
 }
 
 
-
-
 double dw_in_dt(double a_in, double a_out, double e_in,
 		double e_out, double I_in, double I_out,
 		double W_in, double W_out, double w_in,
@@ -784,7 +781,7 @@ double dw_out_dt(double a_in, double a_out, double e_in,
 							1.0/G_2(m_A,m_B,m_C,a_out,e_out) * (4.0+6.0*e_in*e_in+(5.0*pow(cos(I_tot),2)-3.0)*
 											    (2.0+e_in*e_in*(3.0-5.0*cos(2.0*w_in))))) +
     C3(m_A,m_B,m_C,a_in,a_out,e_out)*e_in*(sin(w_in)*sin(w_out)*((4.0*e_out*e_out + 1.0)/(e_out*G_2(m_A,m_B,m_C,a_out,e_out))*
-								 10.0*cos(I_tot)*pow(sin(I_tot),2)*(1.0-e_in*e_in)-
+								 10.0*cos(I_tot)*pow(sin(I_tot),2)*(1.0-e_in*e_in) -
 								 e_out*(1.0/G_1(m_A,m_B,a_in,e_in) + cos(I_tot)/G_2(m_A,m_B,m_C,a_out,e_out)) *
 								 (A+10.0*(3.0*pow(cos(I_tot),2)-1.0)*(1.0-e_in*e_in))) +
 					   cphi*(5.0*B*cos(I_tot)*e_out*(1.0/G_1(m_A,m_B,a_in,e_in) + cos(I_tot)/G_2(m_A,m_B,m_C,a_out,e_out)) +
