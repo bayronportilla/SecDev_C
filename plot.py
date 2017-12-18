@@ -27,7 +27,9 @@ Om_Bz_in = data[:,16:17]
 
 
 
-uT = 5.022087e+06 
+uT = 5.022087e+06
+
+#print e_in
 
 """
 fig = plt.figure()
@@ -37,12 +39,16 @@ ax.plot(time,vel,'+')
 fig.savefig("pshp.png")
 """
 
+
 f,((ax_1), (ax_2)) = plt.subplots(2, 1,figsize=(10,8),sharex=True)
 ax_1.plot(time*uT/(365.25*86400)/1e6,(I_in+I_out)*180.0/np.pi,'-',linewidth=2)
-ax_2.plot(time*uT/(365.25*86400)/1e6,1-e_in,'-',linewidth=2)
-ax_2.axhline(y=0.0023,xmin=0,xmax=4)
-ax_2.axvline(x=0.55,ymin=1e-5,ymax=1,color='k')
+#ax_2.plot(time*uT/(365.25*86400)/1e6,1-e_in,'-',linewidth=2)
+ax_2.plot(time*uT/(365.25*86400)/1e6,1-e_in,'.')#e,linewidth=2)
+#ax_2.axhline(y=0.0023,xmin=0,xmax=4)
+#ax_2.axvline(x=0.55,ymin=1e-5,ymax=1,color='k')
 ax_2.set_yscale("log")
-#ax_1.set_xlim(0.0,4.0)
-#ax_2.set_xlim(0.0,4.0)
+#ax_1.set_xlim(0.0,100.0)
+#ax_2.set_xlim(0.0,100.0)
+#ax_1.set_ylim(0.0,180.0)
+#ax_2.set_ylim(0.001,1.0)
 f.savefig("test.png")

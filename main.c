@@ -35,7 +35,7 @@ int main (void){
   //const gsl_odeiv2_step_type * T = gsl_odeiv2_step_rkck;
 
   gsl_odeiv2_system sys = { func, NULL, 16, &st}; // Define sistema de ecuaciones
-  gsl_odeiv2_driver *d = gsl_odeiv2_driver_alloc_y_new (&sys, gsl_odeiv2_step_rk4,1e-3, 1e-8, 1e-8);
+  gsl_odeiv2_driver *d = gsl_odeiv2_driver_alloc_y_new (&sys, gsl_odeiv2_step_rkf45,1e-3, 1e-8, 1e-8);
     
   //const double h = 6.283e1;
   
