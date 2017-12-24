@@ -322,9 +322,9 @@ Inpar params(){
   //
   ////////////////////////////////////////////////////////////
   
-  double uM =  units(1.989e30,149.6e9,"uT")[0];
-  double uL =  units(1.989e30,149.6e9,"uT")[1];
-  double uT =  units(1.989e30,149.6e9,"uT")[2];
+  double uM =  units(1.989e29,149.6e9,"uT")[0];
+  double uL =  units(1.989e29,149.6e9,"uT")[1];
+  double uT =  units(1.989e29,149.6e9,"uT")[2];
 
   ////////////////////////////////////////////////////////////
   // Defining constants

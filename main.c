@@ -71,18 +71,20 @@ int main (void){
    printf("a_out = %1.9e \n",st.a_out);
    printf("e_in = %1.9e \n",st.e_in);
    printf("e_out = %1.9e \n",st.e_out);
-   printf("I_in = %1.17e \n",st.I_in);
-   printf("I_out = %1.9e \n",st.I_out);
+   //printf("I_in = %1.17e \n",st.I_in);
+   //printf("I_out = %1.9e \n",st.I_out);
    printf("W_in = %1.9e \n",st.W_in);
    printf("W_out = %1.9e \n",st.W_out);
    printf("w_in = %1.9e \n",st.w_in);
    printf("w_out = %1.9e \n",st.w_out);
-   printf("Om_Ax = %1.9e \n",st.Om_Ax);
-   printf("Om_Ay = %1.9e \n",st.Om_Ay);
-   printf("Om_Az = %1.9e \n",st.Om_Az);
-   printf("Om_Bx = %1.9e \n",st.Om_Bx);
-   printf("Om_By = %1.9e \n",st.Om_By);
-   printf("Om_Bz = %1.9e \n",st.Om_Bz);
+   printf("Om_Ax_in = %1.9e \n",st.Om_Ax);
+   printf("Om_Ay_in = %1.9e \n",st.Om_Ay);
+   printf("Om_Az_in = %1.9e \n",st.Om_Az);
+   printf("Om_Bx_in = %1.9e \n",st.Om_Bx);
+   printf("Om_By_in = %1.9e \n",st.Om_By);
+   printf("Om_Bz_in = %1.9e \n",st.Om_Bz);
+
+   exit(0);
    */
    /*
    printf("%e\n",X_A(st.tv_A,st.R_A,st.k_A,st.m_A,
@@ -134,116 +136,117 @@ int main (void){
    
    //   W_A(tv_A,R_A,k_A,m_A,m_B,a_in,e_in,W_in,I_in,w_in,Om_Ax,Om_Ay,Om_Az);
 
-   
+   /*
    printf("dw_in_dt = %e\n",dw_in_dt(st.a_in,st.a_out,st.e_in,st.e_out,
 				      st.I_in, st.I_out, st.W_in, st.W_out,
 				      st.w_in, st.w_out, st.Om_Ax, st.Om_Ay,
 				      st.Om_Az, st.Om_Bx, st.Om_By, st.Om_Bz,
 				      0.0,st));
+   */
 
-   //   exit(0);
-   /*
-   printf("dw_in_dt = %e\n",dw_in_dt(stc.a_in,stc.a_out,stc.e_in,stc.e_out,
-				     stc.I_in, stc.I_out, stc.W_in, stc.W_out,
-				     stc.w_in, stc.w_out, stc.Om_Ax, stc.Om_Ay,
-				     stc.Om_Az, stc.Om_Bx, stc.Om_By, stc.Om_Bz,
-				     0.0,stc));
+
+
+   printf("da_in_dt = %1.17e\n",da_in_dt(st.a_in,st.a_out,st.e_in,st.e_out,
+				     st.I_in, st.I_out, st.W_in, st.W_out,
+				     st.w_in, st.w_out, st.Om_Ax, st.Om_Ay,
+				     st.Om_Az, st.Om_Bx, st.Om_By, st.Om_Bz,
+				     0.0,st));
 
      
-   printf("da_out_dt = %e\n",da_out_dt(stc.a_in,stc.a_out,stc.e_in,stc.e_out,
-				      stc.I_in, stc.I_out, stc.W_in, stc.W_out,
-				      stc.w_in, stc.w_out, stc.Om_Ax, stc.Om_Ay,
-				      stc.Om_Az, stc.Om_Bx, stc.Om_By, stc.Om_Bz,
-				      0.0,stc));
+   printf("da_out_dt = %1.17e\n",da_out_dt(st.a_in,st.a_out,st.e_in,st.e_out,
+				      st.I_in, st.I_out, st.W_in, st.W_out,
+				      st.w_in, st.w_out, st.Om_Ax, st.Om_Ay,
+				      st.Om_Az, st.Om_Bx, st.Om_By, st.Om_Bz,
+				      0.0,st));
 
-   printf("de_in_dt = %e\n",de_in_dt(stc.a_in,stc.a_out,stc.e_in,stc.e_out,
-				     stc.I_in, stc.I_out, stc.W_in, stc.W_out,
-				     stc.w_in, stc.w_out, stc.Om_Ax, stc.Om_Ay,
-				     stc.Om_Az, stc.Om_Bx, stc.Om_By, stc.Om_Bz,
-				     0.0,stc));
+   printf("de_in_dt = %1.17e\n",de_in_dt(st.a_in,st.a_out,st.e_in,st.e_out,
+				     st.I_in, st.I_out, st.W_in, st.W_out,
+				     st.w_in, st.w_out, st.Om_Ax, st.Om_Ay,
+				     st.Om_Az, st.Om_Bx, st.Om_By, st.Om_Bz,
+				     0.0,st));
 
-   printf("de_out_dt = %e\n",de_out_dt(stc.a_in,stc.a_out,stc.e_in,stc.e_out,
-				       stc.I_in, stc.I_out, stc.W_in, stc.W_out,
-				       stc.w_in, stc.w_out, stc.Om_Ax, stc.Om_Ay,
-				       stc.Om_Az, stc.Om_Bx, stc.Om_By, stc.Om_Bz,
-				       0.0,stc));
+   printf("de_out_dt = %1.17e\n",de_out_dt(st.a_in,st.a_out,st.e_in,st.e_out,
+				       st.I_in, st.I_out, st.W_in, st.W_out,
+				       st.w_in, st.w_out, st.Om_Ax, st.Om_Ay,
+				       st.Om_Az, st.Om_Bx, st.Om_By, st.Om_Bz,
+				       0.0,st));
 
-   printf("dI_in_dt = %e\n",dI_in_dt(stc.a_in,stc.a_out,stc.e_in,stc.e_out,
-				     stc.I_in, stc.I_out, stc.W_in, stc.W_out,
-				     stc.w_in, stc.w_out, stc.Om_Ax, stc.Om_Ay,
-				     stc.Om_Az, stc.Om_Bx, stc.Om_By, stc.Om_Bz,
-				     0.0,stc));
+   printf("dI_in_dt = %1.17e\n",dI_in_dt(st.a_in,st.a_out,st.e_in,st.e_out,
+				     st.I_in, st.I_out, st.W_in, st.W_out,
+				     st.w_in, st.w_out, st.Om_Ax, st.Om_Ay,
+				     st.Om_Az, st.Om_Bx, st.Om_By, st.Om_Bz,
+				     0.0,st));
 
-   printf("dI_out_dt = %e\n",dI_out_dt(stc.a_in,stc.a_out,stc.e_in,stc.e_out,
-				       stc.I_in, stc.I_out, stc.W_in, stc.W_out,
-				       stc.w_in, stc.w_out, stc.Om_Ax, stc.Om_Ay,
-				       stc.Om_Az, stc.Om_Bx, stc.Om_By, stc.Om_Bz,
-				       0.0,stc));
+   printf("dI_out_dt = %1.17e\n",dI_out_dt(st.a_in,st.a_out,st.e_in,st.e_out,
+				       st.I_in, st.I_out, st.W_in, st.W_out,
+				       st.w_in, st.w_out, st.Om_Ax, st.Om_Ay,
+				       st.Om_Az, st.Om_Bx, st.Om_By, st.Om_Bz,
+				       0.0,st));
 
-   printf("dW_in_dt = %e\n",dW_in_dt(stc.a_in,stc.a_out,stc.e_in,stc.e_out,
-				     stc.I_in, stc.I_out, stc.W_in, stc.W_out,
-				     stc.w_in, stc.w_out, stc.Om_Ax, stc.Om_Ay,
-				     stc.Om_Az, stc.Om_Bx, stc.Om_By, stc.Om_Bz,
-				     0.0,stc));
+   printf("dW_in_dt = %1.17e\n",dW_in_dt(st.a_in,st.a_out,st.e_in,st.e_out,
+				     st.I_in, st.I_out, st.W_in, st.W_out,
+				     st.w_in, st.w_out, st.Om_Ax, st.Om_Ay,
+				     st.Om_Az, st.Om_Bx, st.Om_By, st.Om_Bz,
+				     0.0,st));
    
-   printf("dW_out_dt = %e\n",dW_out_dt(stc.a_in,stc.a_out,stc.e_in,stc.e_out,
-				       stc.I_in, stc.I_out, stc.W_in, stc.W_out,
-				       stc.w_in, stc.w_out, stc.Om_Ax, stc.Om_Ay,
-				       stc.Om_Az, stc.Om_Bx, stc.Om_By, stc.Om_Bz,
-				       0.0,stc));
+   printf("dW_out_dt = %1.17e\n",dW_out_dt(st.a_in,st.a_out,st.e_in,st.e_out,
+				       st.I_in, st.I_out, st.W_in, st.W_out,
+				       st.w_in, st.w_out, st.Om_Ax, st.Om_Ay,
+				       st.Om_Az, st.Om_Bx, st.Om_By, st.Om_Bz,
+				       0.0,st));
 
-   printf("dw_in_dt = %e\n",dw_in_dt(stc.a_in,stc.a_out,stc.e_in,stc.e_out,
-				     stc.I_in, stc.I_out, stc.W_in, stc.W_out,
-				     stc.w_in, stc.w_out, stc.Om_Ax, stc.Om_Ay,
-				     stc.Om_Az, stc.Om_Bx, stc.Om_By, stc.Om_Bz,
-				     0.0,stc));
+   printf("dw_in_dt = %1.17e\n",dw_in_dt(st.a_in,st.a_out,st.e_in,st.e_out,
+				     st.I_in, st.I_out, st.W_in, st.W_out,
+				     st.w_in, st.w_out, st.Om_Ax, st.Om_Ay,
+				     st.Om_Az, st.Om_Bx, st.Om_By, st.Om_Bz,
+				     0.0,st));
    
-   printf("dw_out_dt = %e\n",dw_out_dt(stc.a_in,stc.a_out,stc.e_in,stc.e_out,
-				       stc.I_in, stc.I_out, stc.W_in, stc.W_out,
-				       stc.w_in, stc.w_out, stc.Om_Ax, stc.Om_Ay,
-				       stc.Om_Az, stc.Om_Bx, stc.Om_By, stc.Om_Bz,
-				       0.0,stc));
+   printf("dw_out_dt = %1.17e\n",dw_out_dt(st.a_in,st.a_out,st.e_in,st.e_out,
+				       st.I_in, st.I_out, st.W_in, st.W_out,
+				       st.w_in, st.w_out, st.Om_Ax, st.Om_Ay,
+				       st.Om_Az, st.Om_Bx, st.Om_By, st.Om_Bz,
+				       0.0,st));
    
-   printf("dOm_Ax_dt = %e\n",dOm_Ax_dt(stc.a_in,stc.a_out,stc.e_in,stc.e_out,
-				       stc.I_in, stc.I_out, stc.W_in, stc.W_out,
-				       stc.w_in, stc.w_out, stc.Om_Ax, stc.Om_Ay,
-				       stc.Om_Az, stc.Om_Bx, stc.Om_By, stc.Om_Bz,
-				       0.0,stc));
+   printf("dOm_Ax_dt = %1.17e\n",dOm_Ax_dt(st.a_in,st.a_out,st.e_in,st.e_out,
+				       st.I_in, st.I_out, st.W_in, st.W_out,
+				       st.w_in, st.w_out, st.Om_Ax, st.Om_Ay,
+				       st.Om_Az, st.Om_Bx, st.Om_By, st.Om_Bz,
+				       0.0,st));
    
-   printf("dOm_Ay_dt = %e\n",dOm_Ay_dt(stc.a_in,stc.a_out,stc.e_in,stc.e_out,
-				       stc.I_in, stc.I_out, stc.W_in, stc.W_out,
-				       stc.w_in, stc.w_out, stc.Om_Ax, stc.Om_Ay,
-				       stc.Om_Az, stc.Om_Bx, stc.Om_By, stc.Om_Bz,
-				       0.0,stc));
+   printf("dOm_Ay_dt = %1.17e\n",dOm_Ay_dt(st.a_in,st.a_out,st.e_in,st.e_out,
+				       st.I_in, st.I_out, st.W_in, st.W_out,
+				       st.w_in, st.w_out, st.Om_Ax, st.Om_Ay,
+				       st.Om_Az, st.Om_Bx, st.Om_By, st.Om_Bz,
+				       0.0,st));
    
-   printf("dOm_Az_dt = %e\n",dOm_Az_dt(stc.a_in,stc.a_out,stc.e_in,stc.e_out,
-				       stc.I_in, stc.I_out, stc.W_in, stc.W_out,
-				       stc.w_in, stc.w_out, stc.Om_Ax, stc.Om_Ay,
-				       stc.Om_Az, stc.Om_Bx, stc.Om_By, stc.Om_Bz,
-				       0.0,stc));
+   printf("dOm_Az_dt = %1.17e\n",dOm_Az_dt(st.a_in,st.a_out,st.e_in,st.e_out,
+				       st.I_in, st.I_out, st.W_in, st.W_out,
+				       st.w_in, st.w_out, st.Om_Ax, st.Om_Ay,
+				       st.Om_Az, st.Om_Bx, st.Om_By, st.Om_Bz,
+				       0.0,st));
 
-   printf("dOm_Bx_dt = %e\n",dOm_Bx_dt(stc.a_in,stc.a_out,stc.e_in,stc.e_out,
-				       stc.I_in, stc.I_out, stc.W_in, stc.W_out,
-				       stc.w_in, stc.w_out, stc.Om_Ax, stc.Om_Ay,
-				       stc.Om_Az, stc.Om_Bx, stc.Om_By, stc.Om_Bz,
-				       0.0,stc));
+   printf("dOm_Bx_dt = %1.17e\n",dOm_Bx_dt(st.a_in,st.a_out,st.e_in,st.e_out,
+				       st.I_in, st.I_out, st.W_in, st.W_out,
+				       st.w_in, st.w_out, st.Om_Ax, st.Om_Ay,
+				       st.Om_Az, st.Om_Bx, st.Om_By, st.Om_Bz,
+				       0.0,st));
    
-   printf("dOm_By_dt = %e\n",dOm_By_dt(stc.a_in,stc.a_out,stc.e_in,stc.e_out,
-				       stc.I_in, stc.I_out, stc.W_in, stc.W_out,
-				       stc.w_in, stc.w_out, stc.Om_Ax, stc.Om_Ay,
-				       stc.Om_Az, stc.Om_Bx, stc.Om_By, stc.Om_Bz,
-				       0.0,stc));
+   printf("dOm_By_dt = %1.17e\n",dOm_By_dt(st.a_in,st.a_out,st.e_in,st.e_out,
+				       st.I_in, st.I_out, st.W_in, st.W_out,
+				       st.w_in, st.w_out, st.Om_Ax, st.Om_Ay,
+				       st.Om_Az, st.Om_Bx, st.Om_By, st.Om_Bz,
+				       0.0,st));
    
-   printf("dOm_Bz_dt = %e\n",dOm_Bz_dt(stc.a_in,stc.a_out,stc.e_in,stc.e_out,
-				       stc.I_in, stc.I_out, stc.W_in, stc.W_out,
-				       stc.w_in, stc.w_out, stc.Om_Ax, stc.Om_Ay,
-				       stc.Om_Az, stc.Om_Bx, stc.Om_By, stc.Om_Bz,
-				       0.0,stc));
+   printf("dOm_Bz_dt = %1.17e\n",dOm_Bz_dt(st.a_in,st.a_out,st.e_in,st.e_out,
+				       st.I_in, st.I_out, st.W_in, st.W_out,
+				       st.w_in, st.w_out, st.Om_Ax, st.Om_Ay,
+				       st.Om_Az, st.Om_Bx, st.Om_By, st.Om_Bz,
+				       0.0,st));
    
    
-   */
+   
    //printf("%f\n",st.gyr_rad_A);
-   // exit(0);
+    exit(0);
    double ti = 1e3;
    while(t<st.t_end){
      //s = gsl_odeiv2_driver_apply_fixed_step (d, &t, h, 1, y);
