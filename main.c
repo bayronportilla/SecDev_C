@@ -30,9 +30,8 @@ int main (void){
    int i, s;
    double t = st.t_ini;
    double progress;
+
    
-
-
    /*
    printf("m_A = %1.9e \n",st.m_A);
    printf("m_B = %1.9e \n",st.m_B);
@@ -224,11 +223,9 @@ int main (void){
 				       st.w_in, st.w_out, st.Om_Ax, st.Om_Ay,
 				       st.Om_Az, st.Om_Bx, st.Om_By, st.Om_Bz,
 				       0.0,st));
-   
-   
-   
 
-    exit(0);
+   
+   exit(0);
    double ti = 1e3;
    while(t<st.t_end){
      //s = gsl_odeiv2_driver_apply_fixed_step (d, &t, h, 1, y);

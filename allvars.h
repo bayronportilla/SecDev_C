@@ -14,7 +14,7 @@ double G  = 1.0;
 #include "matrix.h"
 #include "generic.h"
 #include "proto.h"
-//#include "ModOct.h"
-#include "ModQuad.h"
+#include "ModOct.h"
+//#include "ModQuad.h"
 
 
