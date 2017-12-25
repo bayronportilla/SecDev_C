@@ -1,23 +1,5 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
-#include <gsl/gsl_errno.h>
-#include <gsl/gsl_matrix.h>
-#include <gsl/gsl_odeiv2.h>
-#include <gsl/gsl_vector.h>
-#include <gsl/gsl_blas.h>
-#include "Units.h"
-#include "Params.h"
-//#include "ModQuad.h"
-//#include "matrix.h"
-
-//#include "ConverCan.h"
-#include <libconfig.h>
 #include "allvars.h"
-#include "matrix.h"
-#include "generic.h"
-#include "proto.h"
-#include "ModOct.h"
+
 #define PI 3.14159
 
 int main (void){
@@ -47,7 +29,6 @@ int main (void){
   
    int i, s;
    double t = st.t_ini;
-
    double progress;
    
 
@@ -246,18 +227,18 @@ int main (void){
    
    
    
-   //printf("%f\n",st.gyr_rad_A);
+
     exit(0);
    double ti = 1e3;
    while(t<st.t_end){
      //s = gsl_odeiv2_driver_apply_fixed_step (d, &t, h, 1, y);
-    
+     
      s = gsl_odeiv2_driver_apply(d, &t, ti, y);
      if (s != GSL_SUCCESS){
        printf ("error: driver returned %d\n", s);
        break;
      }
-
+     
      ti += 1e3;
      
     
