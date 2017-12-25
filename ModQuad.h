@@ -1,5 +1,3 @@
-
-
 ////////////////////////////////////////////////////////////
 //
 // This matrix takes me from the inertial system to the
@@ -101,7 +99,6 @@ double *RotMat(double W, double I, double w, double *in_array, char dir[]){
   
 }
 
-
 double G = 1.0;
 
 ////////////////////////////////////////////////////////////
@@ -129,7 +126,6 @@ double f_4(double e){
 double f_5(double e){
   return ( 1.0 + (15.0/4.0)*pow(e,2) + (15.0/8.0)*pow(e,4) + (5.0/64.0)*pow(e,6) ) / pow(1.0-e*e,13.0/2.0);
 }
-
 
 
 double n(double m_1, double m_2, double a){
@@ -214,7 +210,6 @@ double W_A(double tv_A, double R_A, double k_A, double m_A,double m_B,
 
   return 1.0/tf_A(tv_A,R_A,k_A,a,m_A,m_B) * ( f_2(e) - Om_Az_orb/n(m_A,m_B,a) * f_1(e) );
 }
-
 
 double W_B(double tv_B, double R_B, double k_B, double m_A,double m_B,
 	   double a, double e, double W, double I, double w,

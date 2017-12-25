@@ -1,7 +1,4 @@
-//#include <stdio.h>
-//#include <stdlib.h>
 #include <libconfig.h>
-
 
 double G_1(double m_1,double m_2,double a_1,double e_1);
 double G_2(double m_1,double m_2,double m_3,double a_2,double e_2);

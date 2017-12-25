@@ -10,10 +10,14 @@
 #include "Params.h"
 //#include "ModQuad.h"
 //#include "matrix.h"
-#include "ModOct.h"
+
 //#include "ConverCan.h"
 #include <libconfig.h>
-
+#include "allvars.h"
+#include "matrix.h"
+#include "generic.h"
+#include "proto.h"
+#include "ModOct.h"
 #define PI 3.14159
 
 int main (void){
@@ -22,9 +26,7 @@ int main (void){
   fp = fopen("data.dat","w");
 
   Inpar st;
-  //Inpar stc;
   st = params();
-  //stc = ConverToCan(st);
 
   //gsl_odeiv2_driver_alloc_y_new(const gsl_odeiv2_system * sys,
   //                              const gsl_odeiv2_step_type * T,
@@ -37,7 +39,6 @@ int main (void){
   gsl_odeiv2_system sys = { func, NULL, 16, &st}; // Define sistema de ecuaciones
   gsl_odeiv2_driver *d = gsl_odeiv2_driver_alloc_y_new (&sys, gsl_odeiv2_step_rkf45,1e-3, 1e-8, 1e-8);
     
-  //const double h = 6.283e1;
   
   double y[16] = { st.a_in, st.a_out, st.e_in, st.e_out, 
 		   st.I_in, st.I_out, st.W_in, st.W_out,

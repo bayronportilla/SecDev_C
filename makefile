@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS   = -I/usr/local/inlcude
+CFLAGS   = -I/usr/local/include
 CCFLAGS  = -L/usr/local/lib
 
 TARGET = main
@@ -7,7 +7,7 @@ TARGET = main
 
 $(TARGET):$(TARGET).c #Units.c Params.c ModQuad.c
 	$(CC) $(CFLAGS) -c $@.c
-	$(CC) $(CCFLAGS) $@.o -lgsl -lgslcblas -lm -lconfig -o $@.x
+	$(CC) $(CCFLAGS) $@.o -lgsl -lgslcblas -lm -lconfig -o $@.x 
 
 
 clean:
