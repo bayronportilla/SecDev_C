@@ -10,10 +10,10 @@ double G  = 1.0;
 #include <gsl/gsl_blas.h>
 #include <libconfig.h>
 #include "Units.h"
-#include "Params.h"
 #include "matrix.h"
 #include "generic.h"
 #include "proto.h"
+#include "Params.h"
 #include "ModOct.h"
 //#include "ModQuad.h"
 

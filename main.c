@@ -4,9 +4,6 @@
 
 int main (void){
 
-  FILE *fp;
-  fp = fopen("data.dat","w");
-
   Inpar st;
   st = params();
 
@@ -31,7 +28,8 @@ int main (void){
    double t = st.t_ini;
    double progress;
 
-   
+   printf("%s \n",st.sim_name);
+   exit(0);
    /*
    printf("m_A = %1.9e \n",st.m_A);
    printf("m_B = %1.9e \n",st.m_B);
@@ -226,7 +224,11 @@ int main (void){
 
    
    exit(0);
+   
+   FILE *fp;
+   fp = fopen("data.dat","w");
    double ti = 1e3;
+   
    while(t<st.t_end){
      //s = gsl_odeiv2_driver_apply_fixed_step (d, &t, h, 1, y);
      

@@ -1,13 +1,6 @@
-#include <libconfig.h>
-
-double G_1(double m_1,double m_2,double a_1,double e_1);
-double G_2(double m_1,double m_2,double m_3,double a_2,double e_2);
-double *RotMat(double W, double I, double w, double *in_array, char dir[]);
-
 typedef struct Inpar_params{
 
   // Inner A properties
-  char   name_A[50];
   double m_A;
   double R_A;
   double k_A;
@@ -23,7 +16,6 @@ typedef struct Inpar_params{
   double beta_A;
 
   // Inner B properties
-  char   name_B[50];
   double m_B ;
   double R_B ;
   double k_B ;
@@ -34,7 +26,6 @@ typedef struct Inpar_params{
   double beta_B;
 
   // Inner C properties
-  char   name_C[50];
   double m_C;
   double R_C;
   double k_C;
@@ -46,9 +37,18 @@ typedef struct Inpar_params{
   double W_out;
   double w_out;
 
-  // Mutual inclination
+  // General properties
+  const char *sim_name;
+  double t_ini;
+  double t_end;
   double I_tot;
+  int q_orb;
+  int q_tid;
+  int q_GR;
+  int rcu;
+  int rse;
 
+  
   // Rotational velocities
   double Om_Ax;
   double Om_Ay;
@@ -58,35 +58,23 @@ typedef struct Inpar_params{
   double Om_Bz;
   
   
-  // General properties
-  double t_ini;
-  double t_end;
-  int n_steps;
-  int q_orb;
-  int q_tid;
-  int q_GR;
-  int rcu;
-  int rse;
-
   // Canonical units info.
   double uM;
   double uL;
   double uT;
-  
+
   
 } Inpar; // Defining a new datatype *Inpar*
          //which is a structure of the tyoe *Inpar_params*
 
 
 Inpar params(){
-//double params(){
   
   Inpar rest; //defining the REturnSTucture
 
   config_t cfg;
   config_setting_t *setting;
-  const char *str;
-  const char *met;
+
 
   config_init(&cfg);
   
@@ -96,7 +84,6 @@ Inpar params(){
       fprintf(stderr, "%s:%d - %s\n", config_error_file(&cfg),
 	      config_error_line(&cfg), config_error_text(&cfg));
       config_destroy(&cfg);
-      //return(EXIT_FAILURE);
     }
 
   ////////////////////////////////////////////////////////////
@@ -105,11 +92,10 @@ Inpar params(){
   //
   ////////////////////////////////////////////////////////////
 
-  int N;
+  const char *sim_name;
   double t_ini;
   double t_end;
   double I_tot;
-  int n_steps;
   int q_orb;
   int q_tid;
   int q_GR;
@@ -118,7 +104,7 @@ Inpar params(){
   
   
   //config_lookup_string(&cfg, "method", &met);
-  config_lookup_int(&cfg  , "n_steps", &n_steps);
+  config_lookup_string(&cfg, "sim_name"  , &sim_name);
   config_lookup_float(&cfg, "t_ini"  , &t_ini);
   config_lookup_float(&cfg, "t_end"  , &t_end);
   config_lookup_float(&cfg, "I_tot"  , &I_tot);
@@ -128,7 +114,6 @@ Inpar params(){
   config_lookup_int(&cfg  , "rcu"    , &rcu);
   config_lookup_int(&cfg  , "rse"    , &rse);
 
-
   
   ////////////////////////////////////////////////////////////
   //
@@ -136,7 +121,6 @@ Inpar params(){
   //
   ////////////////////////////////////////////////////////////
   
-  const char *name_A;
   double m_A;
   double R_A;
   double k_A;
@@ -159,7 +143,6 @@ Inpar params(){
     for(i = 0; i < count; ++i){
       config_setting_t *object = config_setting_get_elem(setting, i);
       
-      config_setting_lookup_string(object, "name",    &name_A);
       config_setting_lookup_float(object,  "mass",    &m_A);
       config_setting_lookup_float(object,  "radius",  &R_A);
       config_setting_lookup_float(object,  "k",       &k_A);
@@ -175,15 +158,13 @@ Inpar params(){
     }
   }
   
-  
-  
+ 
   ////////////////////////////////////////////////////////////
   //
   // Getting information about inner B
   //
   ////////////////////////////////////////////////////////////
   
-  const char *name_B;
   double m_B;
   double R_B;
   double k_B;
@@ -202,7 +183,6 @@ Inpar params(){
     for(i = 0; i < count; ++i){
       config_setting_t *object = config_setting_get_elem(setting, i);
       
-      config_setting_lookup_string(object, "name",    &name_B);
       config_setting_lookup_float(object,  "mass",    &m_B);
       config_setting_lookup_float(object,  "radius",  &R_B);
       config_setting_lookup_float(object,  "k",       &k_B);
@@ -221,7 +201,6 @@ Inpar params(){
   //
   ////////////////////////////////////////////////////////////
   
-  const char *name_C;
   double m_C;
   double R_C;
   double k_C;
@@ -240,7 +219,6 @@ Inpar params(){
     for(i = 0; i < count; ++i){
       config_setting_t *object = config_setting_get_elem(setting, i);
       
-      config_setting_lookup_string(object, "name",    &name_C);
       config_setting_lookup_float(object,  "mass",    &m_C);
       config_setting_lookup_float(object,  "radius",  &R_C);
       config_setting_lookup_float(object,  "k",       &k_C);
@@ -337,7 +315,7 @@ Inpar params(){
   double DAYS  = 86400.0; 
   
 
-  rest.n_steps = n_steps;
+  rest.sim_name = sim_name;
   rest.t_ini   = t_ini * YEARS/uT;
   rest.t_end   = t_end * YEARS/uT;
   rest.q_orb   = q_orb;

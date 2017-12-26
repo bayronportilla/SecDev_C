@@ -556,8 +556,6 @@ double dOm_Bx_dt(double a_in, double a_out, double e_in,
 }
 
 
-
-
 double dOm_By_dt(double a_in, double a_out, double e_in,
 		 double e_out, double I_in, double I_out,
 		 double W_in, double W_out, double w_in,
