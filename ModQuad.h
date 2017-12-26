@@ -14,8 +14,6 @@ double da_in_dt(double a_in, double a_out, double e_in,
 
   ////////////////////////////////////////////////////////////
   // bulk properties
-
-
   double tv_A = params.tv_A;
   double tv_B = params.tv_B;
   double R_A  = params.R_A;
@@ -25,8 +23,6 @@ double da_in_dt(double a_in, double a_out, double e_in,
   double m_A  = params.m_A;
   double m_B  = params.m_B;
 
-  
-   
   double da_in_dt_orb;
   double da_in_dt_tid;
   
@@ -38,7 +34,6 @@ double da_in_dt(double a_in, double a_out, double e_in,
   
   return (params.q_orb*da_in_dt_orb) + (params.q_tid*da_in_dt_tid);
   
- 
 }
 
 
@@ -52,8 +47,6 @@ double da_out_dt(double a_in, double a_out, double e_in,
   
   ////////////////////////////////////////////////////////////
   // bulk properties
- 
-  
   double tv_A = params.tv_A;
   double tv_B = params.tv_B;
   double R_A  = params.R_A;
@@ -83,8 +76,6 @@ double de_in_dt(double a_in, double a_out, double e_in,
   
   ////////////////////////////////////////////////////////////
   // bulk properties
-
-  
   double tv_A = params.tv_A;
   double tv_B = params.tv_B;
   double R_A  = params.R_A;
@@ -95,9 +86,9 @@ double de_in_dt(double a_in, double a_out, double e_in,
   double m_B  = params.m_B;
   double m_C  = params.m_C;
 
-   
   double de_in_dt_orb;
   double de_in_dt_tid;
+
   double I_tot;
   double B;
   double A;
@@ -127,8 +118,6 @@ double de_out_dt(double a_in, double a_out, double e_in,
   
   ////////////////////////////////////////////////////////////
   // bulk properties
-
-  
   double tv_A = params.tv_A;
   double tv_B = params.tv_B;
   double R_A  = params.R_A;
@@ -159,8 +148,6 @@ double de_out_dt(double a_in, double a_out, double e_in,
 
 
 
-
-
 double dI_in_dt(double a_in, double a_out, double e_in,
 		double e_out, double I_in, double I_out,
 		double W_in, double W_out, double w_in,
@@ -169,9 +156,7 @@ double dI_in_dt(double a_in, double a_out, double e_in,
 		double Om_Bz, double t, Inpar params){
   
   ////////////////////////////////////////////////////////////
-  // bulk properties
-
-  
+  // bulk properties  
   double tv_A = params.tv_A;
   double tv_B = params.tv_B;
   double R_A  = params.R_A;
@@ -182,7 +167,6 @@ double dI_in_dt(double a_in, double a_out, double e_in,
   double m_B  = params.m_B;
   double m_C  = params.m_C;
 
-    
   double dI_in_dt_orb;
   double dI_in_dt_tid;
   double I_tot;
@@ -204,14 +188,10 @@ double dI_in_dt(double a_in, double a_out, double e_in,
 
   dI_in_dt_orb = -1.0 * ( dHin_dt - dGin_dt * cos(I_in) ) / (sin(I_in) * G_1(m_A,m_B,a_in,e_in) );
   dI_in_dt_tid = ( X_A(tv_A,R_A,k_A,m_A,m_B,a_in,e_in,W_in,I_in,w_in,Om_Ax,Om_Ay,Om_Az) + X_B(tv_B,R_B,k_B,m_A,m_B,a_in,e_in,W_in,I_in,w_in,Om_Bx,Om_By,Om_Bz) ) * cos(w_in) - 
-                 ( Y_A(tv_A,R_A,k_A,m_A,m_B,a_in,e_in,W_in,I_in,w_in,Om_Ax,Om_Ay,Om_Az) + Y_B(tv_B,R_B,k_B,m_A,m_B,a_in,e_in,W_in,I_in,w_in,Om_Bx,Om_By,Om_Bz) ) * sin(w_in);
+    ( Y_A(tv_A,R_A,k_A,m_A,m_B,a_in,e_in,W_in,I_in,w_in,Om_Ax,Om_Ay,Om_Az) + Y_B(tv_B,R_B,k_B,m_A,m_B,a_in,e_in,W_in,I_in,w_in,Om_Bx,Om_By,Om_Bz) ) * sin(w_in);
 
   
   return (params.q_orb*dI_in_dt_orb) + (params.q_tid*dI_in_dt_tid);
-
-
-
-  
 
 }
 
@@ -227,8 +207,6 @@ double dI_out_dt(double a_in, double a_out, double e_in,
   
   ////////////////////////////////////////////////////////////
   // bulk properties
-
-  
   double tv_A = params.tv_A;
   double tv_B = params.tv_B;
   double R_A  = params.R_A;
@@ -267,8 +245,6 @@ double dI_out_dt(double a_in, double a_out, double e_in,
 }
 
 
-
-
 double dW_in_dt(double a_in, double a_out, double e_in,
 		double e_out, double I_in, double I_out,
 		double W_in, double W_out, double w_in,
@@ -278,8 +254,6 @@ double dW_in_dt(double a_in, double a_out, double e_in,
   
   ////////////////////////////////////////////////////////////
   // bulk properties
-
-  
   double tv_A = params.tv_A;
   double tv_B = params.tv_B;
   double R_A  = params.R_A;
@@ -315,9 +289,7 @@ double dW_in_dt(double a_in, double a_out, double e_in,
 
 
 
-
 // Ojo aqui
-
 double dW_out_dt(double a_in, double a_out, double e_in,
 		 double e_out, double I_in, double I_out,
 		 double W_in, double W_out, double w_in,
@@ -326,9 +298,7 @@ double dW_out_dt(double a_in, double a_out, double e_in,
 		 double Om_Bz, double t, Inpar params){
   
   ////////////////////////////////////////////////////////////
-  // bulk properties
-
-  
+  // bulk properties  
   double tv_A = params.tv_A;
   double tv_B = params.tv_B;
   double R_A  = params.R_A;
@@ -358,7 +328,6 @@ double dW_out_dt(double a_in, double a_out, double e_in,
 
 
 
-
 double dw_in_dt(double a_in, double a_out, double e_in,
 		double e_out, double I_in, double I_out,
 		double W_in, double W_out, double w_in,
@@ -368,7 +337,7 @@ double dw_in_dt(double a_in, double a_out, double e_in,
   
   ////////////////////////////////////////////////////////////
   // bulk properties
-
+  
   double cvel = 300.0e6 * params.uT/params.uL;
   
   double tv_A = params.tv_A;
@@ -408,11 +377,7 @@ double dw_in_dt(double a_in, double a_out, double e_in,
     
   return (params.q_orb * dw_in_dt_orb) + (params.q_tid * dw_in_dt_tid) + (params.q_GR * dw_in_dt_GR);
   
-    
 }
-
-
-
 
 double dw_out_dt(double a_in, double a_out, double e_in,
 		 double e_out, double I_in, double I_out,
@@ -422,9 +387,7 @@ double dw_out_dt(double a_in, double a_out, double e_in,
 		 double Om_Bz, double t, Inpar params){
   
   ////////////////////////////////////////////////////////////
-  // bulk properties
-
-  
+  // bulk properties  
   double tv_A = params.tv_A;
   double tv_B = params.tv_B;
   double R_A  = params.R_A;
@@ -461,6 +424,9 @@ double dw_out_dt(double a_in, double a_out, double e_in,
 
 
 
+
+
+//from here
 double dOm_Ax_dt(double a_in, double a_out, double e_in,
 		 double e_out, double I_in, double I_out,
 		 double W_in, double W_out, double w_in,
@@ -490,7 +456,7 @@ double dOm_Ax_dt(double a_in, double a_out, double e_in,
   return params.q_tid*( mu*pow(G*(m_A+m_B)*a_in*(1.0-e_in*e_in),0.5)/(gyr_rad_A*m_A*pow(R_A,2)) * 
     ( X_A(tv_A,R_A,k_A,m_A,m_B,a_in,e_in,W_in,I_in,w_in,Om_Ax,Om_Ay,Om_Az)*(-cos(W_in)*sin(w_in) - sin(W_in)*cos(w_in)*cos(I_in)) + 
       W_A(tv_A,R_A,k_A,m_A,m_B,a_in,e_in,W_in,I_in,w_in,Om_Ax,Om_Ay,Om_Az)*(sin(I_in)*sin(W_in)) - 
-      Y_A(tv_A,R_A,k_A,m_A,m_B,a_in,e_in,W_in,I_in,w_in,Om_Ax,Om_Ay,Om_Az)*(cos(W_in)*cos(w_in)-sin(W_in)*sin(w_in)*cos(I_in))));
+      Y_A(tv_A,R_A,k_A,m_A,m_B,a_in,e_in,W_in,I_in,w_in,Om_Ax,Om_Ay,Om_Az)*(cos(W_in)*cos(w_in)-sin(W_in)*sin(w_in)*cos(I_in))) );
 
 }
 
