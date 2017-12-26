@@ -28,8 +28,10 @@ int main (void){
    double t = st.t_ini;
    double progress;
 
-   printf("%s \n",st.sim_name);
-   exit(0);
+   printf("%e \n",st.uM);
+   printf("%e \n",st.uL);
+   printf("%f \n",st.uT);
+   //   exit(0);
    /*
    printf("m_A = %1.9e \n",st.m_A);
    printf("m_B = %1.9e \n",st.m_B);

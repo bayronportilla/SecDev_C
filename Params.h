@@ -101,6 +101,9 @@ Inpar params(){
   int q_GR;
   int rcu;
   int rse;
+  double uM;
+  double uL;
+  
   
   
   //config_lookup_string(&cfg, "method", &met);
@@ -113,6 +116,8 @@ Inpar params(){
   config_lookup_int(&cfg  , "q_GR"   , &q_GR);
   config_lookup_int(&cfg  , "rcu"    , &rcu);
   config_lookup_int(&cfg  , "rse"    , &rse);
+  config_lookup_float(&cfg, "uM"  , &uM);
+  config_lookup_float(&cfg, "uL"  , &uL);
 
   
   ////////////////////////////////////////////////////////////
@@ -293,28 +298,13 @@ Inpar params(){
 
   ////////////////////////////////////////////////////////////
   //
-  // Finding canonical units
+  // Finding derived time canonical unit
   //
   ////////////////////////////////////////////////////////////
   
-  double uM =  units(1.989e29,149.6e9,"uT")[0];
-  double uL =  units(1.989e29,149.6e9,"uT")[1];
-  double uT =  units(1.989e29,149.6e9,"uT")[2];
+  double uT =  units(uM,uL,"uT")[2];
 
-  ////////////////////////////////////////////////////////////
-  // Defining constants
-
-  double AU    = 149.6e9;
-  double MS    = 1.989e30;
-  double RS    = 6.957e8;
-  double MJ    = 1.898e27;
-  double RJ    = 6.9911e7;
-  double ME    = 5.972e24;
-  double RE    = 6.371e6;
-  double YEARS = 365.25*86400;
-  double DAYS  = 86400.0; 
   
-
   rest.sim_name = sim_name;
   rest.t_ini   = t_ini * YEARS/uT;
   rest.t_end   = t_end * YEARS/uT;
