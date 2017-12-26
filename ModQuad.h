@@ -421,12 +421,6 @@ double dw_out_dt(double a_in, double a_out, double e_in,
 }
 
 
-
-
-
-
-
-//from here
 double dOm_Ax_dt(double a_in, double a_out, double e_in,
 		 double e_out, double I_in, double I_out,
 		 double W_in, double W_out, double w_in,
@@ -472,8 +466,6 @@ double dOm_Ay_dt(double a_in, double a_out, double e_in,
   
   ////////////////////////////////////////////////////////////
   // bulk properties
-
-  
   double tv_A = params.tv_A;
   double tv_B = params.tv_B;
   double R_A  = params.R_A;
@@ -509,8 +501,6 @@ double dOm_Az_dt(double a_in, double a_out, double e_in,
   
   ////////////////////////////////////////////////////////////
   // bulk properties
-
-  
   double tv_A = params.tv_A;
   double tv_B = params.tv_B;
   double R_A  = params.R_A;
@@ -534,9 +524,6 @@ double dOm_Az_dt(double a_in, double a_out, double e_in,
 }
 
 
-
-
-
 double dOm_Bx_dt(double a_in, double a_out, double e_in,
 		 double e_out, double I_in, double I_out,
 		 double W_in, double W_out, double w_in,
@@ -545,9 +532,7 @@ double dOm_Bx_dt(double a_in, double a_out, double e_in,
 		 double Om_Bz, double t, Inpar params){
   
   ////////////////////////////////////////////////////////////
-  // bulk properties
-
-  
+  // bulk properties  
   double tv_A = params.tv_A;
   double tv_B = params.tv_B;
   double R_A  = params.R_A;
@@ -582,8 +567,6 @@ double dOm_By_dt(double a_in, double a_out, double e_in,
   
   ////////////////////////////////////////////////////////////
   // bulk properties
-
-  
   double tv_A = params.tv_A;
   double tv_B = params.tv_B;
   double R_A  = params.R_A;
@@ -607,9 +590,6 @@ double dOm_By_dt(double a_in, double a_out, double e_in,
 }
 
 
-
-
-
 double dOm_Bz_dt(double a_in, double a_out, double e_in,
 		 double e_out, double I_in, double I_out,
 		 double W_in, double W_out, double w_in,
@@ -619,8 +599,6 @@ double dOm_Bz_dt(double a_in, double a_out, double e_in,
   
   ////////////////////////////////////////////////////////////
   // bulk properties
-
-  
   double tv_A = params.tv_A;
   double tv_B = params.tv_B;
   double R_A  = params.R_A;
@@ -697,55 +675,3 @@ int func (double t, const double y[], double f[], void *params){
 }
 
 
-
-/*
-typedef struct my_estruct{
-  double mu;
-} exx;
-
-
-double pos(double x, double vx, exx params){
-  double mu = params.mu;
-  return -mu*mu*x;
-}
-
-double vel(double x, double vx, exx params){
-  return vx;
-}
-
-int func (double t, const double y[], double f[], void *params){
-  (void)(t); // avoid unused parameter warning 
-  //double mu = *(double *)params;
- 
-  exx stt   = *(exx *)params;
-  stt.mu = 1.0;
-  double x  = y[0];
-  double vx = y[1];
-
- 
-  //f[0] = vx;
-  //f[1] = -mu*mu*x;
- 
-
-  f[0] = vel(x,vx,stt);
-  f[1] = pos(x,vx,stt);
-  
-  return GSL_SUCCESS;
-}
-*/
-
-/*
-int jac (double t, const double y[], double *dfdy, double dfdt[], void *params){
-  (void)(t); // avoid unused parameter warning 
-  double mu = *(double *)params;
-  gsl_matrix_view dfdy_mat = gsl_matrix_view_array (dfdy, 2, 2);
-  gsl_matrix * m = &dfdy_mat.matrix; 
-  gsl_matrix_set (m, 0, 0, 0.0);
-  gsl_matrix_set (m, 0, 1, 1.0);
-  gsl_matrix_set (m, 1, 0, -2.0*mu*y[0]*y[1] - 1.0);
-  gsl_matrix_set (m, 1, 1, -mu*(y[0]*y[0] - 1.0));
-  dfdt[0] = 0.0;
-  dfdt[1] = 0.0;
-  return GSL_SUCCESS;
-}
-*/
