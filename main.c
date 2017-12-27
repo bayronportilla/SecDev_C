@@ -28,8 +28,9 @@ int main (void){
    double t = st.t_ini;
    double progress;
 
+   
    FetchInfo(st);
-   exit(0);
+
    /*
    printf("m_A = %1.9e \n",st.m_A);
    printf("m_B = %1.9e \n",st.m_B);
@@ -223,32 +224,38 @@ int main (void){
 				       0.0,st));
 
    
-   exit(0);
+   
    
    FILE *fp;
-   fp = fopen("data.dat","w");
-   double ti = 1e3;
-   
+   char src[100];
+   char dest[100];
+   char name_files[100];
+   strcpy(src,st.sim_name);
+   strcpy(dest,".dat");
+   strcpy(name_files,strcat(src,dest));
+   fp = fopen(name_files,"w");
+   double ti = t;
+
+
+
    while(t<st.t_end){
-     //s = gsl_odeiv2_driver_apply_fixed_step (d, &t, h, 1, y);
-     
+
      s = gsl_odeiv2_driver_apply(d, &t, ti, y);
      if (s != GSL_SUCCESS){
        printf ("error: driver returned %d\n", s);
        break;
      }
+     ti += st.h_output;     
+
      
-     ti += 1e3;
+     progress = (t/st.t_end)*100.0;
+     printf("Progress: %d per cent \n",(int)progress);
      
-    
-    progress = (t/st.t_end)*100.0;
-    printf("Progress: %d per cent \n",(int)progress);
-    
-    if ( (int)progress%10 == 0){
-      printf("Progress: %d per cent \n",(int)progress);
-    }
-    
-    //printf("%.5e %.5e %.5e\n", t, y[0], y[2]);
+     if ( (int)progress%10 == 0){
+       printf("Progress: %d per cent \n",(int)progress);
+     }
+     
+
      fprintf(fp,"%.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e \n",
 	     t,y[0],y[1],y[2],y[3],y[4],y[5],y[6],y[7],y[8],y[9],y[10],y[11],y[12],y[13],y[14],y[15]);
    }

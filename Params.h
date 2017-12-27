@@ -41,6 +41,7 @@ typedef struct Inpar_params{
   const char *sim_name;
   double t_ini;
   double t_end;
+  double h_output;
   double I_tot;
   int q_orb;
   int q_tid;
@@ -95,6 +96,7 @@ Inpar params(){
   const char *sim_name;
   double t_ini;
   double t_end;
+  double h_output;
   double I_tot;
   int q_orb;
   int q_tid;
@@ -110,6 +112,7 @@ Inpar params(){
   config_lookup_string(&cfg, "sim_name"  , &sim_name);
   config_lookup_float(&cfg, "t_ini"  , &t_ini);
   config_lookup_float(&cfg, "t_end"  , &t_end);
+  config_lookup_float(&cfg, "h_output"  , &h_output);
   config_lookup_float(&cfg, "I_tot"  , &I_tot);
   config_lookup_int(&cfg  , "q_orb"  , &q_orb);
   config_lookup_int(&cfg  , "q_tid"  , &q_tid);
@@ -308,6 +311,7 @@ Inpar params(){
   rest.sim_name = sim_name;
   rest.t_ini   = t_ini * YEARS/uT;
   rest.t_end   = t_end * YEARS/uT;
+  rest.h_output = h_output * YEARS/uT;
   rest.q_orb   = q_orb;
   rest.q_tid   = q_tid;
   rest.q_GR    = q_GR;

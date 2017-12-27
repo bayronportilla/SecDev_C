@@ -16,3 +16,5 @@ clean:
 
 run:
 	./main.x
+
+
