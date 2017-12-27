@@ -1,6 +1,5 @@
 #include "allvars.h"
 
-#define PI 3.14159
 
 int main (void){
 
@@ -12,13 +11,21 @@ int main (void){
   //                              const double hstart,
   //                              const double epsabs,
   //                              const double epsrel)
-  
-  //const gsl_odeiv2_step_type * T = gsl_odeiv2_step_rkck;
 
-  gsl_odeiv2_system sys = { func, NULL, 16, &st}; // Define sistema de ecuaciones
-  gsl_odeiv2_driver *d = gsl_odeiv2_driver_alloc_y_new (&sys, gsl_odeiv2_step_rkf45,1e-3, 1e-8, 1e-8);
-    
   
+  ////////////////////////////////////////////////////////////
+  // This is the only line must be modified by the user
+  //
+  const gsl_odeiv2_step_type *T = gsl_odeiv2_step_rkf45;
+  //
+  ////////////////////////////////////////////////////////////
+
+  
+  gsl_odeiv2_system sys = { func, NULL, 16, &st}; // Define sistema de ecuaciones
+  gsl_odeiv2_driver *d = gsl_odeiv2_driver_alloc_y_new (&sys, T, 1e-3, 1e-8, 1e-8);
+
+
+
   double y[16] = { st.a_in, st.a_out, st.e_in, st.e_out, 
 		   st.I_in, st.I_out, st.W_in, st.W_out,
 		   st.w_in, st.w_out, st.Om_Ax, st.Om_Ay,
@@ -246,7 +253,6 @@ int main (void){
        break;
      }
      ti += st.h_output;     
-
      
      progress = (t/st.t_end)*100.0;
      printf("Progress: %d per cent \n",(int)progress);
