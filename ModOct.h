@@ -13,10 +13,7 @@ double da_in_dt(double a_in, double a_out, double e_in,
 		double Om_Bz, double t, Inpar params){
 
   ////////////////////////////////////////////////////////////
-  // bulk properties
-  
-  
-  
+  // bulk properties  
   double tv_A = params.tv_A;
   double tv_B = params.tv_B;
   double R_A  = params.R_A;
@@ -38,13 +35,7 @@ double da_in_dt(double a_in, double a_out, double e_in,
 
   return (params.q_orb*da_in_dt_orb) + (params.q_tid*da_in_dt_tid);
   
-
-
 }
-
-
-
-
 
 
 double da_out_dt(double a_in, double a_out, double e_in,
@@ -56,8 +47,6 @@ double da_out_dt(double a_in, double a_out, double e_in,
   
   ////////////////////////////////////////////////////////////
   // bulk properties
- 
-  
   double tv_A = params.tv_A;
   double tv_B = params.tv_B;
   double R_A  = params.R_A;
@@ -87,8 +76,6 @@ double de_in_dt(double a_in, double a_out, double e_in,
   
   ////////////////////////////////////////////////////////////
   // bulk properties
-
-  
   double tv_A = params.tv_A;
   double tv_B = params.tv_B;
   double R_A  = params.R_A;
@@ -132,8 +119,6 @@ double de_out_dt(double a_in, double a_out, double e_in,
   
   ////////////////////////////////////////////////////////////
   // bulk properties
-
-  
   double tv_A = params.tv_A;
   double tv_B = params.tv_B;
   double R_A  = params.R_A;
@@ -176,8 +161,6 @@ double dI_in_dt(double a_in, double a_out, double e_in,
   
   ////////////////////////////////////////////////////////////
   // bulk properties
-
-  
   double tv_A = params.tv_A;
   double tv_B = params.tv_B;
   double R_A  = params.R_A;
@@ -231,8 +214,6 @@ double dI_out_dt(double a_in, double a_out, double e_in,
   
   ////////////////////////////////////////////////////////////
   // bulk properties
-
-  
   double tv_A = params.tv_A;
   double tv_B = params.tv_B;
   double R_A  = params.R_A;
@@ -286,8 +267,6 @@ double dW_in_dt(double a_in, double a_out, double e_in,
   
   ////////////////////////////////////////////////////////////
   // bulk properties
-
-  
   double tv_A = params.tv_A;
   double tv_B = params.tv_B;
   double R_A  = params.R_A;
@@ -324,10 +303,7 @@ double dW_in_dt(double a_in, double a_out, double e_in,
 }
 
 
-
-
 // Ojo aqui
-
 double dW_out_dt(double a_in, double a_out, double e_in,
 		 double e_out, double I_in, double I_out,
 		 double W_in, double W_out, double w_in,
@@ -337,8 +313,6 @@ double dW_out_dt(double a_in, double a_out, double e_in,
   
   ////////////////////////////////////////////////////////////
   // bulk properties
-
-  
   double tv_A = params.tv_A;
   double tv_B = params.tv_B;
   double R_A  = params.R_A;
@@ -437,8 +411,6 @@ double dw_out_dt(double a_in, double a_out, double e_in,
   
   ////////////////////////////////////////////////////////////
   // bulk properties
-
-  
   double tv_A = params.tv_A;
   double tv_B = params.tv_B;
   double R_A  = params.R_A;
