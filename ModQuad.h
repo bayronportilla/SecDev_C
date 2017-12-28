@@ -429,9 +429,7 @@ double dOm_Ax_dt(double a_in, double a_out, double e_in,
 		 double Om_Bz, double t, Inpar params){
   
   ////////////////////////////////////////////////////////////
-  // bulk properties
-
-  
+  // bulk properties  
   double tv_A = params.tv_A;
   double tv_B = params.tv_B;
   double R_A  = params.R_A;

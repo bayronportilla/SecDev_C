@@ -490,8 +490,6 @@ double dOm_Ax_dt(double a_in, double a_out, double e_in,
   
   ////////////////////////////////////////////////////////////
   // bulk properties
-
-  
   double tv_A = params.tv_A;
   double tv_B = params.tv_B;
   double R_A  = params.R_A;
@@ -513,8 +511,6 @@ double dOm_Ax_dt(double a_in, double a_out, double e_in,
       W_A(tv_A,R_A,k_A,m_A,m_B,a_in,e_in,W_in,I_in,w_in,Om_Ax,Om_Ay,Om_Az)*(sin(I_in)*sin(W_in)) - 
       Y_A(tv_A,R_A,k_A,m_A,m_B,a_in,e_in,W_in,I_in,w_in,Om_Ax,Om_Ay,Om_Az)*(cos(W_in)*cos(w_in)-sin(W_in)*sin(w_in)*cos(I_in))));
   
-
-  
 }
 
 
@@ -529,8 +525,6 @@ double dOm_Ay_dt(double a_in, double a_out, double e_in,
   
   ////////////////////////////////////////////////////////////
   // bulk properties
-
-  
   double tv_A = params.tv_A;
   double tv_B = params.tv_B;
   double R_A  = params.R_A;
@@ -566,8 +560,6 @@ double dOm_Az_dt(double a_in, double a_out, double e_in,
   
   ////////////////////////////////////////////////////////////
   // bulk properties
-
-  
   double tv_A = params.tv_A;
   double tv_B = params.tv_B;
   double R_A  = params.R_A;
@@ -602,9 +594,7 @@ double dOm_Bx_dt(double a_in, double a_out, double e_in,
 		 double Om_Bz, double t, Inpar params){
   
   ////////////////////////////////////////////////////////////
-  // bulk properties
-
-  
+  // bulk properties  
   double tv_A = params.tv_A;
   double tv_B = params.tv_B;
   double R_A  = params.R_A;
@@ -676,8 +666,6 @@ double dOm_Bz_dt(double a_in, double a_out, double e_in,
   
   ////////////////////////////////////////////////////////////
   // bulk properties
-
-  
   double tv_A = params.tv_A;
   double tv_B = params.tv_B;
   double R_A  = params.R_A;
