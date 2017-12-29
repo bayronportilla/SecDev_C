@@ -338,7 +338,7 @@ double dw_in_dt(double a_in, double a_out, double e_in,
   ////////////////////////////////////////////////////////////
   // bulk properties
   
-  double cvel = 300.0e6 * params.uT/params.uL;
+  double cvel = cspeed * params.uT/params.uL;
   
   double tv_A = params.tv_A;
   double tv_B = params.tv_B;

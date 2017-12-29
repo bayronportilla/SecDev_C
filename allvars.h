@@ -9,6 +9,7 @@
 #define DAYS   86400.0 
 #define G      1.0
 #define PI     3.14159265358979323
+#define cspeed 300.0e6
   
 #include <stdio.h>
 #include <stdlib.h>
