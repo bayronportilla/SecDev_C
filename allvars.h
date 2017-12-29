@@ -25,8 +25,8 @@
 #include "generic.h"
 #include "proto.h"
 #include "Params.h"
-//#include "ModOct.h"
-#include "ModQuad.h"
+#include "ModOct.h"
+//#include "ModQuad.h"
 #include "FetchInfo.h"
 
 
