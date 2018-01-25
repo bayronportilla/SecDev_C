@@ -231,7 +231,7 @@ int main (void){
 				       0.0,st));
 
    
-   exit(0);
+
    
    FILE *fp;
    char src[100];
