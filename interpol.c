@@ -9,10 +9,9 @@ int main (void){
   FILE *file;
   file = fopen("radius.dat","r");
 
-  int Nlines = 0;
   int j = 0;
+  int Nlines = 0;
   float col1,col2;
-  int size_array = 99;
   double *tim,*rad;
   
   tim = (double *)malloc(1*sizeof(double));
@@ -27,31 +26,26 @@ int main (void){
   }
 
   Nlines = j;
-  int i;
-  for(i=0;i<Nlines;i++){ 
-    printf("%f\n",rad[i]);
-    
-  }
-  
 
-      
+  
+  ////////////////////////////////////////////////////////////
+  // Start interpolation
+  
   gsl_interp_accel *acc = gsl_interp_accel_alloc ();
-  gsl_spline *spline = gsl_spline_alloc (gsl_interp_linear, size_array);
-  gsl_spline_init(spline, tim, rad, size_array);
+  gsl_spline *spline = gsl_spline_alloc (gsl_interp_linear, Nlines);
+  gsl_spline_init(spline, tim, rad, Nlines);
     
   double ti,yi;
 
-  for (ti = tim[0]; ti < tim[size_array-1]; ti += 0.01){
+  for (ti = tim[0]; ti < tim[Nlines-1]; ti += 0.01){
     yi = gsl_spline_eval (spline, ti, acc);
     printf ("%g %g\n", ti, yi);
   }
 
   gsl_spline_free (spline);
   gsl_interp_accel_free (acc);
-  
-  
-  
+  free(tim);
+  free(rad);  
 
-  
   return 0;
 }
