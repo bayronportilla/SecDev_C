@@ -16,7 +16,7 @@ int main (void){
   ////////////////////////////////////////////////////////////
   // This is the only line must be modified by the user
   //
-  const gsl_odeiv2_step_type *T = gsl_odeiv2_step_rkf45;
+  const gsl_odeiv2_step_type *T = gsl_odeiv2_step_rk4;
   //
   ////////////////////////////////////////////////////////////
 
@@ -35,9 +35,11 @@ int main (void){
    double t = st.t_ini;
    double progress;
 
-   
    FetchInfo(st);
 
+   //printf("%f\n",st.R_A);
+
+   //exit(0);
    /*
    printf("m_A = %1.9e \n",st.m_A);
    printf("m_B = %1.9e \n",st.m_B);
@@ -132,7 +134,7 @@ int main (void){
    */
 
 
-
+   /*
    printf("da_in_dt = %1.17e\n",da_in_dt(st.a_in,st.a_out,st.e_in,st.e_out,
 				     st.I_in, st.I_out, st.W_in, st.W_out,
 				     st.w_in, st.w_out, st.Om_Ax, st.Om_Ay,
@@ -229,8 +231,7 @@ int main (void){
 				       st.w_in, st.w_out, st.Om_Ax, st.Om_Ay,
 				       st.Om_Az, st.Om_Bx, st.Om_By, st.Om_Bz,
 				       0.0,st));
-
-   
+*/
 
    
    FILE *fp;
@@ -240,14 +241,25 @@ int main (void){
    strcpy(src,st.sim_name);
    strcpy(dest,".dat");
    strcpy(name_files,strcat(src,dest));
-   fp = fopen(name_files,"w");
+   fp  = fopen(name_files,"w");
+
+   /*
+   FILE *fp2;
+   char src2[100];
+   char dest2[100];
+   char name_files2[100];
+   strcpy(src2,st.sim_name);
+   strcpy(dest2,"_bulk.dat");
+   strcpy(name_files2,strcat(src2,dest2));
+   fp2  = fopen(name_files2,"w");
+   */
+   
    double ti = t;
 
-
-
+   
    while(t<st.t_end){
-
-     s = gsl_odeiv2_driver_apply(d, &t, ti, y);
+     
+     s = gsl_odeiv2_driver_apply(d, &t, ti, y); // from t to ti
      if (s != GSL_SUCCESS){
        printf ("error: driver returned %d\n", s);
        break;
@@ -255,15 +267,23 @@ int main (void){
      ti += st.h_output;     
      
      progress = (t/st.t_end)*100.0;
-     printf("Progress: %d per cent \n",(int)progress);
+
      
+     printf("Progress: %d per cent \n",(int)progress);
      if ( (int)progress%10 == 0){
        printf("Progress: %d per cent \n",(int)progress);
      }
      
 
-     fprintf(fp,"%.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e \n",
-	     t,y[0],y[1],y[2],y[3],y[4],y[5],y[6],y[7],y[8],y[9],y[10],y[11],y[12],y[13],y[14],y[15]);
+     printf("%.5e %.5e %.5e %.5e %.5e %.5e\n",
+	    t,y[0],y[1],y[2],y[3],fn_R_A(t));
+     
+     
+     fprintf(fp,"%.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e \
+%.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e \n",
+	     t,y[0],y[1],y[2],y[3],y[4],y[5],y[6],y[7],y[8],y[9],y[10],y[11],y[12],y[13],y[14],y[15],
+	     st.m_A,st.m_B,fn_R_A(t),st.R_B,st.k_A,st.k_B,st.tv_A,st.tv_B,st.gyr_rad_A,st.gyr_rad_B);
+     
    }
    
    gsl_odeiv2_driver_free (d);

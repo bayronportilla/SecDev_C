@@ -3,6 +3,7 @@ double f_2(double e);
 double f_3(double e);
 double f_4(double e);
 double f_5(double e);
+
 double n(double m_1, double m_2, double a);
 double L_1(double m_1, double m_2, double a_1);
 double L_2(double m_1,double m_2,double m_3,double a_2);
@@ -56,3 +57,13 @@ double Z_A(double R_A, double k_A, double m_A,double m_B,
 double Z_B(double R_B, double k_B, double m_A,double m_B,
 	   double a, double e, double W, double I, double w,
 	   double Om_Bx, double Om_By,double Om_Bz);
+
+////////////////////////////////////////////////////////////
+//
+// Definition of functions for bulk changes
+//
+////////////////////////////////////////////////////////////
+
+//double fn_R_A(double t);
+//double fn_m_A(Inpar st, double t);
+

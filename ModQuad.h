@@ -14,14 +14,56 @@ double da_in_dt(double a_in, double a_out, double e_in,
 
   ////////////////////////////////////////////////////////////
   // bulk properties
-  double tv_A = params.tv_A;
-  double tv_B = params.tv_B;
-  double R_A  = params.R_A;
-  double R_B  = params.R_B;
-  double k_A  = params.k_A;
-  double k_B  = params.k_B;
-  double m_A  = params.m_A;
-  double m_B  = params.m_B;
+  double tv_A;
+  double tv_B;
+  double tv_C;
+  double R_A;  
+  double R_B;
+  double R_C;  
+  double k_A;  
+  double k_B;
+  double k_C;  
+  double m_A;  
+  double m_B;
+  double m_C;
+  double gyr_rad_A;
+  double gyr_rad_B;
+  double gyr_rad_C;
+  
+  if (params.rse==0){
+    tv_A      = params.tv_A;
+    tv_B      = params.tv_B;
+    tv_C      = params.tv_C;
+    R_A       = params.R_A;
+    R_B       = params.R_B;
+    R_C       = params.R_C;
+    k_A       = params.k_A;
+    k_B       = params.k_B;
+    k_C       = params.k_C;
+    m_A       = params.m_A;
+    m_B       = params.m_B;
+    m_C       = params.m_C;
+    gyr_rad_A = params.gyr_rad_A;
+    gyr_rad_B = params.gyr_rad_B;
+    gyr_rad_C = params.gyr_rad_C;
+  }
+  else{
+    tv_A      = params.tv_A;
+    tv_B      = params.tv_B;
+    tv_C      = params.tv_C;
+    R_A       = fn_R_A(t);
+    R_B       = params.R_B;
+    R_C       = params.R_C;
+    k_A       = params.k_A;
+    k_B       = params.k_B;
+    k_C       = params.k_C;
+    m_A       = params.m_A;
+    m_B       = params.m_B;
+    m_C       = params.m_C;
+    gyr_rad_A = params.gyr_rad_A;
+    gyr_rad_B = params.gyr_rad_B;
+    gyr_rad_C = params.gyr_rad_C;
+  }
 
   double da_in_dt_orb;
   double da_in_dt_tid;
@@ -44,17 +86,59 @@ double da_out_dt(double a_in, double a_out, double e_in,
 		 double w_out, double Om_Ax, double Om_Ay,
 		 double Om_Az, double Om_Bx, double Om_By,
 		 double Om_Bz, double t, Inpar params){
-  
+
   ////////////////////////////////////////////////////////////
   // bulk properties
-  double tv_A = params.tv_A;
-  double tv_B = params.tv_B;
-  double R_A  = params.R_A;
-  double R_B  = params.R_B;
-  double k_A  = params.k_A;
-  double k_B  = params.k_B;
-  double m_A  = params.m_A;
-  double m_B  = params.m_B;
+  double tv_A;
+  double tv_B;
+  double tv_C;
+  double R_A;  
+  double R_B;
+  double R_C;  
+  double k_A;  
+  double k_B;
+  double k_C;  
+  double m_A;  
+  double m_B;
+  double m_C;
+  double gyr_rad_A;
+  double gyr_rad_B;
+  double gyr_rad_C;
+  
+  if (params.rse==0){
+    tv_A      = params.tv_A;
+    tv_B      = params.tv_B;
+    tv_C      = params.tv_C;
+    R_A       = params.R_A;
+    R_B       = params.R_B;
+    R_C       = params.R_C;
+    k_A       = params.k_A;
+    k_B       = params.k_B;
+    k_C       = params.k_C;
+    m_A       = params.m_A;
+    m_B       = params.m_B;
+    m_C       = params.m_C;
+    gyr_rad_A = params.gyr_rad_A;
+    gyr_rad_B = params.gyr_rad_B;
+    gyr_rad_C = params.gyr_rad_C;
+  }
+  else{
+    tv_A      = params.tv_A;
+    tv_B      = params.tv_B;
+    tv_C      = params.tv_C;
+    R_A       = fn_R_A(t);
+    R_B       = params.R_B;
+    R_C       = params.R_C;
+    k_A       = params.k_A;
+    k_B       = params.k_B;
+    k_C       = params.k_C;
+    m_A       = params.m_A;
+    m_B       = params.m_B;
+    m_C       = params.m_C;
+    gyr_rad_A = params.gyr_rad_A;
+    gyr_rad_B = params.gyr_rad_B;
+    gyr_rad_C = params.gyr_rad_C;
+  }
   
   double da_out_dt_orb;
   double da_out_dt_tid;
@@ -73,18 +157,59 @@ double de_in_dt(double a_in, double a_out, double e_in,
 		double w_out, double Om_Ax, double Om_Ay,
 		double Om_Az, double Om_Bx, double Om_By,
 		double Om_Bz, double t, Inpar params){
-  
+
   ////////////////////////////////////////////////////////////
-  // bulk properties
-  double tv_A = params.tv_A;
-  double tv_B = params.tv_B;
-  double R_A  = params.R_A;
-  double R_B  = params.R_B;
-  double k_A  = params.k_A;
-  double k_B  = params.k_B;
-  double m_A  = params.m_A;
-  double m_B  = params.m_B;
-  double m_C  = params.m_C;
+  // Bulk properties
+  double tv_A;
+  double tv_B;
+  double tv_C;
+  double R_A;  
+  double R_B;
+  double R_C;  
+  double k_A;  
+  double k_B;
+  double k_C;  
+  double m_A;  
+  double m_B;
+  double m_C;
+  double gyr_rad_A;
+  double gyr_rad_B;
+  double gyr_rad_C;
+  
+  if (params.rse==0){
+    tv_A      = params.tv_A;
+    tv_B      = params.tv_B;
+    tv_C      = params.tv_C;
+    R_A       = params.R_A;
+    R_B       = params.R_B;
+    R_C       = params.R_C;
+    k_A       = params.k_A;
+    k_B       = params.k_B;
+    k_C       = params.k_C;
+    m_A       = params.m_A;
+    m_B       = params.m_B;
+    m_C       = params.m_C;
+    gyr_rad_A = params.gyr_rad_A;
+    gyr_rad_B = params.gyr_rad_B;
+    gyr_rad_C = params.gyr_rad_C;
+  }
+  else{
+    tv_A      = params.tv_A;
+    tv_B      = params.tv_B;
+    tv_C      = params.tv_C;
+    R_A       = fn_R_A(t);
+    R_B       = params.R_B;
+    R_C       = params.R_C;
+    k_A       = params.k_A;
+    k_B       = params.k_B;
+    k_C       = params.k_C;
+    m_A       = params.m_A;
+    m_B       = params.m_B;
+    m_C       = params.m_C;
+    gyr_rad_A = params.gyr_rad_A;
+    gyr_rad_B = params.gyr_rad_B;
+    gyr_rad_C = params.gyr_rad_C;
+  }
 
   double de_in_dt_orb;
   double de_in_dt_tid;
@@ -118,15 +243,56 @@ double de_out_dt(double a_in, double a_out, double e_in,
   
   ////////////////////////////////////////////////////////////
   // bulk properties
-  double tv_A = params.tv_A;
-  double tv_B = params.tv_B;
-  double R_A  = params.R_A;
-  double R_B  = params.R_B;
-  double k_A  = params.k_A;
-  double k_B  = params.k_B;
-  double m_A  = params.m_A;
-  double m_B  = params.m_B;
-  double m_C  = params.m_C;
+  double tv_A;
+  double tv_B;
+  double tv_C;
+  double R_A;  
+  double R_B;
+  double R_C;  
+  double k_A;  
+  double k_B;
+  double k_C;  
+  double m_A;  
+  double m_B;
+  double m_C;
+  double gyr_rad_A;
+  double gyr_rad_B;
+  double gyr_rad_C;
+  
+  if (params.rse==0){
+    tv_A      = params.tv_A;
+    tv_B      = params.tv_B;
+    tv_C      = params.tv_C;
+    R_A       = params.R_A;
+    R_B       = params.R_B;
+    R_C       = params.R_C;
+    k_A       = params.k_A;
+    k_B       = params.k_B;
+    k_C       = params.k_C;
+    m_A       = params.m_A;
+    m_B       = params.m_B;
+    m_C       = params.m_C;
+    gyr_rad_A = params.gyr_rad_A;
+    gyr_rad_B = params.gyr_rad_B;
+    gyr_rad_C = params.gyr_rad_C;
+  }
+  else{
+    tv_A      = params.tv_A;
+    tv_B      = params.tv_B;
+    tv_C      = params.tv_C;
+    R_A       = fn_R_A(t);
+    R_B       = params.R_B;
+    R_C       = params.R_C;
+    k_A       = params.k_A;
+    k_B       = params.k_B;
+    k_C       = params.k_C;
+    m_A       = params.m_A;
+    m_B       = params.m_B;
+    m_C       = params.m_C;
+    gyr_rad_A = params.gyr_rad_A;
+    gyr_rad_B = params.gyr_rad_B;
+    gyr_rad_C = params.gyr_rad_C;
+  }
   
   double de_out_dt_orb;
   double de_out_dt_tid;
@@ -157,16 +323,57 @@ double dI_in_dt(double a_in, double a_out, double e_in,
   
   ////////////////////////////////////////////////////////////
   // bulk properties  
-  double tv_A = params.tv_A;
-  double tv_B = params.tv_B;
-  double R_A  = params.R_A;
-  double R_B  = params.R_B;
-  double k_A  = params.k_A;
-  double k_B  = params.k_B;
-  double m_A  = params.m_A;
-  double m_B  = params.m_B;
-  double m_C  = params.m_C;
-
+  double tv_A;
+  double tv_B;
+  double tv_C;
+  double R_A;  
+  double R_B;
+  double R_C;  
+  double k_A;  
+  double k_B;
+  double k_C;  
+  double m_A;  
+  double m_B;
+  double m_C;
+  double gyr_rad_A;
+  double gyr_rad_B;
+  double gyr_rad_C;
+  
+  if (params.rse==0){
+    tv_A      = params.tv_A;
+    tv_B      = params.tv_B;
+    tv_C      = params.tv_C;
+    R_A       = params.R_A;
+    R_B       = params.R_B;
+    R_C       = params.R_C;
+    k_A       = params.k_A;
+    k_B       = params.k_B;
+    k_C       = params.k_C;
+    m_A       = params.m_A;
+    m_B       = params.m_B;
+    m_C       = params.m_C;
+    gyr_rad_A = params.gyr_rad_A;
+    gyr_rad_B = params.gyr_rad_B;
+    gyr_rad_C = params.gyr_rad_C;
+  }
+  else{
+    tv_A      = params.tv_A;
+    tv_B      = params.tv_B;
+    tv_C      = params.tv_C;
+    R_A       = fn_R_A(t);
+    R_B       = params.R_B;
+    R_C       = params.R_C;
+    k_A       = params.k_A;
+    k_B       = params.k_B;
+    k_C       = params.k_C;
+    m_A       = params.m_A;
+    m_B       = params.m_B;
+    m_C       = params.m_C;
+    gyr_rad_A = params.gyr_rad_A;
+    gyr_rad_B = params.gyr_rad_B;
+    gyr_rad_C = params.gyr_rad_C;
+  }
+  
   double dI_in_dt_orb;
   double dI_in_dt_tid;
   double I_tot;
@@ -207,15 +414,56 @@ double dI_out_dt(double a_in, double a_out, double e_in,
   
   ////////////////////////////////////////////////////////////
   // bulk properties
-  double tv_A = params.tv_A;
-  double tv_B = params.tv_B;
-  double R_A  = params.R_A;
-  double R_B  = params.R_B;
-  double k_A  = params.k_A;
-  double k_B  = params.k_B;
-  double m_A  = params.m_A;
-  double m_B  = params.m_B;
-  double m_C  = params.m_C;
+  double tv_A;
+  double tv_B;
+  double tv_C;
+  double R_A;  
+  double R_B;
+  double R_C;  
+  double k_A;  
+  double k_B;
+  double k_C;  
+  double m_A;  
+  double m_B;
+  double m_C;
+  double gyr_rad_A;
+  double gyr_rad_B;
+  double gyr_rad_C;
+  
+  if (params.rse==0){
+    tv_A      = params.tv_A;
+    tv_B      = params.tv_B;
+    tv_C      = params.tv_C;
+    R_A       = params.R_A;
+    R_B       = params.R_B;
+    R_C       = params.R_C;
+    k_A       = params.k_A;
+    k_B       = params.k_B;
+    k_C       = params.k_C;
+    m_A       = params.m_A;
+    m_B       = params.m_B;
+    m_C       = params.m_C;
+    gyr_rad_A = params.gyr_rad_A;
+    gyr_rad_B = params.gyr_rad_B;
+    gyr_rad_C = params.gyr_rad_C;
+  }
+  else{
+    tv_A      = params.tv_A;
+    tv_B      = params.tv_B;
+    tv_C      = params.tv_C;
+    R_A       = fn_R_A(t);
+    R_B       = params.R_B;
+    R_C       = params.R_C;
+    k_A       = params.k_A;
+    k_B       = params.k_B;
+    k_C       = params.k_C;
+    m_A       = params.m_A;
+    m_B       = params.m_B;
+    m_C       = params.m_C;
+    gyr_rad_A = params.gyr_rad_A;
+    gyr_rad_B = params.gyr_rad_B;
+    gyr_rad_C = params.gyr_rad_C;
+  }
   
   double dI_out_dt_orb;
   double dI_out_dt_tid;
@@ -254,15 +502,56 @@ double dW_in_dt(double a_in, double a_out, double e_in,
   
   ////////////////////////////////////////////////////////////
   // bulk properties
-  double tv_A = params.tv_A;
-  double tv_B = params.tv_B;
-  double R_A  = params.R_A;
-  double R_B  = params.R_B;
-  double k_A  = params.k_A;
-  double k_B  = params.k_B;
-  double m_A  = params.m_A;
-  double m_B  = params.m_B;
-  double m_C  = params.m_C;
+  double tv_A;
+  double tv_B;
+  double tv_C;
+  double R_A;  
+  double R_B;
+  double R_C;  
+  double k_A;  
+  double k_B;
+  double k_C;  
+  double m_A;  
+  double m_B;
+  double m_C;
+  double gyr_rad_A;
+  double gyr_rad_B;
+  double gyr_rad_C;
+  
+  if (params.rse==0){
+    tv_A      = params.tv_A;
+    tv_B      = params.tv_B;
+    tv_C      = params.tv_C;
+    R_A       = params.R_A;
+    R_B       = params.R_B;
+    R_C       = params.R_C;
+    k_A       = params.k_A;
+    k_B       = params.k_B;
+    k_C       = params.k_C;
+    m_A       = params.m_A;
+    m_B       = params.m_B;
+    m_C       = params.m_C;
+    gyr_rad_A = params.gyr_rad_A;
+    gyr_rad_B = params.gyr_rad_B;
+    gyr_rad_C = params.gyr_rad_C;
+  }
+  else{
+    tv_A      = params.tv_A;
+    tv_B      = params.tv_B;
+    tv_C      = params.tv_C;
+    R_A       = fn_R_A(t);
+    R_B       = params.R_B;
+    R_C       = params.R_C;
+    k_A       = params.k_A;
+    k_B       = params.k_B;
+    k_C       = params.k_C;
+    m_A       = params.m_A;
+    m_B       = params.m_B;
+    m_C       = params.m_C;
+    gyr_rad_A = params.gyr_rad_A;
+    gyr_rad_B = params.gyr_rad_B;
+    gyr_rad_C = params.gyr_rad_C;
+  }
   
   double dW_in_dt_orb;
   double dW_in_dt_tid;
@@ -299,15 +588,56 @@ double dW_out_dt(double a_in, double a_out, double e_in,
   
   ////////////////////////////////////////////////////////////
   // bulk properties  
-  double tv_A = params.tv_A;
-  double tv_B = params.tv_B;
-  double R_A  = params.R_A;
-  double R_B  = params.R_B;
-  double k_A  = params.k_A;
-  double k_B  = params.k_B;
-  double m_A  = params.m_A;
-  double m_B  = params.m_B;
-  double m_C  = params.m_C;
+  double tv_A;
+  double tv_B;
+  double tv_C;
+  double R_A;  
+  double R_B;
+  double R_C;  
+  double k_A;  
+  double k_B;
+  double k_C;  
+  double m_A;  
+  double m_B;
+  double m_C;
+  double gyr_rad_A;
+  double gyr_rad_B;
+  double gyr_rad_C;
+  
+  if (params.rse==0){
+    tv_A      = params.tv_A;
+    tv_B      = params.tv_B;
+    tv_C      = params.tv_C;
+    R_A       = params.R_A;
+    R_B       = params.R_B;
+    R_C       = params.R_C;
+    k_A       = params.k_A;
+    k_B       = params.k_B;
+    k_C       = params.k_C;
+    m_A       = params.m_A;
+    m_B       = params.m_B;
+    m_C       = params.m_C;
+    gyr_rad_A = params.gyr_rad_A;
+    gyr_rad_B = params.gyr_rad_B;
+    gyr_rad_C = params.gyr_rad_C;
+  }
+  else{
+    tv_A      = params.tv_A;
+    tv_B      = params.tv_B;
+    tv_C      = params.tv_C;
+    R_A       = fn_R_A(t);
+    R_B       = params.R_B;
+    R_C       = params.R_C;
+    k_A       = params.k_A;
+    k_B       = params.k_B;
+    k_C       = params.k_C;
+    m_A       = params.m_A;
+    m_B       = params.m_B;
+    m_C       = params.m_C;
+    gyr_rad_A = params.gyr_rad_A;
+    gyr_rad_B = params.gyr_rad_B;
+    gyr_rad_C = params.gyr_rad_C;
+  }
   
   double dW_out_dt_orb;
   double I_tot;
@@ -337,18 +667,59 @@ double dw_in_dt(double a_in, double a_out, double e_in,
   
   ////////////////////////////////////////////////////////////
   // bulk properties
+  double tv_A;
+  double tv_B;
+  double tv_C;
+  double R_A;  
+  double R_B;
+  double R_C;  
+  double k_A;  
+  double k_B;
+  double k_C;  
+  double m_A;  
+  double m_B;
+  double m_C;
+  double gyr_rad_A;
+  double gyr_rad_B;
+  double gyr_rad_C;
+  
+  if (params.rse==0){
+    tv_A      = params.tv_A;
+    tv_B      = params.tv_B;
+    tv_C      = params.tv_C;
+    R_A       = params.R_A;
+    R_B       = params.R_B;
+    R_C       = params.R_C;
+    k_A       = params.k_A;
+    k_B       = params.k_B;
+    k_C       = params.k_C;
+    m_A       = params.m_A;
+    m_B       = params.m_B;
+    m_C       = params.m_C;
+    gyr_rad_A = params.gyr_rad_A;
+    gyr_rad_B = params.gyr_rad_B;
+    gyr_rad_C = params.gyr_rad_C;
+  }
+  else{
+    tv_A      = params.tv_A;
+    tv_B      = params.tv_B;
+    tv_C      = params.tv_C;
+    R_A       = fn_R_A(t);
+    R_B       = params.R_B;
+    R_C       = params.R_C;
+    k_A       = params.k_A;
+    k_B       = params.k_B;
+    k_C       = params.k_C;
+    m_A       = params.m_A;
+    m_B       = params.m_B;
+    m_C       = params.m_C;
+    gyr_rad_A = params.gyr_rad_A;
+    gyr_rad_B = params.gyr_rad_B;
+    gyr_rad_C = params.gyr_rad_C;
+  }
   
   double cvel = cspeed * params.uT/params.uL;
   
-  double tv_A = params.tv_A;
-  double tv_B = params.tv_B;
-  double R_A  = params.R_A;
-  double R_B  = params.R_B;
-  double k_A  = params.k_A;
-  double k_B  = params.k_B;
-  double m_A  = params.m_A;
-  double m_B  = params.m_B;
-  double m_C  = params.m_C;
   
   double dw_in_dt_orb;
   double dw_in_dt_tid;
@@ -388,15 +759,56 @@ double dw_out_dt(double a_in, double a_out, double e_in,
   
   ////////////////////////////////////////////////////////////
   // bulk properties  
-  double tv_A = params.tv_A;
-  double tv_B = params.tv_B;
-  double R_A  = params.R_A;
-  double R_B  = params.R_B;
-  double k_A  = params.k_A;
-  double k_B  = params.k_B;
-  double m_A  = params.m_A;
-  double m_B  = params.m_B;
-  double m_C  = params.m_C;
+  double tv_A;
+  double tv_B;
+  double tv_C;
+  double R_A;  
+  double R_B;
+  double R_C;  
+  double k_A;  
+  double k_B;
+  double k_C;  
+  double m_A;  
+  double m_B;
+  double m_C;
+  double gyr_rad_A;
+  double gyr_rad_B;
+  double gyr_rad_C;
+  
+  if (params.rse==0){
+    tv_A      = params.tv_A;
+    tv_B      = params.tv_B;
+    tv_C      = params.tv_C;
+    R_A       = params.R_A;
+    R_B       = params.R_B;
+    R_C       = params.R_C;
+    k_A       = params.k_A;
+    k_B       = params.k_B;
+    k_C       = params.k_C;
+    m_A       = params.m_A;
+    m_B       = params.m_B;
+    m_C       = params.m_C;
+    gyr_rad_A = params.gyr_rad_A;
+    gyr_rad_B = params.gyr_rad_B;
+    gyr_rad_C = params.gyr_rad_C;
+  }
+  else{
+    tv_A      = params.tv_A;
+    tv_B      = params.tv_B;
+    tv_C      = params.tv_C;
+    R_A       = fn_R_A(t);
+    R_B       = params.R_B;
+    R_C       = params.R_C;
+    k_A       = params.k_A;
+    k_B       = params.k_B;
+    k_C       = params.k_C;
+    m_A       = params.m_A;
+    m_B       = params.m_B;
+    m_C       = params.m_C;
+    gyr_rad_A = params.gyr_rad_A;
+    gyr_rad_B = params.gyr_rad_B;
+    gyr_rad_C = params.gyr_rad_C;
+  }
   
   double dw_out_dt_orb;
   double dw_out_dt_tid;
@@ -430,16 +842,56 @@ double dOm_Ax_dt(double a_in, double a_out, double e_in,
   
   ////////////////////////////////////////////////////////////
   // bulk properties  
-  double tv_A = params.tv_A;
-  double tv_B = params.tv_B;
-  double R_A  = params.R_A;
-  double R_B  = params.R_B;
-  double k_A  = params.k_A;
-  double k_B  = params.k_B;
-  double m_A  = params.m_A;
-  double m_B  = params.m_B;
-  double m_C  = params.m_C;
-  double gyr_rad_A = params.gyr_rad_A;
+  double tv_A;
+  double tv_B;
+  double tv_C;
+  double R_A;  
+  double R_B;
+  double R_C;  
+  double k_A;  
+  double k_B;
+  double k_C;  
+  double m_A;  
+  double m_B;
+  double m_C;
+  double gyr_rad_A;
+  double gyr_rad_B;
+  double gyr_rad_C;
+  
+  if (params.rse==0){
+    tv_A      = params.tv_A;
+    tv_B      = params.tv_B;
+    tv_C      = params.tv_C;
+    R_A       = params.R_A;
+    R_B       = params.R_B;
+    R_C       = params.R_C;
+    k_A       = params.k_A;
+    k_B       = params.k_B;
+    k_C       = params.k_C;
+    m_A       = params.m_A;
+    m_B       = params.m_B;
+    m_C       = params.m_C;
+    gyr_rad_A = params.gyr_rad_A;
+    gyr_rad_B = params.gyr_rad_B;
+    gyr_rad_C = params.gyr_rad_C;
+  }
+  else{
+    tv_A      = params.tv_A;
+    tv_B      = params.tv_B;
+    tv_C      = params.tv_C;
+    R_A       = fn_R_A(t);
+    R_B       = params.R_B;
+    R_C       = params.R_C;
+    k_A       = params.k_A;
+    k_B       = params.k_B;
+    k_C       = params.k_C;
+    m_A       = params.m_A;
+    m_B       = params.m_B;
+    m_C       = params.m_C;
+    gyr_rad_A = params.gyr_rad_A;
+    gyr_rad_B = params.gyr_rad_B;
+    gyr_rad_C = params.gyr_rad_C;
+  }
   
   double mu;
 
@@ -464,16 +916,56 @@ double dOm_Ay_dt(double a_in, double a_out, double e_in,
   
   ////////////////////////////////////////////////////////////
   // bulk properties
-  double tv_A = params.tv_A;
-  double tv_B = params.tv_B;
-  double R_A  = params.R_A;
-  double R_B  = params.R_B;
-  double k_A  = params.k_A;
-  double k_B  = params.k_B;
-  double m_A  = params.m_A;
-  double m_B  = params.m_B;
-  double m_C  = params.m_C;
-  double gyr_rad_A = params.gyr_rad_A;
+  double tv_A;
+  double tv_B;
+  double tv_C;
+  double R_A;  
+  double R_B;
+  double R_C;  
+  double k_A;  
+  double k_B;
+  double k_C;  
+  double m_A;  
+  double m_B;
+  double m_C;
+  double gyr_rad_A;
+  double gyr_rad_B;
+  double gyr_rad_C;
+  
+  if (params.rse==0){
+    tv_A      = params.tv_A;
+    tv_B      = params.tv_B;
+    tv_C      = params.tv_C;
+    R_A       = params.R_A;
+    R_B       = params.R_B;
+    R_C       = params.R_C;
+    k_A       = params.k_A;
+    k_B       = params.k_B;
+    k_C       = params.k_C;
+    m_A       = params.m_A;
+    m_B       = params.m_B;
+    m_C       = params.m_C;
+    gyr_rad_A = params.gyr_rad_A;
+    gyr_rad_B = params.gyr_rad_B;
+    gyr_rad_C = params.gyr_rad_C;
+  }
+  else{
+    tv_A      = params.tv_A;
+    tv_B      = params.tv_B;
+    tv_C      = params.tv_C;
+    R_A       = fn_R_A(t);
+    R_B       = params.R_B;
+    R_C       = params.R_C;
+    k_A       = params.k_A;
+    k_B       = params.k_B;
+    k_C       = params.k_C;
+    m_A       = params.m_A;
+    m_B       = params.m_B;
+    m_C       = params.m_C;
+    gyr_rad_A = params.gyr_rad_A;
+    gyr_rad_B = params.gyr_rad_B;
+    gyr_rad_C = params.gyr_rad_C;
+  }
   
   double mu;
 
@@ -499,16 +991,56 @@ double dOm_Az_dt(double a_in, double a_out, double e_in,
   
   ////////////////////////////////////////////////////////////
   // bulk properties
-  double tv_A = params.tv_A;
-  double tv_B = params.tv_B;
-  double R_A  = params.R_A;
-  double R_B  = params.R_B;
-  double k_A  = params.k_A;
-  double k_B  = params.k_B;
-  double m_A  = params.m_A;
-  double m_B  = params.m_B;
-  double m_C  = params.m_C;
-  double gyr_rad_A = params.gyr_rad_A;
+  double tv_A;
+  double tv_B;
+  double tv_C;
+  double R_A;  
+  double R_B;
+  double R_C;  
+  double k_A;  
+  double k_B;
+  double k_C;  
+  double m_A;  
+  double m_B;
+  double m_C;
+  double gyr_rad_A;
+  double gyr_rad_B;
+  double gyr_rad_C;
+  
+  if (params.rse==0){
+    tv_A      = params.tv_A;
+    tv_B      = params.tv_B;
+    tv_C      = params.tv_C;
+    R_A       = params.R_A;
+    R_B       = params.R_B;
+    R_C       = params.R_C;
+    k_A       = params.k_A;
+    k_B       = params.k_B;
+    k_C       = params.k_C;
+    m_A       = params.m_A;
+    m_B       = params.m_B;
+    m_C       = params.m_C;
+    gyr_rad_A = params.gyr_rad_A;
+    gyr_rad_B = params.gyr_rad_B;
+    gyr_rad_C = params.gyr_rad_C;
+  }
+  else{
+    tv_A      = params.tv_A;
+    tv_B      = params.tv_B;
+    tv_C      = params.tv_C;
+    R_A       = fn_R_A(t);
+    R_B       = params.R_B;
+    R_C       = params.R_C;
+    k_A       = params.k_A;
+    k_B       = params.k_B;
+    k_C       = params.k_C;
+    m_A       = params.m_A;
+    m_B       = params.m_B;
+    m_C       = params.m_C;
+    gyr_rad_A = params.gyr_rad_A;
+    gyr_rad_B = params.gyr_rad_B;
+    gyr_rad_C = params.gyr_rad_C;
+  }
   
   double mu;
 
@@ -531,16 +1063,56 @@ double dOm_Bx_dt(double a_in, double a_out, double e_in,
   
   ////////////////////////////////////////////////////////////
   // bulk properties  
-  double tv_A = params.tv_A;
-  double tv_B = params.tv_B;
-  double R_A  = params.R_A;
-  double R_B  = params.R_B;
-  double k_A  = params.k_A;
-  double k_B  = params.k_B;
-  double m_A  = params.m_A;
-  double m_B  = params.m_B;
-  double m_C  = params.m_C;
-  double gyr_rad_B = params.gyr_rad_B;
+  double tv_A;
+  double tv_B;
+  double tv_C;
+  double R_A;  
+  double R_B;
+  double R_C;  
+  double k_A;  
+  double k_B;
+  double k_C;  
+  double m_A;  
+  double m_B;
+  double m_C;
+  double gyr_rad_A;
+  double gyr_rad_B;
+  double gyr_rad_C;
+  
+  if (params.rse==0){
+    tv_A      = params.tv_A;
+    tv_B      = params.tv_B;
+    tv_C      = params.tv_C;
+    R_A       = params.R_A;
+    R_B       = params.R_B;
+    R_C       = params.R_C;
+    k_A       = params.k_A;
+    k_B       = params.k_B;
+    k_C       = params.k_C;
+    m_A       = params.m_A;
+    m_B       = params.m_B;
+    m_C       = params.m_C;
+    gyr_rad_A = params.gyr_rad_A;
+    gyr_rad_B = params.gyr_rad_B;
+    gyr_rad_C = params.gyr_rad_C;
+  }
+  else{
+    tv_A      = params.tv_A;
+    tv_B      = params.tv_B;
+    tv_C      = params.tv_C;
+    R_A       = fn_R_A(t);
+    R_B       = params.R_B;
+    R_C       = params.R_C;
+    k_A       = params.k_A;
+    k_B       = params.k_B;
+    k_C       = params.k_C;
+    m_A       = params.m_A;
+    m_B       = params.m_B;
+    m_C       = params.m_C;
+    gyr_rad_A = params.gyr_rad_A;
+    gyr_rad_B = params.gyr_rad_B;
+    gyr_rad_C = params.gyr_rad_C;
+  }
   
   double mu;
 
@@ -563,16 +1135,56 @@ double dOm_By_dt(double a_in, double a_out, double e_in,
   
   ////////////////////////////////////////////////////////////
   // bulk properties
-  double tv_A = params.tv_A;
-  double tv_B = params.tv_B;
-  double R_A  = params.R_A;
-  double R_B  = params.R_B;
-  double k_A  = params.k_A;
-  double k_B  = params.k_B;
-  double m_A  = params.m_A;
-  double m_B  = params.m_B;
-  double m_C  = params.m_C;
-  double gyr_rad_B = params.gyr_rad_B;
+  double tv_A;
+  double tv_B;
+  double tv_C;
+  double R_A;  
+  double R_B;
+  double R_C;  
+  double k_A;  
+  double k_B;
+  double k_C;  
+  double m_A;  
+  double m_B;
+  double m_C;
+  double gyr_rad_A;
+  double gyr_rad_B;
+  double gyr_rad_C;
+  
+  if (params.rse==0){
+    tv_A      = params.tv_A;
+    tv_B      = params.tv_B;
+    tv_C      = params.tv_C;
+    R_A       = params.R_A;
+    R_B       = params.R_B;
+    R_C       = params.R_C;
+    k_A       = params.k_A;
+    k_B       = params.k_B;
+    k_C       = params.k_C;
+    m_A       = params.m_A;
+    m_B       = params.m_B;
+    m_C       = params.m_C;
+    gyr_rad_A = params.gyr_rad_A;
+    gyr_rad_B = params.gyr_rad_B;
+    gyr_rad_C = params.gyr_rad_C;
+  }
+  else{
+    tv_A      = params.tv_A;
+    tv_B      = params.tv_B;
+    tv_C      = params.tv_C;
+    R_A       = fn_R_A(t);
+    R_B       = params.R_B;
+    R_C       = params.R_C;
+    k_A       = params.k_A;
+    k_B       = params.k_B;
+    k_C       = params.k_C;
+    m_A       = params.m_A;
+    m_B       = params.m_B;
+    m_C       = params.m_C;
+    gyr_rad_A = params.gyr_rad_A;
+    gyr_rad_B = params.gyr_rad_B;
+    gyr_rad_C = params.gyr_rad_C;
+  }
   
   double mu;
 
@@ -595,16 +1207,56 @@ double dOm_Bz_dt(double a_in, double a_out, double e_in,
   
   ////////////////////////////////////////////////////////////
   // bulk properties
-  double tv_A = params.tv_A;
-  double tv_B = params.tv_B;
-  double R_A  = params.R_A;
-  double R_B  = params.R_B;
-  double k_A  = params.k_A;
-  double k_B  = params.k_B;
-  double m_A  = params.m_A;
-  double m_B  = params.m_B;
-  double m_C  = params.m_C;
-  double gyr_rad_B = params.gyr_rad_B;
+  double tv_A;
+  double tv_B;
+  double tv_C;
+  double R_A;  
+  double R_B;
+  double R_C;  
+  double k_A;  
+  double k_B;
+  double k_C;  
+  double m_A;  
+  double m_B;
+  double m_C;
+  double gyr_rad_A;
+  double gyr_rad_B;
+  double gyr_rad_C;
+  
+  if (params.rse==0){
+    tv_A      = params.tv_A;
+    tv_B      = params.tv_B;
+    tv_C      = params.tv_C;
+    R_A       = params.R_A;
+    R_B       = params.R_B;
+    R_C       = params.R_C;
+    k_A       = params.k_A;
+    k_B       = params.k_B;
+    k_C       = params.k_C;
+    m_A       = params.m_A;
+    m_B       = params.m_B;
+    m_C       = params.m_C;
+    gyr_rad_A = params.gyr_rad_A;
+    gyr_rad_B = params.gyr_rad_B;
+    gyr_rad_C = params.gyr_rad_C;
+  }
+  else{
+    tv_A      = params.tv_A;
+    tv_B      = params.tv_B;
+    tv_C      = params.tv_C;
+    R_A       = fn_R_A(t);
+    R_B       = params.R_B;
+    R_C       = params.R_C;
+    k_A       = params.k_A;
+    k_B       = params.k_B;
+    k_C       = params.k_C;
+    m_A       = params.m_A;
+    m_B       = params.m_B;
+    m_C       = params.m_C;
+    gyr_rad_A = params.gyr_rad_A;
+    gyr_rad_B = params.gyr_rad_B;
+    gyr_rad_C = params.gyr_rad_C;
+  }
   
   double mu;
 

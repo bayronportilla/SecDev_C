@@ -2,7 +2,7 @@ CC = gcc
 CFLAGS   = -I/usr/local/include
 CCFLAGS  = -L/usr/local/lib
 
-TARGET = interpol
+TARGET = main
 
 
 $(TARGET):$(TARGET).c #Units.c Params.c ModQuad.c

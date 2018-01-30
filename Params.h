@@ -1,5 +1,5 @@
 typedef struct Inpar_params{
-
+  
   // Inner A properties
   double m_A;
   double R_A;
@@ -76,7 +76,6 @@ Inpar params(){
   config_t cfg;
   config_setting_t *setting;
 
-
   config_init(&cfg);
   
   // Read the file. If there is an error, report it and exit. 
@@ -105,9 +104,8 @@ Inpar params(){
   int rse;
   double uM;
   double uL;
-  
-  
-  
+
+    
   //config_lookup_string(&cfg, "method", &met);
   config_lookup_string(&cfg, "sim_name"  , &sim_name);
   config_lookup_float(&cfg, "t_ini"  , &t_ini);
@@ -201,7 +199,7 @@ Inpar params(){
       config_setting_lookup_float(object,  "beta_B",  &beta_B);    
     }
   }
-  
+
   
   ////////////////////////////////////////////////////////////
   //
@@ -239,7 +237,6 @@ Inpar params(){
     }
   }
 
-
   ////////////////////////////////////////////////////////////
   //
   // Converting angles to radians
@@ -267,8 +264,8 @@ Inpar params(){
   ////////////////////////////////////////////////////////////
 
 
-  double G_tot = pow( pow(G_1(m_A,m_B,a_in,e_in),2) + pow(G_2(m_A,m_B,m_C,a_out,e_out),2)
-		      + 2*G_1(m_A,m_B,a_in,e_in)*G_2(m_A,m_B,m_C,a_out,e_out)*cos(I_tot) , 0.5 );
+  double G_tot    = pow( pow(G_1(m_A,m_B,a_in,e_in),2) + pow(G_2(m_A,m_B,m_C,a_out,e_out),2)
+			 + 2*G_1(m_A,m_B,a_in,e_in)*G_2(m_A,m_B,m_C,a_out,e_out)*cos(I_tot) , 0.5 );
   
   double I_in     = asin(G_2(m_A,m_B,m_C,a_out,e_out)/G_tot * sin(I_tot));
   double I_out    = asin(G_1(m_A,m_B,a_in,e_in)/G_tot * sin(I_tot));
@@ -307,41 +304,48 @@ Inpar params(){
   
   double uT =  units(uM,uL,"uT")[2];
 
-  
   rest.sim_name = sim_name;
-  rest.t_ini   = t_ini * YEARS/uT;
-  rest.t_end   = t_end * YEARS/uT;
+  rest.t_ini    = t_ini * YEARS/uT;
+  rest.t_end    = t_end * YEARS/uT;
   rest.h_output = h_output * YEARS/uT;
-  rest.q_orb   = q_orb;
-  rest.q_tid   = q_tid;
-  rest.q_GR    = q_GR;
-  rest.rcu     = rcu;
-  rest.rse     = rse;
+  rest.q_orb    = q_orb;
+  rest.q_tid    = q_tid;
+  rest.q_GR     = q_GR;
+  rest.rcu      = rcu;
+  rest.rse      = rse;
 
-  rest.uM      = uM;
-  rest.uL      = uL;
-  rest.uT      = uT;
-  
+  rest.uM       = uM;
+  rest.uL       = uL;
+  rest.uT       = uT;
+
+  ////////////////////////////////////////////////////////////
+  // Bulk properties
+
   rest.m_A = m_A * MS/uM;
   rest.m_B = m_B * MS/uM;
   rest.m_C = m_C * MS/uM;
-
+  
   rest.R_A = R_A * RS/uL;
   rest.R_B = R_B * RS/uL;
   rest.R_C = R_C * RS/uL;
-
+  
   rest.k_A = k_A;
   rest.k_B = k_B;
   rest.k_C = k_C;
-
+  
   rest.tv_A = tv_A * YEARS/uT;
   rest.tv_B = tv_B * YEARS/uT;
   rest.tv_C = tv_C * YEARS/uT;
-
+  
   rest.gyr_rad_A = gyr_rad_A;
   rest.gyr_rad_B = gyr_rad_B;
   rest.gyr_rad_C = gyr_rad_C;
 
+
+  
+  ////////////////////////////////////////////////////////////
+  // Orbital
+  
   rest.a_in = a_in * AU/uL;
   rest.e_in = e_in;
   rest.I_in = I_in;

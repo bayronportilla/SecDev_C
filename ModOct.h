@@ -394,7 +394,7 @@ double dw_in_dt(double a_in, double a_out, double e_in,
 
   dw_in_dt_GR = 3.0*pow(G*(m_A+m_B),1.5)/(pow(a_in,2.5)*cvel*cvel*(1.0-e_in*e_in));
 
-  return (params.q_orb * dw_in_dt_orb) + (params.q_tid * dw_in_dt_tid) + (params.q_GR * dw_in_dt_GR);
+  return (params.q_orb * dw_in_dt_orb); //+ (params.q_tid * dw_in_dt_tid) + (params.q_GR * dw_in_dt_GR);
 
 
 }

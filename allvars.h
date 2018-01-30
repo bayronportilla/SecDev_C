@@ -23,12 +23,16 @@
 #include <libconfig.h>
 #include "Units.h"
 #include "matrix.h"
-#include "generic.h"
+
 #include "proto.h"
 #include "Params.h"
+#include "bulk.h"
+#include "generic.h"
+
+#include "FetchInfo.h"
 //#include "ModOct.h"
 #include "ModQuad.h"
-#include "FetchInfo.h"
+
 
 
 

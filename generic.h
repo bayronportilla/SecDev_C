@@ -36,15 +36,15 @@ double L_1(double m_1, double m_2, double a_1){
   return m_1*m_2/(m_1+m_2) * pow(G*(m_1+m_2)*a_1,0.5);
 }
 
-double L_2(double m_1,double m_2,double m_3,double a_2){
+double L_2(double m_1,double m_2,double m_3, double a_2){
   return m_3*(m_1+m_2)/(m_1+m_2+m_3) * pow(G*(m_1+m_2+m_3)*a_2,0.5);
 }
 
-double G_1(double m_1,double m_2,double a_1,double e_1){
+double G_1(double m_1,double m_2,double a_1, double e_1){
   return L_1(m_1,m_2,a_1)*pow(1.0-e_1*e_1,0.5);
 }
 
-double G_2(double m_1,double m_2,double m_3,double a_2,double e_2){
+double G_2(double m_1,double m_2,double m_3, double a_2, double e_2){
   return L_2(m_1,m_2,m_3,a_2)*pow(1.0-e_2*e_2,0.5);
 }
 
@@ -199,7 +199,7 @@ return m_B*k_A*pow(R_A,5)/(mu*n(m_A,m_B,a)*pow(a,5)) * ( (2.0*pow(Om_Az_orb,2) -
 
 double Z_B(double R_B, double k_B, double m_A,double m_B,
 	   double a, double e, double W, double I, double w,
-	   double Om_Bx, double Om_By,double Om_Bz){
+	   double Om_Bx, double Om_By, double Om_Bz){
 
   double Om_B_in[3] = {Om_Bx,Om_By,Om_Bz};
   double Om_Bx_orb = RotMat(W,I,w,Om_B_in,"InOrb")[0];
@@ -211,3 +211,9 @@ double Z_B(double R_B, double k_B, double m_A,double m_B,
   return m_A*k_B*pow(R_B,5)/(mu*n(m_A,m_B,a)*pow(a,5)) * ( (2.0*pow(Om_Bz_orb,2) - pow(Om_By_orb,2) - pow(Om_Bx_orb,2))/(2.0*pow(1.0-e*e,2)) + 15.0*G*m_A/pow(a,3) * f_4(e) );
   
 }
+
+
+
+
+
+
