@@ -5,7 +5,7 @@
 #define RJ     6.9911e7
 #define ME     5.972e24
 #define RE     6.371e6
-#define YEARS  365.25*86400
+#define YEARS  (365.25*86400)
 #define DAYS   86400.0 
 #define G      1.0
 #define PI     3.14159265358979323
@@ -20,12 +20,14 @@
 #include <gsl/gsl_odeiv2.h>
 #include <gsl/gsl_vector.h>
 #include <gsl/gsl_blas.h>
+#include <gsl/gsl_spline.h>
 #include <libconfig.h>
 #include "Units.h"
 #include "matrix.h"
 
 #include "proto.h"
 #include "Params.h"
+#include "interpol.h"
 #include "bulk.h"
 #include "generic.h"
 

@@ -232,8 +232,18 @@ int main (void){
 				       st.Om_Az, st.Om_Bx, st.Om_By, st.Om_Bz,
 				       0.0,st));
 */
+   /*
+   FILE *fp3;
+   fp3 = fopen("interpol.dat","w");
+   double k;
+   for(k=0.003;k<3.0;k+=0.05){
+     fprintf(fp3,"%f %f\n",k,interpol(st,k,"radius_A"));
+   }
+   */
+   //printf("%f\n",interpol(st,1.2,"radius_A"));
 
-   
+   //   printf("%e\n",fn_R_A(st,st.t_ini));
+
    FILE *fp;
    char src[100];
    char dest[100];
@@ -276,13 +286,13 @@ int main (void){
      
 
      printf("%.5e %.5e %.5e %.5e %.5e %.5e\n",
-	    t,y[0],y[1],y[2],y[3],fn_R_A(t));
+	    t,y[0],y[1],y[2],y[3],fn_R_A(st,t));
      
      
      fprintf(fp,"%.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e \
 %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e \n",
 	     t,y[0],y[1],y[2],y[3],y[4],y[5],y[6],y[7],y[8],y[9],y[10],y[11],y[12],y[13],y[14],y[15],
-	     st.m_A,st.m_B,fn_R_A(t),st.R_B,st.k_A,st.k_B,st.tv_A,st.tv_B,st.gyr_rad_A,st.gyr_rad_B);
+	     st.m_A,st.m_B,fn_R_A(st,t),st.R_B,st.k_A,st.k_B,st.tv_A,st.tv_B,st.gyr_rad_A,st.gyr_rad_B);
      
    }
    

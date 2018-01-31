@@ -12,12 +12,9 @@
 ////////////////////////////////////////////////////////////
 
 
-double fn_R_A(double t){
-  double Rf = 1.0*RS/150e9;
-  double tf = 2.0e7*(365.25*86400)/5022086.559303;
-  double m  = (Rf-0.009301)/(tf-0.0);
-  double rr = m*t + 0.009301;
-  return rr;
- 
+double fn_R_A(Inpar st, double t){
+  double T;  
+  T = t*st.uT/YEARS/1e9;
+  return interpol(st,T,"radius_A")*RS/st.uL;
 }
 
