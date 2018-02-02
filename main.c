@@ -285,14 +285,12 @@ int main (void){
      }
      
 
-     printf("%.5e %.5e %.5e %.5e %.5e %.5e\n",
-	    t,y[0],y[1],y[2],y[3],fn_R_A(st,t));
      
      
      fprintf(fp,"%.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e \
 %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e \n",
 	     t,y[0],y[1],y[2],y[3],y[4],y[5],y[6],y[7],y[8],y[9],y[10],y[11],y[12],y[13],y[14],y[15],
-	     st.m_A,st.m_B,fn_R_A(st,t),st.R_B,st.k_A,st.k_B,st.tv_A,st.tv_B,st.gyr_rad_A,st.gyr_rad_B);
+	     st.m_A,st.m_B,st.R_A,st.R_B,st.k_A,st.k_B,st.tv_A,st.tv_B,st.gyr_rad_A,st.gyr_rad_B);
      
    }
    

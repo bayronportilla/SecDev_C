@@ -32,8 +32,8 @@
 #include "generic.h"
 
 #include "FetchInfo.h"
-//#include "ModOct.h"
-#include "ModQuad.h"
+#include "ModOct.h"
+//#include "ModQuad.h"
 
 
 
