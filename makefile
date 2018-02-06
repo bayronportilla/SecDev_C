@@ -16,9 +16,11 @@ OBJGS = main generic
 
 #LIBS = -lgsl -lgslcblas -lm -lconfig
 
-main:main.o generic.o matrix.o Units.o bulk.o #Units.c Params.c ModQuad.c
-	$(CC) main.o generic.o matrix.o Units.o bulk.o \
--lgsl -lgslcblas -lm -o main.x
+
+main:main.o generic.o matrix.o Units.o bulk.o Params.o FetchInfo.o interpol.o ModQuad.o
+	$(CC) main.o generic.o matrix.o Units.o bulk.o Params.o FetchInfo.o interpol.o ModQuad.o -lgsl -lgslcblas -lm -lconfig -o main.x
+	rm *.o
+
 
 
 main.o:main.c
@@ -27,14 +29,14 @@ main.o:main.c
 generic.o:generic.c
 	gcc -c generic.c
 
-matrix.o:matrix.c
-	gcc -c matrix.c
+#matrix.o:matrix.c
+#	gcc -c matrix.c
 
-Units.o:Units.c
-	gcc -c Units.c
+#Units.o:Units.c
+#	gcc -c Units.c
 
-bulk.o:bulk.c
-	gcc -c bulk.c
+#bulk.o:bulk.c
+#	gcc -c bulk.c
 
 
 

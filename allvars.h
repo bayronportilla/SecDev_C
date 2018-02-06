@@ -82,7 +82,7 @@ struct Inpar_params{
 };
 
 typedef struct Inpar_params Inpar;
-extern Inpar;
+extern Inpar st;
 
 
 /*  

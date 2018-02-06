@@ -1,6 +1,7 @@
 #include "allvars.h"
 #include <gsl/gsl_vector.h>
 #include <gsl/gsl_spline.h>
+#include <string.h>
 
 double interpol(Inpar st, double t, char quantity[]){
 

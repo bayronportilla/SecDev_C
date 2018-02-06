@@ -128,7 +128,7 @@ double dOm_Bz_dt(double a_in, double a_out, double e_in,
 		 double e_out, double I_in, double I_out,
 		 double W_in, double W_out, double w_in,
 		 double w_out, double Om_Ax, double Om_Ay,
-		 double Om_Az, double Om_Bx, doubxle Om_By,
+		 double Om_Az, double Om_Bx, double Om_By,
 		 double Om_Bz, double t, Inpar params);
 
 int func (double t, const double y[], double f[], void *params);
