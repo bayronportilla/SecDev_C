@@ -1,3 +1,5 @@
+#include <stdio.h>
+
 #define AU     149.6e9
 #define MS     1.989e30
 #define RS     6.957e8
@@ -10,7 +12,80 @@
 #define G      1.0
 #define PI     3.14159265358979323
 #define cspeed 300.0e6
+
+struct Inpar_params{
   
+  // Inner A properties
+  double m_A;
+  double R_A;
+  double k_A;
+  double tv_A;
+  double gyr_rad_A;
+  double a_in;
+  double e_in;
+  double I_in;
+  double W_in;
+  double w_in;
+  double P_rot_A;
+  double alpha_A;
+  double beta_A;
+
+  // Inner B properties
+  double m_B ;
+  double R_B ;
+  double k_B ;
+  double tv_B;
+  double gyr_rad_B;
+  double P_rot_B;
+  double alpha_B;
+  double beta_B;
+
+  // Inner C properties
+  double m_C;
+  double R_C;
+  double k_C;
+  double tv_C;
+  double gyr_rad_C;
+  double a_out;
+  double e_out;
+  double I_out;
+  double W_out;
+  double w_out;
+
+  // General properties
+  const char *sim_name;
+  double t_ini;
+  double t_end;
+  double h_output;
+  double I_tot;
+  int q_orb;
+  int q_tid;
+  int q_GR;
+  int rcu;
+  int rse;
+
+  
+  // Rotational velocities
+  double Om_Ax;
+  double Om_Ay;
+  double Om_Az;
+  double Om_Bx;
+  double Om_By;
+  double Om_Bz;
+  
+  
+  // Canonical units info.
+  double uM;
+  double uL;
+  double uT;
+ 
+};
+
+typedef struct Inpar_params Inpar;
+extern Inpar;
+
+
+/*  
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -34,7 +109,7 @@
 #include "FetchInfo.h"
 #include "ModOct.h"
 //#include "ModQuad.h"
-
+*/
 
 
 

@@ -1,3 +1,9 @@
+#include <math.h>
+#include "allvars.h"
+#include "proto.h"
+//#include "matrix.c"
+
+
 ////////////////////////////////////////////////////////////
 //
 // Definition of generic functions
@@ -11,6 +17,7 @@
 double f_1(double e){
   return ( 1.0 + 3.0*pow(e,2) + (3.0/8.0)*pow(e,4) ) / pow(1.0-e*e,5);
 }
+
 
 double f_2(double e){
   return ( 1.0 + (15.0/2.0)*pow(e,2) + (45.0/8.0)*pow(e,4) + (5.0/16.0)*pow(e,6) ) / pow(1.0-e*e,13.0/2.0); 
@@ -211,8 +218,6 @@ double Z_B(double R_B, double k_B, double m_A,double m_B,
   return m_A*k_B*pow(R_B,5)/(mu*n(m_A,m_B,a)*pow(a,5)) * ( (2.0*pow(Om_Bz_orb,2) - pow(Om_By_orb,2) - pow(Om_Bx_orb,2))/(2.0*pow(1.0-e*e,2)) + 15.0*G*m_A/pow(a,3) * f_4(e) );
   
 }
-
-
 
 
 

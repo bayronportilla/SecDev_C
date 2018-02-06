@@ -1,3 +1,15 @@
+#include "allvars.h"
+#include "proto.h"
+#include <math.h>
+#include <gsl/gsl_errno.h>
+#include <gsl/gsl_matrix.h>
+#include <gsl/gsl_odeiv2.h>
+#include <gsl/gsl_vector.h>
+#include <gsl/gsl_blas.h>
+#include <gsl/gsl_spline.h>
+
+
+
 ////////////////////////////////////////////////////////////
 //
 // Differential equations

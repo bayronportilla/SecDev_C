@@ -1,3 +1,8 @@
+#include "allvars.h"
+#include "proto.h"
+#include <math.h>
+#include <string.h>
+
 /*
 Este modulo calcula el sistema de unidades canonicas
 apropiado para un problema determinado. Para usarlo,

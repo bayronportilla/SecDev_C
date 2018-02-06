@@ -1,3 +1,8 @@
+#include "allvars.h"
+#include <libconfig.h>
+#include <math.h>
+#include "proto.h"
+/*
 typedef struct Inpar_params{
   
   // Inner A properties
@@ -67,7 +72,7 @@ typedef struct Inpar_params{
   
 } Inpar; // Defining a new datatype *Inpar*
          //which is a structure of the tyoe *Inpar_params*
-
+	 */
 
 Inpar params(){
   

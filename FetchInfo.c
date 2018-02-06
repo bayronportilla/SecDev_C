@@ -1,3 +1,8 @@
+#include <stdio.h>
+#include <string.h>
+#include "allvars.h"
+
+
 int FetchInfo(Inpar st){
   FILE *fp;
   char src[100];
