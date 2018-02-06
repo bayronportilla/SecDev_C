@@ -15,9 +15,7 @@
 ////////////////////////////////////////////////////////////
 
 
-double fn_R_A(Inpar st, double t){
-double T;  
-T = t*st.uT/YEARS/1e9;
-return 0;//interpol(st,T,"radius_A")*RS/st.uL;
+double fn_R_A(Inpar st, double t, double x[], double y[]){
+  return interpol(st,t,x,y);
 }
 

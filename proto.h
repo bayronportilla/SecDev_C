@@ -134,8 +134,8 @@ double dOm_Bz_dt(double a_in, double a_out, double e_in,
 int func (double t, const double y[], double f[], void *params);
 
 double *units(double a, double b, char var[]);
-double fn_R_A(Inpar st, double t);
-double interpol(Inpar st, double t, char quantity[]);
+double fn_R_A(Inpar st, double t, double x[], double y[]);
+double interpol(Inpar st, double t, double x[], double y[]);
 Inpar params();
 
 double f_1(double e);
@@ -214,3 +214,5 @@ double Z_B(double R_B, double k_B, double m_A,double m_B,
 	   double Om_Bx, double Om_By, double Om_Bz);
 
 double *RotMat(double W, double I, double w, double *in_array, char dir[]);
+
+int counterLines(char *infile);

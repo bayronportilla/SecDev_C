@@ -3,13 +3,43 @@
 #include <gsl/gsl_odeiv2.h>
 #include <string.h>
 #include <gsl/gsl_errno.h>
+#include <gsl/gsl_spline.h>
 
 
 int main (void){
 
   Inpar st;
   st = params();
+  
+  
+  ////////////////////////////////////////////////////////////
+  //
+  // Charging data files for interpolation
+  //
+  ////////////////////////////////////////////////////////////
+  
+  FILE *file;
+  file   = fopen("radius.dat","r");
+  Nlines = counterLines("radius.dat");
+  tim_A  = (double *)malloc(Nlines*sizeof(double));
+  tim_B  = (double *)malloc(Nlines*sizeof(double));
+  rad_A  = (double *)malloc(Nlines*sizeof(double));
+  rad_B  = (double *)malloc(Nlines*sizeof(double));
+  
+  int j=0;
+  
+  double col1,col2,col3,col4;
+  while(fscanf(file,"%lf %lf %lf %lf",&col1,&col2,&col3,&col4)!=EOF){
+    tim_A[j] = col1*Gyr/st.uT;
+    tim_B[j] = col2*Gyr/st.uT;
+    rad_A[j] = col3*RS/st.uL;
+    rad_B[j] = col4*RS/st.uL;
+    j++;
+  }
 
+  acc    = gsl_interp_accel_alloc ();
+  spline = gsl_spline_alloc (gsl_interp_linear, Nlines);
+  gsl_spline_init(spline,tim_A,rad_A,Nlines);
   //gsl_odeiv2_driver_alloc_y_new(const gsl_odeiv2_system * sys,
   //                              const gsl_odeiv2_step_type * T,
   //                              const double hstart,
@@ -23,7 +53,6 @@ int main (void){
   const gsl_odeiv2_step_type *T = gsl_odeiv2_step_rk4;
   //
   ////////////////////////////////////////////////////////////
-
   
   gsl_odeiv2_system sys = { func, NULL, 16, &st}; // Define sistema de ecuaciones
   gsl_odeiv2_driver *d = gsl_odeiv2_driver_alloc_y_new (&sys, T, 1e-3, 1e-8, 1e-8);
@@ -33,7 +62,7 @@ int main (void){
 		   st.w_in, st.w_out, st.Om_Ax, st.Om_Ay,
 		   st.Om_Az, st.Om_Bx, st.Om_By, st.Om_Bz}; // y[number of entries of the array] = {}
   
-  int i, s;
+  int s;
   double t = st.t_ini;
   double progress;
   
@@ -281,13 +310,16 @@ int main (void){
      fprintf(fp,"%.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e \
 %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e \n",
 	     t,y[0],y[1],y[2],y[3],y[4],y[5],y[6],y[7],y[8],y[9],y[10],y[11],y[12],y[13],y[14],y[15],
-	     st.m_A,st.m_B,st.R_A,st.R_B,st.k_A,st.k_B,st.tv_A,st.tv_B,st.gyr_rad_A,st.gyr_rad_B);
+	     st.m_A,st.m_B,fn_R_A(st,t,tim_A,rad_A),st.R_B,st.k_A,st.k_B,st.tv_A,st.tv_B,st.gyr_rad_A,st.gyr_rad_B);
      
    }
    
    gsl_odeiv2_driver_free (d);
    fclose(fp);
-
+   gsl_spline_free (spline);
+   gsl_interp_accel_free (acc);
+  
+   
    
   return 0;
    

@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <gsl/gsl_spline.h>
 
 #define AU     149.6e9
 #define MS     1.989e30
@@ -12,6 +13,7 @@
 #define G      1.0
 #define PI     3.14159265358979323
 #define cspeed 300.0e6
+#define Gyr    1.0e9*YEARS
 
 struct Inpar_params{
   
@@ -83,6 +85,17 @@ struct Inpar_params{
 
 typedef struct Inpar_params Inpar;
 extern Inpar st;
+extern int Nlines;
+extern double *tim_A;
+extern double *tim_B;
+extern double *rad_A;
+extern double *rad_B;
+
+extern gsl_interp_accel *acc;
+extern gsl_spline       *spline;
+
+
+
 
 
 /*  

@@ -2,36 +2,25 @@
 #include <gsl/gsl_vector.h>
 #include <gsl/gsl_spline.h>
 #include <string.h>
+#include <stdio.h>
+#include "proto.h"
 
-double interpol(Inpar st, double t, char quantity[]){
+double interpol(Inpar st, double t, double x[], double y[]){
 
-  FILE *file;
-  file = fopen("radius.dat","r");
-
-  int j = 0;
-  int Nlines = 0;
-  float col1,col2,col3,col4;
-  double *tim_A,*tim_B,*rad_A,*rad_B;
+  ////////////////////////////////////////////////////////////
+  // Interpolation for Body A
   
-  tim_A = (double *)malloc(1*sizeof(double));
-  tim_B = (double *)malloc(1*sizeof(double));
-  rad_A = (double *)malloc(1*sizeof(double));
-  rad_B = (double *)malloc(1*sizeof(double));
-
-  while(fscanf(file,"%f %f %f %f",&col1,&col2,&col3,&col4)!=EOF){
-    tim_A[j] = col1;
-    tim_B[j] = col2;
-    rad_A[j] = col3;
-    rad_B[j] = col4;
-    j++;
-    tim_A = (double *)realloc(tim_A,sizeof(double)*(j+1));
-    tim_B = (double *)realloc(tim_B,sizeof(double)*(j+1));
-    rad_A = (double *)realloc(rad_A,sizeof(double)*(j+1));
-    rad_B = (double *)realloc(rad_B,sizeof(double)*(j+1));
-  }
-
-  Nlines = j;
+  //acc    = gsl_interp_accel_alloc ();
+  //spline = gsl_spline_alloc (gsl_interp_linear, Nlines);
   
+  //gsl_spline_init(spline,x,y,Nlines);
+
+  
+  return gsl_spline_eval (spline, t, acc);
+    
+
+
+  /*  
   ////////////////////////////////////////////////////////////
   //
   // Finding max and min of time entries
@@ -66,7 +55,7 @@ double interpol(Inpar st, double t, char quantity[]){
   if (max_time_A>max_time_B){
     gsl_vector_set (time_compa,1,max_time_A);
   }
-  else{
+  elzse{
     gsl_vector_set (time_compa,1,max_time_B);
   }
 
@@ -82,36 +71,7 @@ double interpol(Inpar st, double t, char quantity[]){
   //printf("t_end can't be greater than: %1.3e yr\n",gsl_vector_get(time_compa,1)*1e9);
   
 
-  ////////////////////////////////////////////////////////////
-  //
-  // Start interpolation
-  //
-  ////////////////////////////////////////////////////////////
-
-  ////////////////////////////////////////////////////////////
-  // Body A
   
-  gsl_interp_accel *acc_rad_A = gsl_interp_accel_alloc ();
-  gsl_spline *spline_rad_A    = gsl_spline_alloc (gsl_interp_linear, Nlines);
-  gsl_spline_init(spline_rad_A,tim_A,rad_A,Nlines);
-  
-  if (strcmp(quantity,"radius_A")==0){
-    return gsl_spline_eval (spline_rad_A, t, acc_rad_A);
-  }
-
-
-  
-  ////////////////////////////////////////////////////////////
-  // Body B
-  
-  gsl_interp_accel *acc_rad_B = gsl_interp_accel_alloc ();
-  gsl_spline *spline_rad_B    = gsl_spline_alloc (gsl_interp_linear, Nlines);
-  gsl_spline_init(spline_rad_B,tim_B,rad_B,Nlines);
-  
-  if (strcmp(quantity,"radius_B")==0){
-    return gsl_spline_eval (spline_rad_B, t, acc_rad_B);
-  }
-
 
 
   ////////////////////////////////////////////////////////////
@@ -128,8 +88,8 @@ double interpol(Inpar st, double t, char quantity[]){
   free(tim_B);
   free(rad_A);
   free(rad_B);  
+  */
   
-  
-  return 0;
+  //return 0;
   
 }
