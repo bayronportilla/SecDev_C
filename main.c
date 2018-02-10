@@ -40,6 +40,8 @@ int main (void){
   acc    = gsl_interp_accel_alloc ();
   spline = gsl_spline_alloc (gsl_interp_linear, Nlines);
   gsl_spline_init(spline,tim_A,rad_A,Nlines);
+
+  
   //gsl_odeiv2_driver_alloc_y_new(const gsl_odeiv2_system * sys,
   //                              const gsl_odeiv2_step_type * T,
   //                              const double hstart,
@@ -50,12 +52,13 @@ int main (void){
   ////////////////////////////////////////////////////////////
   // This is the only line must be modified by the user
   //
-  const gsl_odeiv2_step_type *T = gsl_odeiv2_step_rk4;
+  const gsl_odeiv2_step_type *T = gsl_odeiv2_step_rk8pd;
   //
   ////////////////////////////////////////////////////////////
-  
+
+  double hstart = 1.0e0*YEARS/st.uT;
   gsl_odeiv2_system sys = { func, NULL, 16, &st}; // Define sistema de ecuaciones
-  gsl_odeiv2_driver *d = gsl_odeiv2_driver_alloc_y_new (&sys, T, 1e-3, 1e-8, 1e-8);
+  gsl_odeiv2_driver *d = gsl_odeiv2_driver_alloc_y_new (&sys, T, hstart, 1e-10, 1e-10);
 
   double y[16] = { st.a_in, st.a_out, st.e_in, st.e_out, 
 		   st.I_in, st.I_out, st.W_in, st.W_out,
@@ -71,7 +74,8 @@ int main (void){
   //printf("%f\n",st.R_A);
 
    //exit(0);
-   /*
+
+  
    printf("m_A = %1.9e \n",st.m_A);
    printf("m_B = %1.9e \n",st.m_B);
    printf("m_C = %1.9e \n",st.m_C);
@@ -103,8 +107,6 @@ int main (void){
    printf("Om_Bx_in = %1.9e \n",st.Om_Bx);
    printf("Om_By_in = %1.9e \n",st.Om_By);
    printf("Om_Bz_in = %1.9e \n",st.Om_Bz);
-   exit(0);
-   */
    /*
    printf("%e\n",X_A(st.tv_A,st.R_A,st.k_A,st.m_A,
 		     st.m_B, st.a_in, st.e_in, st.W_in,
@@ -252,7 +254,8 @@ int main (void){
 				       st.w_in, st.w_out, st.Om_Ax, st.Om_Ay,
 				       st.Om_Az, st.Om_Bx, st.Om_By, st.Om_Bz,
 				       0.0,st));
-*/
+   */
+   //   exit(0);
    /*
    FILE *fp3;
    fp3 = fopen("interpol.dat","w");
@@ -264,7 +267,7 @@ int main (void){
    //printf("%f\n",interpol(st,1.2,"radius_A"));
 
    //   printf("%e\n",fn_R_A(st,st.t_ini));
-
+   
    FILE *fp;
    char src[100];
    char dest[100];
@@ -273,6 +276,12 @@ int main (void){
    strcpy(dest,".dat");
    strcpy(name_files,strcat(src,dest));
    fp  = fopen(name_files,"w");
+   
+   
+   FILE *fp2;
+   fp2  = fopen("step.dat","w");
+
+   
 
    /*
    FILE *fp2;
@@ -288,6 +297,7 @@ int main (void){
    double ti = t;
 
     while(t<st.t_end){
+
      
      s = gsl_odeiv2_driver_apply(d, &t, ti, y); // from t to ti
      if (s != GSL_SUCCESS){
@@ -303,19 +313,28 @@ int main (void){
      if ( (int)progress%10 == 0){
        printf("Progress: %d per cent \n",(int)progress);
      }
-     
 
-     
      
      fprintf(fp,"%.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e \
 %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e \n",
 	     t,y[0],y[1],y[2],y[3],y[4],y[5],y[6],y[7],y[8],y[9],y[10],y[11],y[12],y[13],y[14],y[15],
-	     st.m_A,st.m_B,fn_R_A(st,t,tim_A,rad_A),st.R_B,st.k_A,st.k_B,st.tv_A,st.tv_B,st.gyr_rad_A,st.gyr_rad_B);
+	     st.m_A,st.m_B,st.R_A,st.R_B,st.k_A,st.k_B,st.tv_A,st.tv_B,st.gyr_rad_A,st.gyr_rad_B);
+
+     fprintf(fp2,"%.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e \n",t, de_in_dt(y[0],y[1],y[2],y[3],y[4],y[5],y[6],y[7],y[8],y[9],y[10],y[11],y[12],y[13],y[14],y[15],t,st),
+	     de_out_dt(y[0],y[1],y[2],y[3], y[4],y[5],y[6],y[7], y[8],y[9],y[10],y[11],y[12],y[13],y[14],y[15],t,st),
+	     dI_in_dt(y[0],y[1],y[2],y[3], y[4],y[5],y[6],y[7], y[8],y[9],y[10],y[11], y[12],y[13],y[14],y[15],t,st),
+	     dI_out_dt(y[0],y[1],y[2],y[3], y[4],y[5],y[6],y[7],y[8],y[9],y[10],y[11],y[12],y[13],y[14],y[15], t,st),
+	     dW_in_dt(y[0],y[1],y[2],y[3],y[4],y[5],y[6],y[7], y[8],y[9],y[10],y[11], y[12],y[13],y[14],y[15], t,st),
+	     dW_out_dt(y[0],y[1],y[2],y[3], y[4],y[5],y[6],y[7],y[8],y[9],y[10],y[11], y[12],y[13],y[14],y[15],t,st),
+	     dw_in_dt(y[0],y[1],y[2],y[3], y[4],y[5],y[6],y[7], y[8],y[9],y[10],y[11], y[12],y[13],y[14],y[15],t,st),
+	     dw_out_dt(y[0],y[1],y[2],y[3], y[4],y[5],y[6],y[7],y[8],y[9],y[10],y[11],y[12],y[13],y[14],y[15], t,st));
      
    }
-   
+
+     
    gsl_odeiv2_driver_free (d);
    fclose(fp);
+   fclose(fp2);
    gsl_spline_free (spline);
    gsl_interp_accel_free (acc);
   
