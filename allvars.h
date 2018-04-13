@@ -13,7 +13,7 @@
 #define G      1.0
 #define PI     3.14159265358979323
 #define cspeed 300.0e6
-#define Gyr    1.0e9*YEARS
+#define Gyr    (1.0e9*YEARS)
 
 struct Inpar_params{
   

@@ -61,8 +61,8 @@ double da_in_dt(double a_in, double a_out, double e_in,
     tv_A      = params.tv_A;
     tv_B      = params.tv_B;
     tv_C      = params.tv_C;
-    R_A       = fn_R_A(params,t,tim_A,rad_A);
-    R_B       = params.R_B;
+    R_A       = fn_R_A(params,t,tim_B,rad_B);
+    R_B       = fn_R_B(params,t,tim_B,rad_B);
     R_C       = params.R_C;
     k_A       = params.k_A;
     k_B       = params.k_B;
@@ -136,8 +136,8 @@ double da_out_dt(double a_in, double a_out, double e_in,
     tv_A      = params.tv_A;
     tv_B      = params.tv_B;
     tv_C      = params.tv_C;
-    R_A       = fn_R_A(params,t,tim_A,rad_A);
-    R_B       = params.R_B;
+    R_A       = fn_R_A(params,t,tim_B,rad_B);
+    R_B       = fn_R_B(params,t,tim_B,rad_B);
     R_C       = params.R_C;
     k_A       = params.k_A;
     k_B       = params.k_B;
@@ -207,8 +207,8 @@ double de_in_dt(double a_in, double a_out, double e_in,
     tv_A      = params.tv_A;
     tv_B      = params.tv_B;
     tv_C      = params.tv_C;
-    R_A       = fn_R_A(params,t,tim_A,rad_A);
-    R_B       = params.R_B;
+    R_A       = fn_R_A(params,t,tim_B,rad_B);
+    R_B       = fn_R_B(params,t,tim_B,rad_B);
     R_C       = params.R_C;
     k_A       = params.k_A;
     k_B       = params.k_B;
@@ -291,8 +291,8 @@ double de_out_dt(double a_in, double a_out, double e_in,
     tv_A      = params.tv_A;
     tv_B      = params.tv_B;
     tv_C      = params.tv_C;
-    R_A       = fn_R_A(params,t,tim_A,rad_A);
-    R_B       = params.R_B;
+    R_A       = fn_R_A(params,t,tim_B,rad_B);
+    R_B       = fn_R_B(params,t,tim_B,rad_B);
     R_C       = params.R_C;
     k_A       = params.k_A;
     k_B       = params.k_B;
@@ -374,8 +374,8 @@ double dI_in_dt(double a_in, double a_out, double e_in,
     tv_A      = params.tv_A;
     tv_B      = params.tv_B;
     tv_C      = params.tv_C;
-    R_A       = fn_R_A(params,t,tim_A,rad_A);
-    R_B       = params.R_B;
+    R_A       = fn_R_A(params,t,tim_B,rad_B);
+    R_B       = fn_R_B(params,t,tim_B,rad_B);
     R_C       = params.R_C;
     k_A       = params.k_A;
     k_B       = params.k_B;
@@ -468,8 +468,8 @@ double dI_out_dt(double a_in, double a_out, double e_in,
     tv_A      = params.tv_A;
     tv_B      = params.tv_B;
     tv_C      = params.tv_C;
-    R_A       = fn_R_A(params,t,tim_A,rad_A);
-    R_B       = params.R_B;
+    R_A       = fn_R_A(params,t,tim_B,rad_B);
+    R_B       = fn_R_B(params,t,tim_B,rad_B);
     R_C       = params.R_C;
     k_A       = params.k_A;
     k_B       = params.k_B;
@@ -562,8 +562,8 @@ double dW_in_dt(double a_in, double a_out, double e_in,
     tv_A      = params.tv_A;
     tv_B      = params.tv_B;
     tv_C      = params.tv_C;
-    R_A       = fn_R_A(params,t,tim_A,rad_A);
-    R_B       = params.R_B;
+    R_A       = fn_R_A(params,t,tim_B,rad_B);
+    R_B       = fn_R_B(params,t,tim_B,rad_B);
     R_C       = params.R_C;
     k_A       = params.k_A;
     k_B       = params.k_B;
@@ -650,8 +650,8 @@ double dW_out_dt(double a_in, double a_out, double e_in,
     tv_A      = params.tv_A;
     tv_B      = params.tv_B;
     tv_C      = params.tv_C;
-    R_A       = fn_R_A(params,t,tim_A,rad_A);
-    R_B       = params.R_B;
+    R_A       = fn_R_A(params,t,tim_B,rad_B);
+    R_B       = fn_R_B(params,t,tim_B,rad_B);
     R_C       = params.R_C;
     k_A       = params.k_A;
     k_B       = params.k_B;
@@ -730,8 +730,8 @@ double dw_in_dt(double a_in, double a_out, double e_in,
     tv_A      = params.tv_A;
     tv_B      = params.tv_B;
     tv_C      = params.tv_C;
-    R_A       = fn_R_A(params,t,tim_A,rad_A);
-    R_B       = params.R_B;
+    R_A       = fn_R_A(params,t,tim_B,rad_B);
+    R_B       = fn_R_B(params,t,tim_B,rad_B);
     R_C       = params.R_C;
     k_A       = params.k_A;
     k_B       = params.k_B;
@@ -776,7 +776,7 @@ double dw_in_dt(double a_in, double a_out, double e_in,
 
   dw_in_dt_GR = 3.0*pow(G*(m_A+m_B),1.5)/(pow(a_in,2.5)*cvel*cvel*(1.0-e_in*e_in));
 
-  return (params.q_orb * dw_in_dt_orb); //+ (params.q_tid * dw_in_dt_tid) + (params.q_GR * dw_in_dt_GR);
+  return (params.q_orb * dw_in_dt_orb) + (params.q_tid * dw_in_dt_tid) + (params.q_GR * dw_in_dt_GR);
 
 
 }
@@ -829,8 +829,8 @@ double dw_out_dt(double a_in, double a_out, double e_in,
     tv_A      = params.tv_A;
     tv_B      = params.tv_B;
     tv_C      = params.tv_C;
-    R_A       = fn_R_A(params,t,tim_A,rad_A);
-    R_B       = params.R_B;
+    R_A       = fn_R_A(params,t,tim_B,rad_B);
+    R_B       = fn_R_B(params,t,tim_B,rad_B);
     R_C       = params.R_C;
     k_A       = params.k_A;
     k_B       = params.k_B;
@@ -921,8 +921,8 @@ double dOm_Ax_dt(double a_in, double a_out, double e_in,
     tv_A      = params.tv_A;
     tv_B      = params.tv_B;
     tv_C      = params.tv_C;
-    R_A       = fn_R_A(params,t,tim_A,rad_A);
-    R_B       = params.R_B;
+    R_A       = fn_R_A(params,t,tim_B,rad_B);
+    R_B       = fn_R_B(params,t,tim_B,rad_B);
     R_C       = params.R_C;
     k_A       = params.k_A;
     k_B       = params.k_B;
@@ -997,8 +997,8 @@ double dOm_Ay_dt(double a_in, double a_out, double e_in,
     tv_A      = params.tv_A;
     tv_B      = params.tv_B;
     tv_C      = params.tv_C;
-    R_A       = fn_R_A(params,t,tim_A,rad_A);
-    R_B       = params.R_B;
+    R_A       = fn_R_A(params,t,tim_B,rad_B);
+    R_B       = fn_R_B(params,t,tim_B,rad_B);
     R_C       = params.R_C;
     k_A       = params.k_A;
     k_B       = params.k_B;
@@ -1071,8 +1071,8 @@ double dOm_Az_dt(double a_in, double a_out, double e_in,
     tv_A      = params.tv_A;
     tv_B      = params.tv_B;
     tv_C      = params.tv_C;
-    R_A       = fn_R_A(params,t,tim_A,rad_A);
-    R_B       = params.R_B;
+    R_A       = fn_R_A(params,t,tim_B,rad_B);
+    R_B       = fn_R_B(params,t,tim_B,rad_B);
     R_C       = params.R_C;
     k_A       = params.k_A;
     k_B       = params.k_B;
@@ -1146,8 +1146,8 @@ double dOm_Bx_dt(double a_in, double a_out, double e_in,
     tv_A      = params.tv_A;
     tv_B      = params.tv_B;
     tv_C      = params.tv_C;
-    R_A       = fn_R_A(params,t,tim_A,rad_A);
-    R_B       = params.R_B;
+    R_A       = fn_R_A(params,t,tim_B,rad_B);
+    R_B       = fn_R_B(params,t,tim_B,rad_B);
     R_C       = params.R_C;
     k_A       = params.k_A;
     k_B       = params.k_B;
@@ -1220,8 +1220,8 @@ double dOm_By_dt(double a_in, double a_out, double e_in,
     tv_A      = params.tv_A;
     tv_B      = params.tv_B;
     tv_C      = params.tv_C;
-    R_A       = fn_R_A(params,t,tim_A,rad_A);
-    R_B       = params.R_B;
+    R_A       = fn_R_A(params,t,tim_B,rad_B);
+    R_B       = fn_R_B(params,t,tim_B,rad_B);
     R_C       = params.R_C;
     k_A       = params.k_A;
     k_B       = params.k_B;
@@ -1295,8 +1295,8 @@ double dOm_Bz_dt(double a_in, double a_out, double e_in,
     tv_A      = params.tv_A;
     tv_B      = params.tv_B;
     tv_C      = params.tv_C;
-    R_A       = fn_R_A(params,t,tim_A,rad_A);
-    R_B       = params.R_B;
+    R_A       = fn_R_A(params,t,tim_B,rad_B);
+    R_B       = fn_R_B(params,t,tim_B,rad_B);
     R_C       = params.R_C;
     k_A       = params.k_A;
     k_B       = params.k_B;

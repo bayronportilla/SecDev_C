@@ -135,6 +135,7 @@ int func (double t, const double y[], double f[], void *params);
 
 double *units(double a, double b, char var[]);
 double fn_R_A(Inpar st, double t, double x[], double y[]);
+double fn_R_B(Inpar st, double t, double x[], double y[]);
 double interpol(Inpar st, double t, double x[], double y[]);
 Inpar params();
 

@@ -10,8 +10,7 @@ int main (void){
 
   Inpar st;
   st = params();
-  
-  
+    
   ////////////////////////////////////////////////////////////
   //
   // Charging data files for interpolation
@@ -19,27 +18,34 @@ int main (void){
   ////////////////////////////////////////////////////////////
   
   FILE *file;
-  file   = fopen("radius.dat","r");
-  Nlines = counterLines("radius.dat");
+  file   = fopen("red_dwarf_radius.dat","r");
+  Nlines = counterLines("red_dwarf_radius.dat");
   tim_A  = (double *)malloc(Nlines*sizeof(double));
-  tim_B  = (double *)malloc(Nlines*sizeof(double));
   rad_A  = (double *)malloc(Nlines*sizeof(double));
-  rad_B  = (double *)malloc(Nlines*sizeof(double));
+
   
   int j=0;
-  
-  double col1,col2,col3,col4;
-  while(fscanf(file,"%lf %lf %lf %lf",&col1,&col2,&col3,&col4)!=EOF){
+  double col1,col2,col3;
+  while(fscanf(file,"%lf %lf %lf",&col1,&col2,&col3)!=EOF){
     tim_A[j] = col1*Gyr/st.uT;
-    tim_B[j] = col2*Gyr/st.uT;
     rad_A[j] = col3*RS/st.uL;
-    rad_B[j] = col4*RS/st.uL;
     j++;
   }
 
   acc    = gsl_interp_accel_alloc ();
   spline = gsl_spline_alloc (gsl_interp_linear, Nlines);
   gsl_spline_init(spline,tim_A,rad_A,Nlines);
+
+  /*  
+  FILE *files;
+  files = fopen("interpolated_radius.dat","w");
+
+  double time;
+  for(time=1.0e6*YEARS/st.uT;time<9.0e9*YEARS/st.uT;time+=5.0e5*YEARS/st.uT){
+    fprintf(files,"%1.4e %1.4e \n",time*st.uT/Gyr,fn_R_A(st,time,tim_A,rad_A)*st.uL/RS);
+  }
+  */
+
 
   
   //gsl_odeiv2_driver_alloc_y_new(const gsl_odeiv2_system * sys,
@@ -48,7 +54,9 @@ int main (void){
   //                              const double epsabs,
   //                              const double epsrel)
 
-  
+  //printf("%f\n",tim_B[0]*st.uT/YEARS);
+
+  //exit(0);
   ////////////////////////////////////////////////////////////
   // This is the only line must be modified by the user
   //
@@ -75,7 +83,7 @@ int main (void){
 
    //exit(0);
 
-  
+  /*
    printf("m_A = %1.9e \n",st.m_A);
    printf("m_B = %1.9e \n",st.m_B);
    printf("m_C = %1.9e \n",st.m_C);
@@ -107,6 +115,8 @@ int main (void){
    printf("Om_Bx_in = %1.9e \n",st.Om_Bx);
    printf("Om_By_in = %1.9e \n",st.Om_By);
    printf("Om_Bz_in = %1.9e \n",st.Om_Bz);
+  */
+
    /*
    printf("%e\n",X_A(st.tv_A,st.R_A,st.k_A,st.m_A,
 		     st.m_B, st.a_in, st.e_in, st.W_in,
@@ -165,7 +175,7 @@ int main (void){
    */
 
 
-   /*
+  /*   
    printf("da_in_dt = %1.17e\n",da_in_dt(st.a_in,st.a_out,st.e_in,st.e_out,
 				     st.I_in, st.I_out, st.W_in, st.W_out,
 				     st.w_in, st.w_out, st.Om_Ax, st.Om_Ay,
@@ -254,8 +264,8 @@ int main (void){
 				       st.w_in, st.w_out, st.Om_Ax, st.Om_Ay,
 				       st.Om_Az, st.Om_Bx, st.Om_By, st.Om_Bz,
 				       0.0,st));
-   */
-   //   exit(0);
+  */
+  //exit(0);
    /*
    FILE *fp3;
    fp3 = fopen("interpol.dat","w");
@@ -281,6 +291,9 @@ int main (void){
    FILE *fp2;
    fp2  = fopen("step.dat","w");
 
+   FILE *fp3;
+   fp3  = fopen("only_radius.dat","w");
+
    
 
    /*
@@ -296,8 +309,12 @@ int main (void){
    
    double ti = t;
 
-    while(t<st.t_end){
 
+   double a_stop,e_stop;
+   a_stop = 0.1*AU/st.uL;
+   e_stop = 0.1;
+   
+   while(t<st.t_end){
      
      s = gsl_odeiv2_driver_apply(d, &t, ti, y); // from t to ti
      if (s != GSL_SUCCESS){
@@ -314,12 +331,27 @@ int main (void){
        printf("Progress: %d per cent \n",(int)progress);
      }
 
+     printf("a_in=%1.9e e_in=%1.9e R_A=%1.9e R_B=%1.9e \n",y[0],y[2],fn_R_A(st,t,tim_A,rad_A)*st.uL/RS,st.R_B*st.uL/RS);
+     fprintf(fp3,"%1.9e %1.9e %1.9e \n",t,fn_R_A(st,t,tim_A,rad_A)*st.uL/RS,st.R_B*st.uL/RS);
+
      
+     if(y[0]<a_stop){
+       break;
+     }
+     
+
+     fprintf(fp,"%.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e \
+%.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e \n",
+	     t,y[0],y[1],y[2],y[3],y[4],y[5],y[6],y[7],y[8],y[9],y[10],y[11],y[12],y[13],y[14],y[15],
+	     st.m_A,st.m_B,fn_R_A(st,t,tim_A,rad_A),st.R_B,st.k_A,st.k_B,st.tv_A,st.tv_B,st.gyr_rad_A,st.gyr_rad_B);
+     
+     /*
      fprintf(fp,"%.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e \
 %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e \n",
 	     t,y[0],y[1],y[2],y[3],y[4],y[5],y[6],y[7],y[8],y[9],y[10],y[11],y[12],y[13],y[14],y[15],
 	     st.m_A,st.m_B,st.R_A,st.R_B,st.k_A,st.k_B,st.tv_A,st.tv_B,st.gyr_rad_A,st.gyr_rad_B);
-
+     */
+     
      fprintf(fp2,"%.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e \n",t, de_in_dt(y[0],y[1],y[2],y[3],y[4],y[5],y[6],y[7],y[8],y[9],y[10],y[11],y[12],y[13],y[14],y[15],t,st),
 	     de_out_dt(y[0],y[1],y[2],y[3], y[4],y[5],y[6],y[7], y[8],y[9],y[10],y[11],y[12],y[13],y[14],y[15],t,st),
 	     dI_in_dt(y[0],y[1],y[2],y[3], y[4],y[5],y[6],y[7], y[8],y[9],y[10],y[11], y[12],y[13],y[14],y[15],t,st),
