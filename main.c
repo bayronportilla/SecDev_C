@@ -4,6 +4,8 @@
 #include <string.h>
 #include <gsl/gsl_errno.h>
 #include <gsl/gsl_spline.h>
+#include <math.h>
+
 
 
 int main (void){
@@ -16,7 +18,7 @@ int main (void){
   // Charging data files for interpolation
   //
   ////////////////////////////////////////////////////////////
-  
+  /*  
   FILE *file;
   file   = fopen("red_dwarf_radius.dat","r");
   Nlines = counterLines("red_dwarf_radius.dat");
@@ -31,11 +33,11 @@ int main (void){
     rad_A[j] = col3*RS/st.uL;
     j++;
   }
-
+  
   acc    = gsl_interp_accel_alloc ();
   spline = gsl_spline_alloc (gsl_interp_linear, Nlines);
   gsl_spline_init(spline,tim_A,rad_A,Nlines);
-
+  */
   /*  
   FILE *files;
   files = fopen("interpolated_radius.dat","w");
@@ -310,9 +312,11 @@ int main (void){
    double ti = t;
 
 
-   double a_stop,e_stop;
-   a_stop = 0.1*AU/st.uL;
+   double a_stop,e_stop,d_roche,t_stop;
+   a_stop = 0.07*AU/st.uL;
    e_stop = 0.1;
+   t_stop = 5000.0e6*YEARS/st.uT;
+   d_roche = 1.66*st.R_A*pow((st.m_A+st.m_B)/st.m_B , 1/3.);
    
    while(t<st.t_end){
      
@@ -331,19 +335,20 @@ int main (void){
        printf("Progress: %d per cent \n",(int)progress);
      }
 
-     printf("a_in=%1.9e e_in=%1.9e R_A=%1.9e R_B=%1.9e \n",y[0],y[2],fn_R_A(st,t,tim_A,rad_A)*st.uL/RS,st.R_B*st.uL/RS);
+     printf("t=%1.4f a_in=%1.9e e_in=%1.9e R_A=%1.9e R_B=%1.9e \n",t*st.uT/Myr,y[0]*st.uL/AU,y[2],fn_R_A(st,t,tim_A,rad_A)*st.uL/RS,st.R_B*st.uL/RS);
      fprintf(fp3,"%1.9e %1.9e %1.9e \n",t,fn_R_A(st,t,tim_A,rad_A)*st.uL/RS,st.R_B*st.uL/RS);
-
-     
-     if(y[0]<a_stop){
-       break;
-     }
-     
 
      fprintf(fp,"%.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e \
 %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e \n",
 	     t,y[0],y[1],y[2],y[3],y[4],y[5],y[6],y[7],y[8],y[9],y[10],y[11],y[12],y[13],y[14],y[15],
 	     st.m_A,st.m_B,fn_R_A(st,t,tim_A,rad_A),st.R_B,st.k_A,st.k_B,st.tv_A,st.tv_B,st.gyr_rad_A,st.gyr_rad_B);
+     
+     
+     if(y[0]<a_stop ||  t>t_stop || y[0]*(1.0-y[2])<d_roche){
+       break;
+     }
+     
+
      
      /*
      fprintf(fp,"%.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e %.5e \

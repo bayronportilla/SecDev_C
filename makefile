@@ -17,8 +17,8 @@ OBJGS = main generic
 #LIBS = -lgsl -lgslcblas -lm -lconfig
 
 
-main:main.o generic.o matrix.o Units.o bulk.o Params.o FetchInfo.o interpol.o ModQuad.o readlines.o allvars.o
-	$(CC) main.o generic.o matrix.o Units.o bulk.o Params.o FetchInfo.o interpol.o ModQuad.o readlines.o allvars.o -lgsl -lgslcblas -lm -lconfig -o main.x
+main:main.o generic.o matrix.o Units.o bulk.o Params.o FetchInfo.o interpol.o ModOct.o readlines.o allvars.o
+	$(CC) main.o generic.o matrix.o Units.o bulk.o Params.o FetchInfo.o interpol.o ModOct.o readlines.o allvars.o -lgsl -lgslcblas -lm -lconfig -o main.x
 	rm *.o
 
 

@@ -9,6 +9,7 @@
 #define ME     5.972e24
 #define RE     6.371e6
 #define YEARS  (365.25*86400)
+#define Myr    (1.0e6*YEARS)
 #define DAYS   86400.0 
 #define G      1.0
 #define PI     3.14159265358979323
